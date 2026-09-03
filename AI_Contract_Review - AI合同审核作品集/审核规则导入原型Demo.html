@@ -1,0 +1,1982 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>星途AI · 审核规则导入Demo</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe sandbox="allow-scripts" referrerpolicy="no-referrer" title="星途AI · 审核规则导入Demo" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;星途AI · 审核规则导入Demo&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(
+    --background,
+    var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
+  ) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --color-background-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --card: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  --card-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --popover: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255), rgb(45 45 45))
+  );
+  --popover-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --primary: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --primary-foreground: var(
+    --color-text-inverse,
+    light-dark(rgb(255 255 255), rgb(13 13 13))
+  );
+  --secondary: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%))
+  );
+  --secondary-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: var(
+    --color-text-secondary,
+    light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%))
+  );
+  --accent: var(
+    --color-background-info,
+    light-dark(rgb(229 242 255), rgb(13 39 63))
+  );
+  --accent-foreground: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --destructive: var(
+    --color-text-warning,
+    light-dark(rgb(226 85 7), rgb(255 133 73))
+  );
+  --border: var(
+    --color-border-secondary,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+  --input: var(
+    --color-border-primary,
+    light-dark(
+      rgb(26 28 31 / 11.8%),
+      color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+    )
+  );
+  --ring: var(
+    --color-ring-primary,
+    light-dark(rgb(51 156 255), rgb(131 195 255 / 76%))
+  );
+  --font-size-base: var(--font-text-md-size, 14px);
+  --blue: light-dark(rgb(51 156 255), rgb(51 156 255));
+  --orange: light-dark(rgb(226 85 7), rgb(251 106 34));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+  --red: light-dark(rgb(224 46 42), rgb(255 103 100));
+  --purple: light-dark(rgb(146 79 247), rgb(173 123 249));
+  --yellow: light-dark(rgb(255 195 0), rgb(255 210 64));
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --radius: var(--border-radius-lg, 12.5px);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  /* Preserve MCP aliases for older inline renderers without creating :root cycles. */
+  --color-background-primary: var(
+    --background,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --color-text-primary: var(
+    --foreground,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --color-border-secondary: var(
+    --border,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+
+  margin: 0;
+  padding: 5px;
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans) !important;
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--font-weight-medium, 500);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive &gt; .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align=&quot;right&quot;]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align=&quot;center&quot;]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: superellipse(1.5);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card, .progress) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress {
+  display: flex;
+  height: 6px;
+  margin-block: calc((var(--line-height-normal, 1.5em) - 6px) / 2);
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+}
+
+.progress-bar {
+  height: 100%;
+  flex-shrink: 0;
+  border: 0;
+  background: var(--viz-series-1);
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: superellipse(1.5);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+  [aria-pressed=&quot;true&quot;],
+  [aria-selected=&quot;true&quot;],
+  .is-selected
+) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+/* Model-authored chart rules can otherwise stretch icons after these styles load. */
+svg.lucide {
+  display: block;
+  width: 16px !important;
+  height: 16px !important;
+  flex: none;
+  margin: 0 !important;
+  stroke-width: 1.6;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;rule-import-demo&quot;&gt;
+  &lt;style&gt;
+    #rule-import-demo {
+      --ri-bg: light-dark(#f4f7fb, #10151d);
+      --ri-surface: light-dark(#ffffff, #18202b);
+      --ri-surface-soft: light-dark(#f7f9fc, #202a37);
+      --ri-line: light-dark(#dbe3ee, #344253);
+      --ri-text: light-dark(#172b4d, #edf3fa);
+      --ri-muted: light-dark(#66758a, #aebaca);
+      --ri-brand: light-dark(#2459a9, #79a8ef);
+      --ri-brand-soft: light-dark(#eaf2ff, #1d3453);
+      --ri-danger: light-dark(#bd2c25, #ff8179);
+      --ri-danger-soft: light-dark(#fff0ef, #4a2425);
+      --ri-warning: light-dark(#a86800, #ffc261);
+      --ri-warning-soft: light-dark(#fff5df, #44341d);
+      --ri-success: light-dark(#087a55, #63d8ae);
+      --ri-success-soft: light-dark(#e6f7f0, #173c31);
+      --ri-shadow: light-dark(0 18px 48px rgba(32, 61, 102, .12), 0 18px 48px rgba(0, 0, 0, .34));
+      color: var(--ri-text); font-family: Inter, &quot;Microsoft YaHei&quot;, system-ui, sans-serif;
+    }
+    #rule-import-demo * { box-sizing: border-box; }
+    #rule-import-demo .ri-window { min-height: 700px; background: var(--ri-bg); border: 1px solid var(--ri-line); border-radius: 16px; overflow: hidden; box-shadow: var(--ri-shadow); }
+    #rule-import-demo .ri-topbar { height: 64px; padding: 0 22px; display: flex; align-items: center; justify-content: space-between; gap: 18px; background: var(--ri-surface); border-bottom: 1px solid var(--ri-line); }
+    #rule-import-demo .ri-brand, #rule-import-demo .ri-top-actions, #rule-import-demo .ri-actions, #rule-import-demo .ri-file-row, #rule-import-demo .ri-progress-head { display: flex; align-items: center; }
+    #rule-import-demo .ri-brand { gap: 10px; font-weight: 500; }
+    #rule-import-demo .ri-logo { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: var(--ri-brand); color: light-dark(#fff, #0e1a29); }
+    #rule-import-demo .ri-brand small { display: block; color: var(--ri-muted); font-weight: 400; }
+    #rule-import-demo .ri-top-actions { gap: 14px; color: var(--ri-muted); }
+    #rule-import-demo .ri-avatar { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--ri-brand-soft); color: var(--ri-brand); font-weight: 500; }
+    #rule-import-demo .ri-shell-body { display: grid; grid-template-columns: 196px minmax(0, 1fr); min-height: 636px; }
+    #rule-import-demo .ri-shell-body &gt; main { min-width: 0; background: var(--ri-bg); }
+    #rule-import-demo .ri-steps { display: flex; flex-direction: column; gap: 2px; padding: 13px 7px 24px; background: linear-gradient(180deg, light-dark(#12365f,#0b223c), light-dark(#0d2b4d,#07182b)); border-right: 0; color: #fff; }
+    #rule-import-demo .ri-steps-title, #rule-import-demo .ri-nav-group { padding: 9px 9px 6px; color: #86a8c9; font-size: 11px; letter-spacing: 1px; }
+    #rule-import-demo .ri-steps-title { padding-top: 2px; color: #c7dbef; font-size: 13px; letter-spacing: 0; }
+    #rule-import-demo .ri-step { display: grid; grid-template-columns: 20px minmax(0, 1fr) auto; align-items: center; gap: 7px; min-height: 49px; padding: 8px 7px; border-radius: 9px; color: #d8e5f2; }
+    #rule-import-demo .ri-step::after { display: none; }
+    #rule-import-demo .ri-step-num { width: 20px; height: 20px; display: grid; place-items: center; background: transparent; border: 0; color: #a8c2dc; }
+    #rule-import-demo .ri-step-copy strong, #rule-import-demo .ri-step-copy small { display: block; }
+    #rule-import-demo .ri-step-copy strong { color: inherit; font-weight: 500; }
+    #rule-import-demo .ri-step-copy small { margin-top: 3px; color: #91abc4; font-size: 10px; white-space: nowrap; }
+    #rule-import-demo .ri-nav-count { min-width: 21px; height: 19px; margin-left: auto; padding: 0 6px; border-radius: 10px; display: none; place-items: center; background: #e65b55; color: #fff; font-size: 10px; }
+    #rule-import-demo .ri-nav-count.is-visible { display: grid; }
+    #rule-import-demo .ri-step.is-active { color: #fff; background: linear-gradient(90deg, rgba(78,137,232,.38), rgba(52,120,229,.14)); box-shadow: inset 3px 0 #65a1ff; }
+    #rule-import-demo .ri-step.is-active .ri-step-num { background: transparent; border: 0; color: #8fbcff; }
+    #rule-import-demo .ri-step.is-active .ri-step-copy small { color: #c8dcf2; }
+    #rule-import-demo .ri-step.is-done { color: #d8e5f2; }
+    #rule-import-demo .ri-step.is-done .ri-step-num { background: transparent; border: 0; color: #63d8ae; }
+    #rule-import-demo .ri-view { display: none; }
+    #rule-import-demo .ri-view.is-active { display: block; }
+    #rule-import-demo .ri-center-view { padding: 48px 24px; }
+    #rule-import-demo .ri-center { max-width: 720px; margin: 0 auto; text-align: center; }
+    #rule-import-demo .ri-eyebrow { color: var(--ri-brand); font-weight: 500; margin-bottom: 9px; }
+    #rule-import-demo h1 { margin: 0; font-size: clamp(25px, 4vw, 36px); line-height: 1.25; font-weight: 500; }
+    #rule-import-demo h2, #rule-import-demo h3 { font-weight: 500; }
+    #rule-import-demo .ri-lead { max-width: 590px; margin: 13px auto 26px; color: var(--ri-muted); line-height: 1.65; }
+    #rule-import-demo .ri-dropzone { display: block; padding: 34px 24px; border: 1.5px dashed var(--ri-line); border-radius: 15px; background: var(--ri-surface); cursor: pointer; transition: .2s ease; }
+    #rule-import-demo .ri-dropzone:hover, #rule-import-demo .ri-dropzone:focus-within { border-color: var(--ri-danger); }
+    #rule-import-demo .ri-dropzone.is-ready { border-color: var(--ri-brand); background: var(--ri-brand-soft); }
+    #rule-import-demo .ri-upload-icon { width: 52px; height: 52px; margin: 0 auto 13px; border-radius: 14px; display: grid; place-items: center; background: var(--ri-brand-soft); color: var(--ri-brand); }
+    #rule-import-demo .ri-drop-title { font-weight: 500; }
+    #rule-import-demo .ri-drop-sub { margin-top: 6px; color: var(--ri-muted); }
+    #rule-import-demo .ri-file-row { display: none; justify-content: space-between; gap: 14px; margin-top: 14px; padding: 12px 14px; border-radius: 10px; background: var(--ri-surface); border: 1px solid var(--ri-line); text-align: left; }
+    #rule-import-demo .ri-file-row.is-visible { display: flex; }
+    #rule-import-demo .ri-file-info { min-width: 0; }
+    #rule-import-demo .ri-file-info strong, #rule-import-demo .ri-file-info span { display: block; }
+    #rule-import-demo .ri-file-info strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    #rule-import-demo .ri-file-info span { color: var(--ri-muted); margin-top: 3px; }
+    #rule-import-demo .ri-actions { justify-content: center; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+    #rule-import-demo .ri-button { appearance: none; border: 1px solid var(--ri-line); background: var(--ri-surface); color: var(--ri-text); min-height: 40px; padding: 9px 15px; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; cursor: pointer; font: inherit; transition: .18s ease; }
+    #rule-import-demo .ri-button:hover { border-color: var(--ri-brand); color: var(--ri-brand); }
+    #rule-import-demo .ri-button:disabled { cursor: not-allowed; opacity: .45; }
+    #rule-import-demo .ri-button-primary { background: var(--ri-brand); border-color: var(--ri-brand); color: light-dark(#fff, #0e1a29); }
+    #rule-import-demo .ri-button-primary:hover { color: light-dark(#fff, #0e1a29); filter: brightness(.96); }
+    #rule-import-demo .ri-button-danger { color: var(--ri-danger); }
+    #rule-import-demo .ri-button-small { min-height: 34px; padding: 6px 10px; }
+    #rule-import-demo .ri-processing { padding: 82px 24px; text-align: center; }
+    #rule-import-demo .ri-processing-box { max-width: 620px; margin: 0 auto; }
+    #rule-import-demo .ri-ai-orb { width: 82px; height: 82px; margin: 0 auto 18px; border-radius: 50%; display: grid; place-items: center; color: var(--ri-brand); background: radial-gradient(circle at center, var(--ri-brand-soft) 0 43%, transparent 44%), conic-gradient(var(--ri-brand), var(--ri-line), var(--ri-brand)); animation: ri-spin 2.1s linear infinite; }
+    #rule-import-demo .ri-ai-orb span { width: 58px; height: 58px; display: grid; place-items: center; border-radius: 50%; background: var(--ri-surface); font-weight: 500; }
+    #rule-import-demo .ri-progress-head { justify-content: space-between; margin: 24px 0 8px; color: var(--ri-muted); }
+    #rule-import-demo .ri-progress { height: 8px; border-radius: 999px; overflow: hidden; background: var(--ri-line); }
+    #rule-import-demo .ri-progress span { display: block; height: 100%; width: 0; background: var(--ri-brand); transition: width .35s ease; }
+    #rule-import-demo .ri-process-step { margin-top: 11px; color: var(--ri-muted); }
+    #rule-import-demo .ri-page { padding: 24px; }
+    #rule-import-demo .ri-page-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; margin-bottom: 18px; }
+    #rule-import-demo .ri-page-head h2 { margin: 0 0 5px; }
+    #rule-import-demo .ri-page-head p { margin: 0; color: var(--ri-muted); }
+    #rule-import-demo .ri-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
+    #rule-import-demo .ri-stat { padding: 14px; border: 1px solid var(--ri-line); border-radius: 11px; background: var(--ri-surface); }
+    #rule-import-demo .ri-stat span, #rule-import-demo .ri-stat small { display: block; color: var(--ri-muted); }
+    #rule-import-demo .ri-stat strong { display: block; margin: 4px 0; font-size: 23px; font-weight: 500; }
+    #rule-import-demo .ri-principles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    #rule-import-demo .ri-principle { display: grid; grid-template-columns: 34px minmax(0, 1fr) 64px; gap: 10px; align-items: start; padding: 13px; background: var(--ri-surface); border: 1px solid var(--ri-line); border-radius: 10px; }
+    #rule-import-demo .ri-principle-num { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; background: var(--ri-brand-soft); color: var(--ri-brand); font-weight: 500; }
+    #rule-import-demo .ri-principle strong, #rule-import-demo .ri-principle span { display: block; }
+    #rule-import-demo .ri-principle span { color: var(--ri-muted); margin-top: 3px; line-height: 1.45; }
+    #rule-import-demo .ri-confidence { color: var(--ri-success); text-align: right; }
+    #rule-import-demo .ri-workspace { display: grid; grid-template-columns: 310px minmax(0, 1fr); min-height: 540px; border: 1px solid var(--ri-line); background: var(--ri-surface); }
+    #rule-import-demo .ri-sidebar { border-right: 1px solid var(--ri-line); }
+    #rule-import-demo .ri-sidebar-head, #rule-import-demo .ri-detail-head { padding: 15px; border-bottom: 1px solid var(--ri-line); }
+    #rule-import-demo .ri-sidebar-head strong, #rule-import-demo .ri-sidebar-head span { display: block; }
+    #rule-import-demo .ri-sidebar-head span { margin-top: 4px; color: var(--ri-muted); }
+    #rule-import-demo .ri-filters { display: flex; gap: 5px; padding: 10px; border-bottom: 1px solid var(--ri-line); overflow-x: auto; }
+    #rule-import-demo .ri-filter { border: 0; background: transparent; color: var(--ri-muted); padding: 7px 9px; border-radius: 7px; cursor: pointer; white-space: nowrap; }
+    #rule-import-demo .ri-filter.is-active { color: var(--ri-brand); background: var(--ri-brand-soft); }
+    #rule-import-demo .ri-rule-list { max-height: 575px; overflow-y: auto; padding: 8px; }
+    #rule-import-demo .ri-rule-item { width: 100%; border: 0; background: transparent; color: var(--ri-text); text-align: left; padding: 11px; border-radius: 9px; display: grid; grid-template-columns: 9px minmax(0, 1fr); gap: 9px; cursor: pointer; }
+    #rule-import-demo .ri-rule-item:hover, #rule-import-demo .ri-rule-item.is-active { background: var(--ri-brand-soft); }
+    #rule-import-demo .ri-rule-dot { width: 7px; height: 7px; margin-top: 6px; border-radius: 50%; background: var(--ri-danger); }
+    #rule-import-demo .ri-rule-item[data-level=&quot;medium&quot;] .ri-rule-dot { background: var(--ri-warning); }
+    #rule-import-demo .ri-rule-item[data-status=&quot;confirmed&quot;] .ri-rule-dot { background: var(--ri-success); }
+    #rule-import-demo .ri-rule-item[data-status=&quot;excluded&quot;] .ri-rule-dot { background: var(--ri-muted); }
+    #rule-import-demo .ri-rule-item strong, #rule-import-demo .ri-rule-item span { display: block; }
+    #rule-import-demo .ri-rule-item span { margin-top: 4px; color: var(--ri-muted); }
+    #rule-import-demo .ri-detail { min-width: 0; }
+    #rule-import-demo .ri-detail-head { display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+    #rule-import-demo .ri-detail-body { padding: 20px; }
+    #rule-import-demo .ri-badge { display: inline-flex; align-items: center; gap: 5px; padding: 5px 8px; border-radius: 999px; background: var(--ri-danger-soft); color: var(--ri-danger); }
+    #rule-import-demo .ri-badge.medium { background: var(--ri-warning-soft); color: var(--ri-warning); }
+    #rule-import-demo .ri-badge.confirmed { background: var(--ri-success-soft); color: var(--ri-success); }
+    #rule-import-demo .ri-badge.excluded { background: var(--ri-surface-soft); color: var(--ri-muted); }
+    #rule-import-demo .ri-detail-title { margin: 12px 0 5px; font-size: 21px; }
+    #rule-import-demo .ri-rule-code { color: var(--ri-muted); }
+    #rule-import-demo .ri-field { padding: 14px 0; border-top: 1px solid var(--ri-line); }
+    #rule-import-demo .ri-field:first-of-type { margin-top: 15px; }
+    #rule-import-demo .ri-field-label { margin-bottom: 6px; color: var(--ri-muted); }
+    #rule-import-demo .ri-field-content { line-height: 1.65; }
+    #rule-import-demo .ri-rule-suggestion { padding: 12px; border-radius: 9px; background: var(--ri-success-soft); }
+    #rule-import-demo .ri-edit-area { display: none; margin-top: 12px; }
+    #rule-import-demo .ri-edit-area.is-visible { display: block; }
+    #rule-import-demo .ri-label { display: block; margin: 10px 0 6px; color: var(--ri-muted); }
+    #rule-import-demo .ri-textarea { width: 100%; min-height: 92px; border: 1px solid var(--ri-line); border-radius: 8px; background: var(--ri-surface); color: var(--ri-text); padding: 10px; font: inherit; resize: vertical; }
+    #rule-import-demo .ri-empty { padding: 28px 14px; color: var(--ri-muted); text-align: center; }
+    #rule-import-demo .ri-complete-icon { width: 78px; height: 78px; margin: 0 auto 18px; border-radius: 50%; display: grid; place-items: center; background: var(--ri-success-soft); color: var(--ri-success); }
+    #rule-import-demo .ri-complete-card { max-width: 680px; margin: 24px auto 0; padding: 20px; border: 1px solid var(--ri-line); border-radius: 13px; background: var(--ri-surface); text-align: left; }
+    #rule-import-demo .ri-complete-row { display: flex; justify-content: space-between; gap: 18px; padding: 11px 0; border-top: 1px solid var(--ri-line); }
+    #rule-import-demo .ri-complete-row:first-child { border-top: 0; }
+    #rule-import-demo .ri-complete-row span { color: var(--ri-muted); }
+    #rule-import-demo .ri-rag-flow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin: 18px 0; }
+    #rule-import-demo .ri-rag-stage { position: relative; min-height: 112px; padding: 15px 12px; border: 1px solid var(--ri-line); border-radius: 11px; background: var(--ri-surface); color: var(--ri-muted); }
+    #rule-import-demo .ri-rag-stage::after { content: &quot;&quot;; position: absolute; top: 35px; right: -9px; width: 9px; height: 1px; background: var(--ri-line); }
+    #rule-import-demo .ri-rag-stage:last-child::after { display: none; }
+    #rule-import-demo .ri-rag-stage.is-running { border-color: var(--ri-brand); color: var(--ri-brand); background: var(--ri-brand-soft); }
+    #rule-import-demo .ri-rag-stage.is-done { border-color: var(--ri-success); color: var(--ri-text); }
+    #rule-import-demo .ri-rag-stage-icon { width: 36px; height: 36px; margin-bottom: 10px; display: grid; place-items: center; border-radius: 9px; background: var(--ri-surface-soft); color: var(--ri-brand); }
+    #rule-import-demo .ri-rag-stage strong, #rule-import-demo .ri-rag-stage small { display: block; }
+    #rule-import-demo .ri-rag-stage small { margin-top: 5px; color: var(--ri-muted); line-height: 1.4; }
+    #rule-import-demo .ri-rag-stage-state { margin-top: 8px; color: var(--ri-brand); }
+    #rule-import-demo .ri-tabs { display: flex; gap: 4px; margin-top: 18px; border-bottom: 1px solid var(--ri-line); overflow-x: auto; }
+    #rule-import-demo .ri-tab { border: 0; border-bottom: 2px solid transparent; background: transparent; color: var(--ri-muted); padding: 10px 13px; cursor: pointer; white-space: nowrap; }
+    #rule-import-demo .ri-tab.is-active { color: var(--ri-brand); border-bottom-color: var(--ri-brand); }
+    #rule-import-demo .ri-tab-panel { display: none; padding: 17px 0 4px; }
+    #rule-import-demo .ri-tab-panel.is-active { display: block; }
+    #rule-import-demo .ri-data-table { width: 100%; border-collapse: collapse; background: var(--ri-surface); }
+    #rule-import-demo .ri-data-table th, #rule-import-demo .ri-data-table td { padding: 11px 10px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--ri-line); line-height: 1.5; }
+    #rule-import-demo .ri-data-table th { color: var(--ri-muted); font-weight: 400; background: var(--ri-surface-soft); }
+    #rule-import-demo .ri-code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: var(--ri-brand); }
+    #rule-import-demo .ri-ok { color: var(--ri-success); }
+    #rule-import-demo .ri-rag-note { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 10px; background: var(--ri-brand-soft); color: var(--ri-text); line-height: 1.55; }
+    #rule-import-demo .ri-ai-explain { margin: 0 0 18px; padding: 14px 16px; border: 1px solid light-dark(#a9c6ee,#416a9c); border-left: 4px solid var(--ri-brand); border-radius: 9px; background: light-dark(#f5f9ff,#172b44); line-height: 1.65; }
+    #rule-import-demo .ri-ai-explain-head { display: flex; align-items: center; gap: 7px; margin-bottom: 5px; color: var(--ri-brand); font-weight: 500; }
+    #rule-import-demo .ri-ai-explain p { margin: 0; color: var(--ri-text); }
+    #rule-import-demo .ri-ai-explain small { display: block; margin-top: 5px; color: var(--ri-muted); }
+    #rule-import-demo .ri-ai-explain[hidden] { display: none; }
+    #rule-import-demo .ri-test-layout { display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(290px, .82fr); gap: 16px; }
+    #rule-import-demo .ri-test-panel { padding: 18px; border: 1px solid var(--ri-line); border-radius: 12px; background: var(--ri-surface); }
+    #rule-import-demo .ri-test-panel h3 { margin: 0 0 14px; }
+    #rule-import-demo .ri-control-grid { display: grid; grid-template-columns: minmax(0, 1fr) 130px; gap: 10px; }
+    #rule-import-demo .ri-input, #rule-import-demo .ri-select { width: 100%; border: 1px solid var(--ri-line); border-radius: 8px; background: var(--ri-surface); color: var(--ri-text); padding: 10px; font: inherit; }
+    #rule-import-demo .ri-retrieval-results { margin-top: 16px; }
+    #rule-import-demo .ri-hit { margin-top: 9px; padding: 13px; border: 1px solid var(--ri-line); border-radius: 10px; background: var(--ri-surface-soft); }
+    #rule-import-demo .ri-hit-head { display: flex; justify-content: space-between; gap: 12px; }
+    #rule-import-demo .ri-score { color: var(--ri-success); font-weight: 500; }
+    #rule-import-demo .ri-hit p { margin: 7px 0; line-height: 1.55; }
+    #rule-import-demo .ri-hit small { color: var(--ri-muted); }
+    #rule-import-demo .ri-judgement { display: none; }
+    #rule-import-demo .ri-judgement.is-visible { display: block; }
+    #rule-import-demo .ri-risk-result { padding: 13px; border-radius: 10px; background: var(--ri-danger-soft); color: var(--ri-danger); }
+    #rule-import-demo .ri-evidence { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--ri-line); line-height: 1.65; }
+    #rule-import-demo .ri-test-loading { display: none; padding: 28px 0; text-align: center; color: var(--ri-muted); }
+    #rule-import-demo .ri-test-loading.is-visible { display: block; }
+    #rule-import-demo .ri-toast { display: none; position: absolute; right: 18px; top: 74px; z-index: 10; padding: 11px 14px; border-radius: 9px; background: var(--ri-success-soft); color: var(--ri-success); border: 1px solid var(--ri-success); }
+    #rule-import-demo .ri-toast.is-visible { display: flex; gap: 7px; align-items: center; }
+    #rule-import-demo .ri-window { position: relative; }
+    @keyframes ri-spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { #rule-import-demo .ri-ai-orb { animation: none; } }
+    @media (max-width: 760px) {
+      #rule-import-demo .ri-top-actions &gt; span:not(.ri-avatar) { display: none; }
+      #rule-import-demo .ri-shell-body { display: block; min-height: 0; }
+      #rule-import-demo .ri-steps { display: flex; flex-direction: row; gap: 3px; padding: 8px; border-bottom: 0; overflow-x: auto; }
+      #rule-import-demo .ri-steps-title, #rule-import-demo .ri-nav-group { display: none; }
+      #rule-import-demo .ri-step { display: grid; grid-template-columns: 18px auto; flex: 0 0 auto; min-width: 116px; min-height: 42px; padding: 6px 8px; border-radius: 7px; }
+      #rule-import-demo .ri-nav-count { display: none !important; }
+      #rule-import-demo .ri-step-copy { display: block; }
+      #rule-import-demo .ri-step-copy small { display: none; }
+      #rule-import-demo .ri-principles, #rule-import-demo .ri-summary { grid-template-columns: 1fr; }
+      #rule-import-demo .ri-workspace { grid-template-columns: 1fr; }
+      #rule-import-demo .ri-sidebar { border-right: 0; border-bottom: 1px solid var(--ri-line); }
+      #rule-import-demo .ri-rule-list { max-height: 310px; }
+      #rule-import-demo .ri-page-head { flex-direction: column; }
+      #rule-import-demo .ri-rag-flow { grid-template-columns: 1fr; }
+      #rule-import-demo .ri-rag-stage::after { display: none; }
+      #rule-import-demo .ri-test-layout { grid-template-columns: 1fr; }
+      #rule-import-demo .ri-control-grid { grid-template-columns: 1fr; }
+    }
+  &lt;/style&gt;
+
+  &lt;section class=&quot;ri-window&quot; aria-label=&quot;星途AI审核规则导入原型&quot;&gt;
+    &lt;header class=&quot;ri-topbar&quot;&gt;
+      &lt;div class=&quot;ri-brand&quot;&gt;&lt;span class=&quot;ri-logo&quot;&gt;&lt;i data-lucide=&quot;library&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span&gt;星途AI&lt;small&gt;企业合同审核规则中心&lt;/small&gt;&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;ri-top-actions&quot;&gt;&lt;span&gt;wzp&lt;/span&gt;&lt;span&gt;甲方 · 法务管理员&lt;/span&gt;&lt;span class=&quot;ri-avatar&quot;&gt;星&lt;/span&gt;&lt;/div&gt;
+    &lt;/header&gt;
+
+    &lt;div class=&quot;ri-shell-body&quot;&gt;
+      &lt;nav class=&quot;ri-steps&quot; aria-label=&quot;规则导入步骤&quot;&gt;
+        &lt;div class=&quot;ri-steps-title&quot;&gt;审核规则库&lt;/div&gt;
+        &lt;div class=&quot;ri-nav-group&quot;&gt;规则准备&lt;/div&gt;
+        &lt;div class=&quot;ri-step is-active&quot; data-step=&quot;1&quot;&gt;&lt;span class=&quot;ri-step-num&quot;&gt;&lt;i data-lucide=&quot;file-up&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span class=&quot;ri-step-copy&quot;&gt;&lt;strong&gt;审核原则导入&lt;/strong&gt;&lt;small&gt;上传Word或PDF文件&lt;/small&gt;&lt;/span&gt;&lt;/div&gt;
+        &lt;div class=&quot;ri-step&quot; data-step=&quot;2&quot;&gt;&lt;span class=&quot;ri-step-num&quot;&gt;&lt;i data-lucide=&quot;scan-text&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span class=&quot;ri-step-copy&quot;&gt;&lt;strong&gt;AI原则识别&lt;/strong&gt;&lt;small&gt;提取审核主题与阈值&lt;/small&gt;&lt;/span&gt;&lt;/div&gt;
+        &lt;div class=&quot;ri-step&quot; data-step=&quot;3&quot;&gt;&lt;span class=&quot;ri-step-num&quot;&gt;&lt;i data-lucide=&quot;list-checks&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span class=&quot;ri-step-copy&quot;&gt;&lt;strong&gt;候选规则审核&lt;/strong&gt;&lt;small&gt;采纳、修改或不采纳&lt;/small&gt;&lt;/span&gt;&lt;/div&gt;
+        &lt;div class=&quot;ri-nav-group&quot;&gt;RAG处理与验证&lt;/div&gt;
+        &lt;div class=&quot;ri-step&quot; data-step=&quot;4&quot;&gt;&lt;span class=&quot;ri-step-num&quot;&gt;&lt;i data-lucide=&quot;inbox&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span class=&quot;ri-step-copy&quot;&gt;&lt;strong&gt;入库任务&lt;/strong&gt;&lt;small&gt;创建测试入库任务&lt;/small&gt;&lt;/span&gt;&lt;b class=&quot;ri-nav-count&quot; id=&quot;ri-ingestion-count&quot;&gt;1&lt;/b&gt;&lt;/div&gt;
+        &lt;div class=&quot;ri-step&quot; data-step=&quot;5&quot;&gt;&lt;span class=&quot;ri-step-num&quot;&gt;&lt;i data-lucide=&quot;database-zap&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span class=&quot;ri-step-copy&quot;&gt;&lt;strong&gt;处理与索引&lt;/strong&gt;&lt;small&gt;切片、向量化与索引&lt;/small&gt;&lt;/span&gt;&lt;/div&gt;
+        &lt;div class=&quot;ri-step&quot; data-step=&quot;6&quot;&gt;&lt;span class=&quot;ri-step-num&quot;&gt;&lt;i data-lucide=&quot;search-check&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span class=&quot;ri-step-copy&quot;&gt;&lt;strong&gt;检索调试&lt;/strong&gt;&lt;small&gt;验证召回、分数与依据&lt;/small&gt;&lt;/span&gt;&lt;/div&gt;
+        &lt;div class=&quot;ri-step&quot; data-step=&quot;7&quot;&gt;&lt;span class=&quot;ri-step-num&quot;&gt;&lt;i data-lucide=&quot;rocket&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span class=&quot;ri-step-copy&quot;&gt;&lt;strong&gt;规则库发布&lt;/strong&gt;&lt;small&gt;发布并启用正式版本&lt;/small&gt;&lt;/span&gt;&lt;/div&gt;
+      &lt;/nav&gt;
+
+      &lt;main&gt;
+      &lt;section class=&quot;ri-view ri-center-view is-active&quot; data-view=&quot;upload&quot;&gt;
+        &lt;div class=&quot;ri-center&quot;&gt;
+          &lt;div class=&quot;ri-eyebrow&quot;&gt;企业审核原则初始化&lt;/div&gt;
+          &lt;h1&gt;上传精简审核原则&lt;/h1&gt;
+          &lt;p class=&quot;ri-lead&quot;&gt;上传法务维护的简短Word，AI将识别审核主题和关键阈值，再生成可执行的候选规则。&lt;/p&gt;
+          &lt;label class=&quot;ri-dropzone&quot; id=&quot;ri-dropzone&quot; for=&quot;ri-file-input&quot;&gt;
+            &lt;span class=&quot;ri-upload-icon&quot;&gt;&lt;i data-lucide=&quot;file-up&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;
+            &lt;span class=&quot;ri-drop-title&quot;&gt;点击选择审核原则文件，或拖放到此处&lt;/span&gt;
+            &lt;span class=&quot;ri-drop-sub&quot;&gt;支持 DOCX、PDF，单份不超过 20MB&lt;/span&gt;
+            &lt;input id=&quot;ri-file-input&quot; type=&quot;file&quot; accept=&quot;.doc,.docx,.pdf&quot; hidden&gt;
+          &lt;/label&gt;
+          &lt;div class=&quot;ri-file-row&quot; id=&quot;ri-file-row&quot;&gt;
+            &lt;div class=&quot;ri-file-info&quot;&gt;&lt;strong id=&quot;ri-file-name&quot;&gt;&lt;/strong&gt;&lt;span id=&quot;ri-file-size&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+            &lt;button type=&quot;button&quot; class=&quot;ri-button ri-button-small&quot; id=&quot;ri-change-file&quot;&gt;更换文件&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;ri-actions&quot;&gt;
+            &lt;button type=&quot;button&quot; class=&quot;ri-button&quot; id=&quot;ri-sample&quot;&gt;&lt;i data-lucide=&quot;sparkles&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;使用精简版示例&lt;/button&gt;
+            &lt;button type=&quot;button&quot; class=&quot;ri-button ri-button-primary&quot; id=&quot;ri-upload&quot; disabled&gt;&lt;i data-lucide=&quot;upload&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;上传文件&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/section&gt;
+
+      &lt;section class=&quot;ri-view ri-center-view&quot; data-view=&quot;uploaded&quot;&gt;
+        &lt;div class=&quot;ri-center&quot;&gt;
+          &lt;span class=&quot;ri-complete-icon&quot;&gt;&lt;i data-lucide=&quot;file-check-2&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;
+          &lt;div class=&quot;ri-eyebrow&quot; style=&quot;color:var(--ri-success)&quot;&gt;文件上传完成&lt;/div&gt;
+          &lt;h1&gt;可以开始识别审核原则&lt;/h1&gt;
+          &lt;p class=&quot;ri-lead&quot; id=&quot;ri-uploaded-name&quot;&gt;&lt;/p&gt;
+          &lt;div class=&quot;ri-actions&quot;&gt;
+            &lt;button type=&quot;button&quot; class=&quot;ri-button&quot; id=&quot;ri-upload-back&quot;&gt;重新选择&lt;/button&gt;
+            &lt;button type=&quot;button&quot; class=&quot;ri-button ri-button-primary&quot; id=&quot;ri-recognize&quot;&gt;&lt;i data-lucide=&quot;scan-text&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;开始AI识别&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/section&gt;
+
+      &lt;section class=&quot;ri-view ri-processing&quot; data-view=&quot;processing&quot; aria-live=&quot;polite&quot;&gt;
+        &lt;div class=&quot;ri-processing-box&quot;&gt;
+          &lt;div class=&quot;ri-ai-orb&quot;&gt;&lt;span id=&quot;ri-orb-label&quot;&gt;AI&lt;/span&gt;&lt;/div&gt;
+          &lt;div class=&quot;ri-eyebrow&quot; id=&quot;ri-process-phase&quot;&gt;AI识别&lt;/div&gt;
+          &lt;h1 id=&quot;ri-process-title&quot;&gt;正在识别审核原则&lt;/h1&gt;
+          &lt;p class=&quot;ri-lead&quot; id=&quot;ri-process-file&quot;&gt;&lt;/p&gt;
+          &lt;div class=&quot;ri-ai-explain&quot; id=&quot;ri-process-ai&quot; hidden style=&quot;text-align:left&quot;&gt;
+            &lt;div class=&quot;ri-ai-explain-head&quot;&gt;&lt;i data-lucide=&quot;sparkles&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;AI在这一步做了什么&lt;/div&gt;
+            &lt;p id=&quot;ri-process-ai-text&quot;&gt;&lt;/p&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;ri-progress-head&quot;&gt;&lt;span id=&quot;ri-process-label&quot;&gt;处理进度&lt;/span&gt;&lt;strong id=&quot;ri-progress-value&quot;&gt;0%&lt;/strong&gt;&lt;/div&gt;
+          &lt;div class=&quot;ri-progress&quot; role=&quot;progressbar&quot; aria-valuemin=&quot;0&quot; aria-valuemax=&quot;100&quot; aria-valuenow=&quot;0&quot;&gt;&lt;span id=&quot;ri-progress-bar&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+          &lt;div class=&quot;ri-process-step&quot; id=&quot;ri-process-step&quot;&gt;正在准备文件&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/section&gt;
+
+      &lt;section class=&quot;ri-view ri-page&quot; data-view=&quot;principles&quot;&gt;
+        &lt;div class=&quot;ri-page-head&quot;&gt;
+          &lt;div&gt;&lt;h2&gt;AI已识别17项审核原则&lt;/h2&gt;&lt;p&gt;请检查识别结果，再生成可执行的候选规则。&lt;/p&gt;&lt;/div&gt;
+          &lt;div class=&quot;ri-actions&quot; style=&quot;margin-top:0&quot;&gt;
+            &lt;button type=&quot;button&quot; class=&quot;ri-button&quot; id=&quot;ri-principles-back&quot;&gt;返回上传&lt;/button&gt;
+            &lt;button type=&quot;button&quot; class=&quot;ri-button ri-button-primary&quot; id=&quot;ri-generate&quot;&gt;&lt;i data-lucide=&quot;git-branch&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;生成候选规则&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;ri-ai-explain&quot;&gt;
+          &lt;div class=&quot;ri-ai-explain-head&quot;&gt;&lt;i data-lucide=&quot;sparkles&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;AI在这一步做了什么&lt;/div&gt;
+          &lt;p&gt;大模型读取原则文档，识别审核主题、义务或禁止事项、关键数值阈值，并合并重复表达，形成17项结构化审核原则。&lt;/p&gt;
+          &lt;small&gt;AI只负责识别和结构化，不决定这些原则是否成为企业正式规则。&lt;/small&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;ri-summary&quot;&gt;
+          &lt;div class=&quot;ri-stat&quot;&gt;&lt;span&gt;识别原则&lt;/span&gt;&lt;strong&gt;17&lt;/strong&gt;&lt;small&gt;覆盖ERP SaaS采购关键主题&lt;/small&gt;&lt;/div&gt;
+          &lt;div class=&quot;ri-stat&quot;&gt;&lt;span&gt;关键阈值&lt;/span&gt;&lt;strong&gt;5&lt;/strong&gt;&lt;small&gt;付款、价格、SLA、责任、退出&lt;/small&gt;&lt;/div&gt;
+          &lt;div class=&quot;ri-stat&quot;&gt;&lt;span&gt;平均置信度&lt;/span&gt;&lt;strong&gt;96%&lt;/strong&gt;&lt;small&gt;低置信度内容需人工确认&lt;/small&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;ri-principles&quot; id=&quot;ri-principles&quot;&gt;&lt;/div&gt;
+      &lt;/section&gt;
+
+      &lt;section class=&quot;ri-view ri-page&quot; data-view=&quot;rules&quot;&gt;
+        &lt;div class=&quot;ri-page-head&quot;&gt;
+          &lt;div&gt;&lt;h2&gt;法务处理候选规则&lt;/h2&gt;&lt;p&gt;AI根据17项原则拆分出26条候选规则；法务处理完成后再创建测试入库任务。&lt;/p&gt;&lt;/div&gt;
+          &lt;div class=&quot;ri-actions&quot; style=&quot;margin-top:0&quot;&gt;
+            &lt;button type=&quot;button&quot; class=&quot;ri-button&quot; id=&quot;ri-batch&quot;&gt;&lt;i data-lucide=&quot;check-check&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;批量采纳剩余规则&lt;/button&gt;
+            &lt;button type=&quot;button&quot; class=&quot;ri-button ri-button-primary&quot; id=&quot;ri-store&quot; disabled&gt;&lt;i data-lucide=&quot;database&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;保存规则并创建入库任务&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;ri-ai-explain&quot;&gt;
+          &lt;div class=&quot;ri-ai-explain-head&quot;&gt;&lt;i data-lucide=&quot;sparkles&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;AI在这一步做了什么&lt;/div&gt;
+          &lt;p&gt;大模型把17项原则拆成可执行的候选规则，并为每条规则生成风险等级、合同触发表达和甲方建议口径。&lt;/p&gt;
+          &lt;small&gt;法务负责最终采纳、修改或不采纳；未经法务处理的内容不会进入后续入库任务。&lt;/small&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;ri-summary&quot; id=&quot;ri-rule-summary&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;ri-workspace&quot;&gt;
+          &lt;aside class=&quot;ri-sidebar&quot;&gt;
+            &lt;div class=&quot;ri-sidebar-head&quot;&gt;&lt;strong&gt;候选规则清单&lt;/strong&gt;&lt;span id=&quot;ri-rule-progress&quot;&gt;待处理 26 条&lt;/span&gt;&lt;/div&gt;
+            &lt;div class=&quot;ri-filters&quot;&gt;
+              &lt;button type=&quot;button&quot; class=&quot;ri-filter is-active&quot; data-filter=&quot;all&quot;&gt;全部&lt;/button&gt;
+              &lt;button type=&quot;button&quot; class=&quot;ri-filter&quot; data-filter=&quot;pending&quot;&gt;待处理&lt;/button&gt;
+              &lt;button type=&quot;button&quot; class=&quot;ri-filter&quot; data-filter=&quot;confirmed&quot;&gt;已采纳&lt;/button&gt;
+              &lt;button type=&quot;button&quot; class=&quot;ri-filter&quot; data-filter=&quot;excluded&quot;&gt;不采纳&lt;/button&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;ri-rule-list&quot; id=&quot;ri-rule-list&quot;&gt;&lt;/div&gt;
+          &lt;/aside&gt;
+          &lt;section class=&quot;ri-detail&quot;&gt;
+            &lt;div class=&quot;ri-detail-head&quot;&gt;&lt;strong&gt;候选规则详情&lt;/strong&gt;&lt;span id=&quot;ri-detail-status&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+            &lt;div class=&quot;ri-detail-body&quot; id=&quot;ri-detail&quot;&gt;&lt;/div&gt;
+          &lt;/section&gt;
+        &lt;/div&gt;
+      &lt;/section&gt;
+
+      &lt;section class=&quot;ri-view ri-page&quot; data-view=&quot;ingestion&quot; aria-live=&quot;polite&quot;&gt;
+        &lt;div class=&quot;ri-page-head&quot;&gt;
+          &lt;div&gt;&lt;h2&gt;入库任务&lt;/h2&gt;&lt;p&gt;企业平台负责创建和跟踪任务，RAG处理能力由 FastGPT 提供。&lt;/p&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;ri-rag-note&quot; style=&quot;margin-bottom:16px;background:var(--ri-warning-soft)&quot;&gt;&lt;i data-lucide=&quot;info&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;span&gt;&lt;strong&gt;操作说明&lt;/strong&gt;&lt;br&gt;法务处理完成后生成测试任务；点击“推送API”将已采纳规则、测试 datasetId 和回调地址发送给 FastGPT。FastGPT 完成切片、Embedding 和索引后异步回调，任务自动进入待验证状态。&lt;/span&gt;&lt;/div&gt;
+        &lt;div class=&quot;ri-summary&quot;&gt;
+          &lt;div class=&quot;ri-stat&quot;&gt;&lt;span&gt;待推送任务&lt;/span&gt;&lt;strong id=&quot;ri-job-pending&quot;&gt;1&lt;/strong&gt;&lt;small&gt;等待调用 FastGPT API&lt;/small&gt;&lt;/div&gt;
+          &lt;div class=&quot;ri-stat&quot;&gt;&lt;span&gt;目标环境&lt;/span&gt;&lt;strong style=&quot;font-size:18px&quot;&gt;测试环境&lt;/strong&gt;&lt;small&gt;验证通过后再发布生产版本&lt;/small&gt;&lt;/div&gt;
+          &lt;div class=&quot;ri-stat&quot;&gt;&lt;span&gt;待入库规则&lt;/span&gt;&lt;strong id=&quot;ri-job-rule-count&quot;&gt;0&lt;/strong&gt;&lt;small&gt;仅包含法务已采纳的候选规则&lt;/small&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div style=&quot;overflow-x:auto&quot;&gt;
+          &lt;table class=&quot;ri-data-table&quot;&gt;
+            &lt;thead&gt;&lt;tr&gt;&lt;th&gt;任务 ID&lt;/th&gt;&lt;th&gt;规则库 / 版本&lt;/th&gt;&lt;th&gt;来源文件&lt;/th&gt;&lt;th&gt;目标数据集&lt;/th&gt;&lt;th&gt;规则数&lt;/th&gt;&lt;th&gt;状态&lt;/th&gt;&lt;th&gt;操作&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+            &lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;ri-code&quot; id=&quot;ri-job-id&quot;&gt;JOB-RULE-V10-001&lt;/td&gt;&lt;td&gt;&lt;strong&gt;ERP SaaS私有云采购合同规则库&lt;/strong&gt;&lt;br&gt;&lt;small&gt;V1.0 草稿&lt;/small&gt;&lt;/td&gt;&lt;td id=&quot;ri-job-file&quot;&gt;—&lt;/td&gt;&lt;td&gt;&lt;span class=&quot;ri-code&quot;&gt;ds_test_erp_rules&lt;/span&gt;&lt;br&gt;&lt;small&gt;测试向量库&lt;/small&gt;&lt;/td&gt;&lt;td id=&quot;ri-job-table-count&quot;&gt;0&lt;/td&gt;&lt;td&gt;&lt;span class=&quot;ri-badge medium&quot; id=&quot;ri-job-status&quot;&gt;待推送&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;button type=&quot;button&quot; class=&quot;ri-button ri-button-primary ri-button-small&quot; id=&quot;ri-start-ingestion&quot;&gt;推送API&lt;/button&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;
+          &lt;/table&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;ri-rag-note&quot; style=&quot;margin-top:16px&quot;&gt;&lt;i data-lucide=&quot;shield-check&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;span&gt;测试入库与正式发布分离：先在测试数据集完成切片、Embedding、索引和检索验证，验证通过后再发布规则库。&lt;/span&gt;&lt;/div&gt;
+        &lt;div class=&quot;ri-actions&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;ri-button&quot; id=&quot;ri-ingestion-back&quot;&gt;返回规则审核&lt;/button&gt;&lt;/div&gt;
+      &lt;/section&gt;
+
+      &lt;section class=&quot;ri-view ri-page&quot; data-view=&quot;rag-processing&quot; aria-live=&quot;polite&quot;&gt;
+        &lt;div class=&quot;ri-page-head&quot;&gt;
+          &lt;div&gt;&lt;h2&gt;FastGPT 处理与索引&lt;/h2&gt;&lt;p&gt;企业平台展示 FastGPT 异步回调的切片、Embedding 和向量索引结果。&lt;/p&gt;&lt;/div&gt;
+          &lt;button type=&quot;button&quot; class=&quot;ri-button&quot; id=&quot;ri-start-rag&quot; disabled&gt;&lt;i data-lucide=&quot;loader-circle&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;等待FastGPT回调&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;ri-ai-explain&quot;&gt;
+          &lt;div class=&quot;ri-ai-explain-head&quot;&gt;&lt;i data-lucide=&quot;brain-circuit&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;AI在这一步做了什么&lt;/div&gt;
+          &lt;p&gt;FastGPT调用语义模型理解规则内容，将规则拆成适合检索的文本切片，再通过Embedding模型转换为向量并建立语义索引。&lt;/p&gt;
+          &lt;small&gt;这一步解决“如何找到相关规则”，不直接判断合同条款是否违法或是否可以接受。&lt;/small&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;ri-rag-flow&quot; id=&quot;ri-rag-flow&quot;&gt;
+          &lt;div class=&quot;ri-rag-stage&quot; data-rag-stage=&quot;0&quot;&gt;&lt;span class=&quot;ri-rag-stage-icon&quot;&gt;&lt;i data-lucide=&quot;save&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;strong&gt;保存结构化规则&lt;/strong&gt;&lt;small&gt;规则正文、风险等级与元数据&lt;/small&gt;&lt;span class=&quot;ri-rag-stage-state&quot;&gt;等待处理&lt;/span&gt;&lt;/div&gt;
+          &lt;div class=&quot;ri-rag-stage&quot; data-rag-stage=&quot;1&quot;&gt;&lt;span class=&quot;ri-rag-stage-icon&quot;&gt;&lt;i data-lucide=&quot;scissors&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;strong&gt;规则文本切片&lt;/strong&gt;&lt;small&gt;按语义字段生成检索单元&lt;/small&gt;&lt;span class=&quot;ri-rag-stage-state&quot;&gt;等待处理&lt;/span&gt;&lt;/div&gt;
+          &lt;div class=&quot;ri-rag-stage&quot; data-rag-stage=&quot;2&quot;&gt;&lt;span class=&quot;ri-rag-stage-icon&quot;&gt;&lt;i data-lucide=&quot;binary&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;strong&gt;Embedding向量化&lt;/strong&gt;&lt;small&gt;将切片转换为语义向量&lt;/small&gt;&lt;span class=&quot;ri-rag-stage-state&quot;&gt;等待处理&lt;/span&gt;&lt;/div&gt;
+          &lt;div class=&quot;ri-rag-stage&quot; data-rag-stage=&quot;3&quot;&gt;&lt;span class=&quot;ri-rag-stage-icon&quot;&gt;&lt;i data-lucide=&quot;database&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;strong&gt;写入向量库&lt;/strong&gt;&lt;small&gt;保存向量、原文和元数据&lt;/small&gt;&lt;span class=&quot;ri-rag-stage-state&quot;&gt;等待处理&lt;/span&gt;&lt;/div&gt;
+          &lt;div class=&quot;ri-rag-stage&quot; data-rag-stage=&quot;4&quot;&gt;&lt;span class=&quot;ri-rag-stage-icon&quot;&gt;&lt;i data-lucide=&quot;network&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;strong&gt;建立检索索引&lt;/strong&gt;&lt;small&gt;支持语义与关键词混合召回&lt;/small&gt;&lt;span class=&quot;ri-rag-stage-state&quot;&gt;等待处理&lt;/span&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;ri-progress-head&quot;&gt;&lt;span id=&quot;ri-rag-progress-label&quot;&gt;尚未开始&lt;/span&gt;&lt;strong id=&quot;ri-rag-progress-value&quot;&gt;0%&lt;/strong&gt;&lt;/div&gt;
+        &lt;div class=&quot;ri-progress&quot; id=&quot;ri-rag-progress&quot; role=&quot;progressbar&quot; aria-valuemin=&quot;0&quot; aria-valuemax=&quot;100&quot; aria-valuenow=&quot;0&quot;&gt;&lt;span id=&quot;ri-rag-progress-bar&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+        &lt;div class=&quot;ri-tabs&quot; role=&quot;tablist&quot; aria-label=&quot;RAG处理结果&quot;&gt;
+          &lt;button type=&quot;button&quot; class=&quot;ri-tab is-active&quot; data-rag-tab=&quot;overview&quot;&gt;处理概览&lt;/button&gt;
+          &lt;button type=&quot;button&quot; class=&quot;ri-tab&quot; data-rag-tab=&quot;chunks&quot;&gt;切片明细&lt;/button&gt;
+          &lt;button type=&quot;button&quot; class=&quot;ri-tab&quot; data-rag-tab=&quot;index&quot;&gt;向量与索引&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;ri-tab-panel is-active&quot; data-rag-panel=&quot;overview&quot;&gt;
+          &lt;div class=&quot;ri-summary&quot;&gt;
+            &lt;div class=&quot;ri-stat&quot;&gt;&lt;span&gt;法务确认规则&lt;/span&gt;&lt;strong id=&quot;ri-rag-rule-count&quot;&gt;0&lt;/strong&gt;&lt;small&gt;结构化规则正文及元数据&lt;/small&gt;&lt;/div&gt;
+            &lt;div class=&quot;ri-stat&quot;&gt;&lt;span&gt;生成文本切片&lt;/span&gt;&lt;strong id=&quot;ri-rag-chunk-count&quot;&gt;—&lt;/strong&gt;&lt;small&gt;触发条件与审核口径分段&lt;/small&gt;&lt;/div&gt;
+            &lt;div class=&quot;ri-stat&quot;&gt;&lt;span&gt;向量/索引&lt;/span&gt;&lt;strong id=&quot;ri-rag-vector-count&quot;&gt;—&lt;/strong&gt;&lt;small&gt;处理完成后应与切片数一致&lt;/small&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;ri-rag-note&quot;&gt;&lt;i data-lucide=&quot;info&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;span&gt;“数量一致”只能证明数据成功写入。是否真的能支持合同审核，还需要用真实合同条款做一次RAG召回测试。&lt;/span&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;ri-tab-panel&quot; data-rag-panel=&quot;chunks&quot;&gt;&lt;div style=&quot;overflow-x:auto&quot;&gt;&lt;table class=&quot;ri-data-table&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Chunk ID&lt;/th&gt;&lt;th&gt;来源规则&lt;/th&gt;&lt;th&gt;切片文本&lt;/th&gt;&lt;th&gt;字符&lt;/th&gt;&lt;th&gt;状态&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody id=&quot;ri-chunk-body&quot;&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;ri-tab-panel&quot; data-rag-panel=&quot;index&quot;&gt;&lt;div class=&quot;ri-complete-card&quot; style=&quot;max-width:none;margin:0&quot;&gt;&lt;div class=&quot;ri-complete-row&quot;&gt;&lt;span&gt;RAG能力引擎&lt;/span&gt;&lt;strong&gt;FastGPT&lt;/strong&gt;&lt;/div&gt;&lt;div class=&quot;ri-complete-row&quot;&gt;&lt;span&gt;外部任务 ID&lt;/span&gt;&lt;strong class=&quot;ri-code&quot; id=&quot;ri-external-task&quot;&gt;等待推送&lt;/strong&gt;&lt;/div&gt;&lt;div class=&quot;ri-complete-row&quot;&gt;&lt;span&gt;向量库集合&lt;/span&gt;&lt;strong class=&quot;ri-code&quot;&gt;erp_procurement_rules_v1&lt;/strong&gt;&lt;/div&gt;&lt;div class=&quot;ri-complete-row&quot;&gt;&lt;span&gt;Embedding模型&lt;/span&gt;&lt;strong&gt;企业中文语义模型 · 1024维&lt;/strong&gt;&lt;/div&gt;&lt;div class=&quot;ri-complete-row&quot;&gt;&lt;span&gt;检索索引&lt;/span&gt;&lt;strong&gt;HNSW向量索引 + BM25关键词索引&lt;/strong&gt;&lt;/div&gt;&lt;div class=&quot;ri-complete-row&quot;&gt;&lt;span&gt;一致性校验&lt;/span&gt;&lt;strong id=&quot;ri-index-check&quot;&gt;等待处理&lt;/strong&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;ri-actions&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;ri-button&quot; id=&quot;ri-rag-back&quot;&gt;返回入库任务&lt;/button&gt;&lt;button type=&quot;button&quot; class=&quot;ri-button ri-button-primary&quot; id=&quot;ri-to-test&quot; disabled&gt;&lt;i data-lucide=&quot;search-check&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;进入RAG检索测试&lt;/button&gt;&lt;/div&gt;
+      &lt;/section&gt;
+
+      &lt;section class=&quot;ri-view ri-page&quot; data-view=&quot;retrieval&quot; aria-live=&quot;polite&quot;&gt;
+        &lt;div class=&quot;ri-page-head&quot;&gt;&lt;div&gt;&lt;h2&gt;RAG检索测试&lt;/h2&gt;&lt;p&gt;用一条真实合同表述，验证向量库能否召回正确规则，再决定是否发布。&lt;/p&gt;&lt;/div&gt;&lt;span class=&quot;ri-badge confirmed&quot;&gt;索引已就绪&lt;/span&gt;&lt;/div&gt;
+        &lt;div class=&quot;ri-ai-explain&quot;&gt;
+          &lt;div class=&quot;ri-ai-explain-head&quot;&gt;&lt;i data-lucide=&quot;sparkles&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;AI在这一步做了什么&lt;/div&gt;
+          &lt;p&gt;Embedding模型先理解测试条款的语义并召回最相关的规则切片；大模型再结合召回证据，生成风险等级、判断理由和甲方法务修改意见。&lt;/p&gt;
+          &lt;small&gt;页面会同时展示召回规则和相似度，使AI结论能够追溯到具体规则依据。&lt;/small&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;ri-test-layout&quot;&gt;
+          &lt;section class=&quot;ri-test-panel&quot;&gt;
+            &lt;h3&gt;合同条款测试&lt;/h3&gt;
+            &lt;label class=&quot;ri-label&quot; for=&quot;ri-test-query&quot;&gt;待审核合同条款&lt;/label&gt;
+            &lt;textarea class=&quot;ri-textarea&quot; id=&quot;ri-test-query&quot;&gt;乙方有权根据经营成本变化调整后续年度订阅价格，甲方继续使用即视为接受调整后的价格。&lt;/textarea&gt;
+            &lt;div class=&quot;ri-control-grid&quot;&gt;
+              &lt;div&gt;&lt;label class=&quot;ri-label&quot; for=&quot;ri-search-mode&quot;&gt;召回方式&lt;/label&gt;&lt;select class=&quot;ri-select&quot; id=&quot;ri-search-mode&quot;&gt;&lt;option&gt;混合检索（向量 + 关键词）&lt;/option&gt;&lt;option&gt;仅语义向量检索&lt;/option&gt;&lt;/select&gt;&lt;/div&gt;
+              &lt;div&gt;&lt;label class=&quot;ri-label&quot; for=&quot;ri-top-k&quot;&gt;Top K&lt;/label&gt;&lt;select class=&quot;ri-select&quot; id=&quot;ri-top-k&quot;&gt;&lt;option&gt;3&lt;/option&gt;&lt;option&gt;5&lt;/option&gt;&lt;/select&gt;&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;ri-actions&quot; style=&quot;justify-content:flex-start&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;ri-button ri-button-primary&quot; id=&quot;ri-run-test&quot;&gt;&lt;i data-lucide=&quot;search&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;运行检索测试&lt;/button&gt;&lt;/div&gt;
+            &lt;div class=&quot;ri-test-loading&quot; id=&quot;ri-test-loading&quot;&gt;&lt;i data-lucide=&quot;loader-circle&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;p&gt;正在将合同条款向量化并检索相似规则…&lt;/p&gt;&lt;/div&gt;
+            &lt;div class=&quot;ri-retrieval-results&quot; id=&quot;ri-retrieval-results&quot;&gt;&lt;/div&gt;
+          &lt;/section&gt;
+          &lt;section class=&quot;ri-test-panel&quot;&gt;
+            &lt;h3&gt;AI审核判断&lt;/h3&gt;
+            &lt;div class=&quot;ri-empty&quot; id=&quot;ri-judgement-empty&quot;&gt;运行检索后，AI会基于召回规则给出风险结论与可追溯依据。&lt;/div&gt;
+            &lt;div class=&quot;ri-judgement&quot; id=&quot;ri-judgement&quot;&gt;
+              &lt;div class=&quot;ri-risk-result&quot;&gt;&lt;strong&gt;高风险 · 必须修改&lt;/strong&gt;&lt;div style=&quot;margin-top:5px&quot;&gt;续订价格由乙方单方决定，且以甲方继续使用推定接受。&lt;/div&gt;&lt;/div&gt;
+              &lt;div class=&quot;ri-evidence&quot;&gt;&lt;div class=&quot;ri-field-label&quot;&gt;采用的规则依据&lt;/div&gt;&lt;strong&gt;ERP-PRICE-001、ERP-PRICE-002&lt;/strong&gt;&lt;/div&gt;
+              &lt;div class=&quot;ri-evidence&quot;&gt;&lt;div class=&quot;ri-field-label&quot;&gt;甲方法务意见&lt;/div&gt;该条款突破合同价格约定，并以默示行为代替书面确认。建议删除乙方单方调价权；续订价格调整须至少提前60日通知并经双方书面确认。&lt;/div&gt;
+              &lt;div class=&quot;ri-evidence&quot;&gt;&lt;div class=&quot;ri-field-label&quot;&gt;验证结果&lt;/div&gt;&lt;span class=&quot;ri-ok&quot;&gt;召回准确、证据可追溯，可发布规则库。&lt;/span&gt;&lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/section&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;ri-actions&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;ri-button&quot; id=&quot;ri-test-back&quot;&gt;返回索引结果&lt;/button&gt;&lt;button type=&quot;button&quot; class=&quot;ri-button ri-button-primary&quot; id=&quot;ri-publish&quot; disabled&gt;&lt;i data-lucide=&quot;rocket&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;发布规则库 V1.0&lt;/button&gt;&lt;/div&gt;
+      &lt;/section&gt;
+
+      &lt;section class=&quot;ri-view ri-center-view&quot; data-view=&quot;complete&quot;&gt;
+        &lt;div class=&quot;ri-center&quot;&gt;
+          &lt;span class=&quot;ri-complete-icon&quot;&gt;&lt;i data-lucide=&quot;database-zap&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;
+          &lt;div class=&quot;ri-eyebrow&quot; style=&quot;color:var(--ri-success)&quot;&gt;规则库创建成功&lt;/div&gt;
+          &lt;h1&gt;RAG审核规则库已发布&lt;/h1&gt;
+          &lt;p class=&quot;ri-lead&quot;&gt;法务规则已经完成切片、向量化、索引和检索验证，可用于ERP SaaS采购合同审核。&lt;/p&gt;
+          &lt;div class=&quot;ri-complete-card&quot;&gt;
+            &lt;div class=&quot;ri-complete-row&quot;&gt;&lt;span&gt;规则库名称&lt;/span&gt;&lt;strong&gt;ERP SaaS私有云采购合同规则库&lt;/strong&gt;&lt;/div&gt;
+            &lt;div class=&quot;ri-complete-row&quot;&gt;&lt;span&gt;版本&lt;/span&gt;&lt;strong&gt;V1.0&lt;/strong&gt;&lt;/div&gt;
+            &lt;div class=&quot;ri-complete-row&quot;&gt;&lt;span&gt;来源原则&lt;/span&gt;&lt;strong&gt;17 项&lt;/strong&gt;&lt;/div&gt;
+            &lt;div class=&quot;ri-complete-row&quot;&gt;&lt;span&gt;正式规则&lt;/span&gt;&lt;strong id=&quot;ri-final-confirmed&quot;&gt;26 条&lt;/strong&gt;&lt;/div&gt;
+            &lt;div class=&quot;ri-complete-row&quot;&gt;&lt;span&gt;文本切片&lt;/span&gt;&lt;strong id=&quot;ri-final-chunks&quot;&gt;50 个&lt;/strong&gt;&lt;/div&gt;
+            &lt;div class=&quot;ri-complete-row&quot;&gt;&lt;span&gt;向量与索引&lt;/span&gt;&lt;strong id=&quot;ri-final-vectors&quot;&gt;50 / 50 · 一致&lt;/strong&gt;&lt;/div&gt;
+            &lt;div class=&quot;ri-complete-row&quot;&gt;&lt;span&gt;RAG检索验证&lt;/span&gt;&lt;strong class=&quot;ri-ok&quot;&gt;通过&lt;/strong&gt;&lt;/div&gt;
+            &lt;div class=&quot;ri-complete-row&quot;&gt;&lt;span&gt;未采纳&lt;/span&gt;&lt;strong id=&quot;ri-final-excluded&quot;&gt;0 条&lt;/strong&gt;&lt;/div&gt;
+            &lt;div class=&quot;ri-complete-row&quot;&gt;&lt;span&gt;来源文件&lt;/span&gt;&lt;strong id=&quot;ri-final-file&quot;&gt;&lt;/strong&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;ri-actions&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;ri-button&quot; id=&quot;ri-restart&quot;&gt;重新演示&lt;/button&gt;&lt;button type=&quot;button&quot; class=&quot;ri-button ri-button-primary&quot; id=&quot;ri-manage&quot;&gt;&lt;i data-lucide=&quot;search-check&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;查看检索验证&lt;/button&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/section&gt;
+      &lt;/main&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;ri-toast&quot; id=&quot;ri-toast&quot; role=&quot;status&quot;&gt;&lt;i data-lucide=&quot;circle-check&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;span id=&quot;ri-toast-text&quot;&gt;操作成功&lt;/span&gt;&lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;script&gt;
+    (() =&gt; {
+      const root = document.getElementById(&#x27;rule-import-demo&#x27;);
+      const views = [...root.querySelectorAll(&#x27;.ri-view&#x27;)];
+      const steps = [...root.querySelectorAll(&#x27;.ri-step&#x27;)];
+      const input = root.querySelector(&#x27;#ri-file-input&#x27;);
+      const dropzone = root.querySelector(&#x27;#ri-dropzone&#x27;);
+      const fileRow = root.querySelector(&#x27;#ri-file-row&#x27;);
+      const fileName = root.querySelector(&#x27;#ri-file-name&#x27;);
+      const fileSize = root.querySelector(&#x27;#ri-file-size&#x27;);
+      const uploadButton = root.querySelector(&#x27;#ri-upload&#x27;);
+      let selectedFile = &#x27;&#x27;;
+      let currentFilter = &#x27;all&#x27;;
+      let activeRuleId = &#x27;ERP-DOC-001&#x27;;
+      let ragReady = false;
+      let retrievalPassed = false;
+      let chunkCount = 0;
+
+      const principles = [
+        [&#x27;合同文件&#x27;, &#x27;盖章合同及附件优先，在线规则不得单方改变合同&#x27;, 98],
+        [&#x27;服务范围&#x27;, &#x27;签约前明确模块、接口、迁移和追加收费边界&#x27;, 97],
+        [&#x27;项目交付&#x27;, &#x27;明确里程碑、交付日期、延期责任和解除权&#x27;, 96],
+        [&#x27;验收&#x27;, &#x27;仅以书面验收单为准，禁止默示验收&#x27;, 99],
+        [&#x27;付款&#x27;, &#x27;付款与交付、验收及合格发票挂钩&#x27;, 98],
+        [&#x27;价格&#x27;, &#x27;合同期内锁价，续订调价须书面确认&#x27;, 99],
+        [&#x27;许可范围&#x27;, &#x27;覆盖约定主体，审计规则清晰合理&#x27;, 94],
+        [&#x27;私有云边界&#x27;, &#x27;通过联合根因分析确定故障责任&#x27;, 95],
+        [&#x27;远程运维&#x27;, &#x27;工单审批、实名账号、最小权限和全程留痕&#x27;, 98],
+        [&#x27;SLA&#x27;, &#x27;约定可用率、响应、恢复和修复时限&#x27;, 97],
+        [&#x27;数据使用&#x27;, &#x27;禁止未经同意用于训练、分析或商业展示&#x27;, 99],
+        [&#x27;数据安全&#x27;, &#x27;数据原则上不离开私有云，事件立即通知&#x27;, 98],
+        [&#x27;知识产权&#x27;, &#x27;区分底层产品与甲方付费定制成果&#x27;, 94],
+        [&#x27;保密与分包&#x27;, &#x27;保密义务对等，重要分包须事先同意&#x27;, 96],
+        [&#x27;责任限制&#x27;, &#x27;重大责任不得适用一般责任上限&#x27;, 98],
+        [&#x27;终止与退出&#x27;, &#x27;终止权对等并提供退款、导出和迁移协助&#x27;, 97],
+        [&#x27;续订与争议&#x27;, &#x27;禁止默认续订，重大通知实际送达&#x27;, 92]
+      ];
+
+      const rules = [
+        [&#x27;ERP-DOC-001&#x27;,&#x27;在线规则不得优先于盖章合同&#x27;,&#x27;high&#x27;,1,&#x27;合同约定乙方产品规则、官网政策或后续更新文件具有更高效力。&#x27;,&#x27;双方盖章合同及附件具有最高效力；其他规则仅经甲方书面确认后生效。&#x27;],
+        [&#x27;ERP-DOC-002&#x27;,&#x27;乙方不得单方变更合同内容&#x27;,&#x27;high&#x27;,1,&#x27;乙方可以通过通知、公告或后台更新单方变更服务范围、价格或责任。&#x27;,&#x27;任何实质性变更均须双方书面签署后生效。&#x27;],
+        [&#x27;ERP-SCOPE-001&#x27;,&#x27;实施范围应在签约前明确&#x27;,&#x27;high&#x27;,2,&#x27;实施模块、交付物、接口数量或数据迁移范围在项目启动后再确定。&#x27;,&#x27;在附件中列明实施清单、成果、接口、数据范围和责任分工。&#x27;],
+        [&#x27;ERP-SCOPE-002&#x27;,&#x27;追加收费须履行变更审批&#x27;,&#x27;medium&#x27;,2,&#x27;乙方可自行判断超出标准服务并直接按人天收费。&#x27;,&#x27;新增费用须由双方完成书面变更确认后发生。&#x27;],
+        [&#x27;ERP-DELIVERY-001&#x27;,&#x27;必须约定确定的交付期限&#x27;,&#x27;high&#x27;,3,&#x27;交付周期仅为预计时间，且无延期责任或解除权。&#x27;,&#x27;明确里程碑和最终交付日，并约定延期责任及甲方解除权。&#x27;],
+        [&#x27;ERP-ACCEPT-001&#x27;,&#x27;不得以沉默视为验收&#x27;,&#x27;high&#x27;,4,&#x27;甲方未在短期内提出异议即视为验收完成。&#x27;,&#x27;验收仅以双方签署的书面验收单为准。&#x27;],
+        [&#x27;ERP-ACCEPT-002&#x27;,&#x27;登录试用不得构成验收&#x27;,&#x27;high&#x27;,4,&#x27;甲方登录、试用、培训或部分功能使用即视为整体验收。&#x27;,&#x27;试用、培训、登录及部分使用均不构成验收。&#x27;],
+        [&#x27;ERP-PAY-001&#x27;,&#x27;付款节点必须与验收挂钩&#x27;,&#x27;high&#x27;,5,&#x27;甲方在最终验收前需支付大部分或全部合同价款。&#x27;,&#x27;按启动、初验、上线和终验分期付款。&#x27;],
+        [&#x27;ERP-PAY-002&#x27;,&#x27;付款应以合格发票为前提&#x27;,&#x27;medium&#x27;,5,&#x27;合同排除发票作为付款前提或要求甲方先付款后开票。&#x27;,&#x27;每期付款以甲方收到合法有效发票为前提。&#x27;],
+        [&#x27;ERP-PRICE-001&#x27;,&#x27;合同期内价格保持不变&#x27;,&#x27;high&#x27;,6,&#x27;乙方可在合同有效期内单方调整订阅价格。&#x27;,&#x27;合同有效期内价格锁定，不因乙方成本变化而调整。&#x27;],
+        [&#x27;ERP-PRICE-002&#x27;,&#x27;续订调价须书面确认&#x27;,&#x27;medium&#x27;,6,&#x27;乙方通知后续订价格自动生效，甲方继续使用视为接受。&#x27;,&#x27;续订调价至少提前60日通知并经双方书面确认。&#x27;],
+        [&#x27;ERP-LICENSE-001&#x27;,&#x27;授权主体范围应匹配实际使用&#x27;,&#x27;medium&#x27;,7,&#x27;软件仅限甲方本部使用，分支机构或关联公司需另行付费。&#x27;,&#x27;将约定的分公司、控股子公司和项目公司纳入授权范围。&#x27;],
+        [&#x27;ERP-CLOUD-001&#x27;,&#x27;故障责任依据联合根因分析&#x27;,&#x27;high&#x27;,8,&#x27;原因不明或不能证明为代码问题的故障一律归责甲方环境。&#x27;,&#x27;双方联合开展根因分析，并按过错和因果关系承担责任。&#x27;],
+        [&#x27;ERP-OPS-001&#x27;,&#x27;远程运维实行最小权限控制&#x27;,&#x27;high&#x27;,9,&#x27;乙方人员无需逐次审批即可访问日志、配置、数据库或业务数据。&#x27;,&#x27;实行工单审批、实名账号、双因素认证、最小权限和操作留痕。&#x27;],
+        [&#x27;ERP-SLA-001&#x27;,&#x27;重大故障应约定恢复时限&#x27;,&#x27;high&#x27;,10,&#x27;重大故障仅约定首次响应时间，不约定恢复和修复目标。&#x27;,&#x27;P1故障30分钟响应、2小时提供临时方案、4小时恢复核心服务。&#x27;],
+        [&#x27;ERP-SLA-002&#x27;,&#x27;SLA排除事项不得过宽&#x27;,&#x27;medium&#x27;,10,&#x27;版本升级、安全攻击、分包方或第三方服务故障均不计入不可用时间。&#x27;,&#x27;仅排除甲方单独原因及法定不可抗力。&#x27;],
+        [&#x27;ERP-DATA-001&#x27;,&#x27;甲方数据不得用于模型训练&#x27;,&#x27;high&#x27;,11,&#x27;乙方可以将去标识化数据用于模型训练或产品开发。&#x27;,&#x27;未经甲方书面同意，不得将甲方数据用于训练或产品开发。&#x27;],
+        [&#x27;ERP-DATA-002&#x27;,&#x27;甲方数据不得用于商业分析&#x27;,&#x27;high&#x27;,11,&#x27;乙方可将甲方数据用于行业分析、商业展示或向第三方提供。&#x27;,&#x27;不得将甲方数据用于行业分析、商业展示或向第三方提供。&#x27;],
+        [&#x27;ERP-SEC-001&#x27;,&#x27;数据原则上不得离开甲方私有云&#x27;,&#x27;high&#x27;,12,&#x27;乙方可将数据副本保存至其自身或合作伙伴环境。&#x27;,&#x27;确需导出时须逐次审批、加密、限期删除并提供证明。&#x27;],
+        [&#x27;ERP-SEC-002&#x27;,&#x27;安全事件应立即通知甲方&#x27;,&#x27;high&#x27;,12,&#x27;乙方完成内部核实后再决定是否通知安全事件。&#x27;,&#x27;发现安全事件后立即通知并持续通报处置进展。&#x27;],
+        [&#x27;ERP-IP-001&#x27;,&#x27;甲方付费定制成果应获得持续权利&#x27;,&#x27;high&#x27;,13,&#x27;甲方付费形成的接口、脚本、报表和配置全部归乙方。&#x27;,&#x27;甲方至少获得永久、不可撤销的使用、维护和委托修改权。&#x27;],
+        [&#x27;ERP-VENDOR-001&#x27;,&#x27;重要分包须经甲方书面同意&#x27;,&#x27;high&#x27;,14,&#x27;乙方可任意分包实施、运维或数据处理且无需通知甲方。&#x27;,&#x27;重要分包须事先书面同意，乙方对分包方承担完整责任。&#x27;],
+        [&#x27;ERP-LIABILITY-001&#x27;,&#x27;重大责任不得受一般上限限制&#x27;,&#x27;high&#x27;,15,&#x27;数据、保密、知识产权、故意或重大过失责任适用较低责任上限。&#x27;,&#x27;上述重大责任不适用一般责任上限。&#x27;],
+        [&#x27;ERP-EXIT-001&#x27;,&#x27;终止后应提供数据导出和迁移协助&#x27;,&#x27;high&#x27;,16,&#x27;终止后数据导出期限过短、另行高额收费或乙方可立即删除数据。&#x27;,&#x27;提供不少于60日的免费结构化数据导出期和合理迁移协助。&#x27;],
+        [&#x27;ERP-RENEW-001&#x27;,&#x27;不得设置默认自动续订&#x27;,&#x27;medium&#x27;,17,&#x27;甲方未在较长提前期提出异议即自动续订。&#x27;,&#x27;续订须由双方另行书面确认。&#x27;],
+        [&#x27;ERP-NOTICE-001&#x27;,&#x27;重大通知必须实际送达&#x27;,&#x27;medium&#x27;,17,&#x27;乙方向管理后台发送消息即视为送达。&#x27;,&#x27;重大通知应发送至指定联系人并能够证明实际接收。&#x27;]
+      ].map(([id,title,level,principle,trigger,suggestion]) =&gt; ({id,title,level,principle,trigger,suggestion,status:&#x27;pending&#x27;}));
+
+      const showView = (name, step) =&gt; {
+        views.forEach(view =&gt; view.classList.toggle(&#x27;is-active&#x27;, view.dataset.view === name));
+        steps.forEach(item =&gt; {
+          const value = Number(item.dataset.step);
+          item.classList.toggle(&#x27;is-active&#x27;, value === step);
+          item.classList.toggle(&#x27;is-done&#x27;, value &lt; step);
+        });
+      };
+      const iconRefresh = () =&gt; { if (window.lucide) lucide.createIcons({attrs:{width:16,height:16}}); };
+      const pause = ms =&gt; new Promise(resolve =&gt; setTimeout(resolve, ms));
+      const formatSize = bytes =&gt; bytes ? `${(bytes / 1024).toFixed(1)} KB` : &#x27;42.3 KB&#x27;;
+      const setFile = (name, size) =&gt; {
+        selectedFile = name;
+        fileName.textContent = name;
+        fileSize.textContent = size;
+        fileRow.classList.add(&#x27;is-visible&#x27;);
+        dropzone.classList.add(&#x27;is-ready&#x27;);
+        uploadButton.disabled = false;
+      };
+      const clearFile = () =&gt; {
+        input.value = &#x27;&#x27;;
+        selectedFile = &#x27;&#x27;;
+        fileRow.classList.remove(&#x27;is-visible&#x27;);
+        dropzone.classList.remove(&#x27;is-ready&#x27;);
+        uploadButton.disabled = true;
+      };
+      const runProcess = async ({phase,title,label,stages,nextView,nextStep,orb=&#x27;AI&#x27;,aiRole=&#x27;&#x27;}) =&gt; {
+        root.querySelector(&#x27;#ri-process-phase&#x27;).textContent = phase;
+        root.querySelector(&#x27;#ri-process-title&#x27;).textContent = title;
+        root.querySelector(&#x27;#ri-process-label&#x27;).textContent = label;
+        root.querySelector(&#x27;#ri-process-file&#x27;).textContent = selectedFile;
+        root.querySelector(&#x27;#ri-orb-label&#x27;).textContent = orb;
+        const aiBox = root.querySelector(&#x27;#ri-process-ai&#x27;);
+        aiBox.hidden = !aiRole;
+        root.querySelector(&#x27;#ri-process-ai-text&#x27;).textContent = aiRole;
+        const bar = root.querySelector(&#x27;#ri-progress-bar&#x27;);
+        const progress = root.querySelector(&#x27;.ri-progress&#x27;);
+        const valueText = root.querySelector(&#x27;#ri-progress-value&#x27;);
+        const stepText = root.querySelector(&#x27;#ri-process-step&#x27;);
+        bar.style.width = &#x27;0%&#x27;; valueText.textContent = &#x27;0%&#x27;; progress.setAttribute(&#x27;aria-valuenow&#x27;,&#x27;0&#x27;);
+        showView(&#x27;processing&#x27;, nextStep);
+        for (const [value,text] of stages) {
+          await pause(520);
+          bar.style.width = `${value}%`;
+          valueText.textContent = `${value}%`;
+          progress.setAttribute(&#x27;aria-valuenow&#x27;, String(value));
+          stepText.textContent = text;
+        }
+        await pause(450);
+        showView(nextView, nextStep);
+        iconRefresh();
+      };
+
+      input.addEventListener(&#x27;change&#x27;, () =&gt; {
+        const file = input.files[0];
+        if (file) setFile(file.name, formatSize(file.size));
+      });
+      dropzone.addEventListener(&#x27;dragover&#x27;, event =&gt; { event.preventDefault(); dropzone.classList.add(&#x27;is-ready&#x27;); });
+      dropzone.addEventListener(&#x27;dragleave&#x27;, () =&gt; { if (!selectedFile) dropzone.classList.remove(&#x27;is-ready&#x27;); });
+      dropzone.addEventListener(&#x27;drop&#x27;, event =&gt; {
+        event.preventDefault();
+        const file = event.dataTransfer.files[0];
+        if (file) setFile(file.name, formatSize(file.size));
+      });
+      root.querySelector(&#x27;#ri-sample&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; setFile(&#x27;ERP_SaaS私有云采购合同审核原则_精简版.docx&#x27;,&#x27;42.3 KB&#x27;));
+      root.querySelector(&#x27;#ri-change-file&#x27;).addEventListener(&#x27;click&#x27;, clearFile);
+      root.querySelector(&#x27;#ri-upload&#x27;).addEventListener(&#x27;click&#x27;, async () =&gt; {
+        uploadButton.disabled = true;
+        await runProcess({phase:&#x27;文件上传&#x27;,title:&#x27;正在上传审核原则&#x27;,label:&#x27;上传进度&#x27;,orb:&#x27;上传&#x27;,nextView:&#x27;uploaded&#x27;,nextStep:1,stages:[[12,&#x27;正在建立安全上传通道&#x27;],[31,&#x27;上传Word文件&#x27;],[53,&#x27;校验文件完整性&#x27;],[76,&#x27;提取文档正文与表格&#x27;],[92,&#x27;准备AI识别任务&#x27;],[100,&#x27;文件上传完成&#x27;]]});
+        root.querySelector(&#x27;#ri-uploaded-name&#x27;).textContent = selectedFile;
+        uploadButton.disabled = false;
+      });
+      root.querySelector(&#x27;#ri-upload-back&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; { clearFile(); showView(&#x27;upload&#x27;,1); });
+      root.querySelector(&#x27;#ri-recognize&#x27;).addEventListener(&#x27;click&#x27;, async () =&gt; {
+        await runProcess({phase:&#x27;AI原则识别&#x27;,title:&#x27;正在识别审核主题与关键阈值&#x27;,label:&#x27;识别进度&#x27;,nextView:&#x27;principles&#x27;,nextStep:2,aiRole:&#x27;大模型正在读取文档语义，提取审核主题、义务、禁止事项和关键数值阈值，并对重复表达进行合并。&#x27;,stages:[[9,&#x27;识别文档标题与适用范围&#x27;],[24,&#x27;提取付款、价格与验收阈值&#x27;],[41,&#x27;识别私有云、运维与SLA要求&#x27;],[59,&#x27;识别数据安全与数据使用原则&#x27;],[76,&#x27;识别知识产权、责任与退出要求&#x27;],[91,&#x27;合并重复表达并计算置信度&#x27;],[100,&#x27;识别完成，共17项原则&#x27;]]});
+        renderPrinciples();
+      });
+      root.querySelector(&#x27;#ri-principles-back&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; showView(&#x27;upload&#x27;,1));
+      root.querySelector(&#x27;#ri-generate&#x27;).addEventListener(&#x27;click&#x27;, async () =&gt; {
+        await runProcess({phase:&#x27;AI规则拆解&#x27;,title:&#x27;正在生成可执行候选规则&#x27;,label:&#x27;生成进度&#x27;,nextView:&#x27;rules&#x27;,nextStep:3,aiRole:&#x27;大模型正在把抽象原则拆成可执行规则，并生成风险等级、合同触发条件及甲方建议口径，等待法务逐条确认。&#x27;,stages:[[8,&#x27;分析原则中的义务、禁止和阈值&#x27;],[23,&#x27;生成语义触发表达&#x27;],[39,&#x27;拆分复合审核原则&#x27;],[56,&#x27;补充适用范围和风险等级&#x27;],[72,&#x27;生成甲方法务建议条款&#x27;],[88,&#x27;检查候选规则冲突与重复&#x27;],[100,&#x27;生成完成，共26条候选规则&#x27;]]});
+        currentFilter = &#x27;all&#x27;; activeRuleId = rules[0].id; renderRules();
+      });
+
+      const renderPrinciples = () =&gt; {
+        root.querySelector(&#x27;#ri-principles&#x27;).innerHTML = principles.map((item,index) =&gt; `&lt;div class=&quot;ri-principle&quot;&gt;&lt;span class=&quot;ri-principle-num&quot;&gt;${index+1}&lt;/span&gt;&lt;div&gt;&lt;strong&gt;${item[0]}&lt;/strong&gt;&lt;span&gt;${item[1]}&lt;/span&gt;&lt;/div&gt;&lt;strong class=&quot;ri-confidence&quot;&gt;${item[2]}%&lt;/strong&gt;&lt;/div&gt;`).join(&#x27;&#x27;);
+      };
+      const filteredRules = () =&gt; currentFilter === &#x27;all&#x27; ? rules : rules.filter(rule =&gt; rule.status === currentFilter);
+      const statusLabel = status =&gt; ({pending:&#x27;待处理&#x27;,confirmed:&#x27;已采纳&#x27;,excluded:&#x27;不采纳&#x27;})[status];
+      const counts = () =&gt; ({pending:rules.filter(r=&gt;r.status===&#x27;pending&#x27;).length,confirmed:rules.filter(r=&gt;r.status===&#x27;confirmed&#x27;).length,excluded:rules.filter(r=&gt;r.status===&#x27;excluded&#x27;).length});
+      const renderSummary = () =&gt; {
+        const c = counts();
+        root.querySelector(&#x27;#ri-rule-summary&#x27;).innerHTML = `&lt;div class=&quot;ri-stat&quot;&gt;&lt;span&gt;候选规则&lt;/span&gt;&lt;strong&gt;26&lt;/strong&gt;&lt;small&gt;由17项原则拆解生成&lt;/small&gt;&lt;/div&gt;&lt;div class=&quot;ri-stat&quot;&gt;&lt;span&gt;已采纳&lt;/span&gt;&lt;strong&gt;${c.confirmed}&lt;/strong&gt;&lt;small&gt;将进入后续测试入库任务&lt;/small&gt;&lt;/div&gt;&lt;div class=&quot;ri-stat&quot;&gt;&lt;span&gt;待处理&lt;/span&gt;&lt;strong&gt;${c.pending}&lt;/strong&gt;&lt;small&gt;可单条处理或批量采纳&lt;/small&gt;&lt;/div&gt;`;
+        root.querySelector(&#x27;#ri-rule-progress&#x27;).textContent = `待处理 ${c.pending} 条 · 不采纳 ${c.excluded} 条`;
+        root.querySelector(&#x27;#ri-store&#x27;).disabled = c.pending &gt; 0 || c.confirmed === 0;
+      };
+      const renderRuleList = () =&gt; {
+        const list = root.querySelector(&#x27;#ri-rule-list&#x27;);
+        const visible = filteredRules();
+        if (!visible.length) {
+          list.innerHTML = &#x27;&lt;div class=&quot;ri-empty&quot;&gt;当前筛选下暂无规则&lt;/div&gt;&#x27;;
+          root.querySelector(&#x27;#ri-detail&#x27;).innerHTML = &#x27;&lt;div class=&quot;ri-empty&quot;&gt;请选择其他状态查看&lt;/div&gt;&#x27;;
+          return;
+        }
+        if (!visible.some(rule =&gt; rule.id === activeRuleId)) activeRuleId = visible[0].id;
+        list.innerHTML = visible.map(rule =&gt; `&lt;button type=&quot;button&quot; class=&quot;ri-rule-item${rule.id===activeRuleId?&#x27; is-active&#x27;:&#x27;&#x27;}&quot; data-rule-id=&quot;${rule.id}&quot; data-level=&quot;${rule.level}&quot; data-status=&quot;${rule.status}&quot;&gt;&lt;span class=&quot;ri-rule-dot&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;&lt;span&gt;&lt;strong&gt;${rule.title}&lt;/strong&gt;&lt;span&gt;${rule.id} · ${statusLabel(rule.status)}&lt;/span&gt;&lt;/span&gt;&lt;/button&gt;`).join(&#x27;&#x27;);
+        list.querySelectorAll(&#x27;[data-rule-id]&#x27;).forEach(button =&gt; button.addEventListener(&#x27;click&#x27;, () =&gt; { activeRuleId = button.dataset.ruleId; renderRuleList(); renderDetail(); }));
+      };
+      const renderDetail = () =&gt; {
+        const rule = rules.find(item =&gt; item.id === activeRuleId);
+        if (!rule) return;
+        const principle = principles[rule.principle-1];
+        const badgeClass = rule.status !== &#x27;pending&#x27; ? rule.status : (rule.level === &#x27;medium&#x27; ? &#x27;medium&#x27; : &#x27;&#x27;);
+        root.querySelector(&#x27;#ri-detail-status&#x27;).innerHTML = `&lt;span class=&quot;ri-badge ${badgeClass}&quot;&gt;${rule.status === &#x27;pending&#x27; ? (rule.level === &#x27;high&#x27; ? &#x27;高风险&#x27; : &#x27;中风险&#x27;) : statusLabel(rule.status)}&lt;/span&gt;`;
+        root.querySelector(&#x27;#ri-detail&#x27;).innerHTML = `
+          &lt;h3 class=&quot;ri-detail-title&quot;&gt;${rule.title}&lt;/h3&gt;&lt;div class=&quot;ri-rule-code&quot;&gt;${rule.id}&lt;/div&gt;
+          &lt;div class=&quot;ri-field&quot;&gt;&lt;div class=&quot;ri-field-label&quot;&gt;来源原则&lt;/div&gt;&lt;div class=&quot;ri-field-content&quot;&gt;原则 ${rule.principle}：${principle[0]} — ${principle[1]}&lt;/div&gt;&lt;/div&gt;
+          &lt;div class=&quot;ri-field&quot;&gt;&lt;div class=&quot;ri-field-label&quot;&gt;合同出现什么内容会提示风险&lt;/div&gt;&lt;div class=&quot;ri-field-content&quot;&gt;${rule.trigger}&lt;/div&gt;&lt;/div&gt;
+          &lt;div class=&quot;ri-field&quot;&gt;&lt;div class=&quot;ri-field-label&quot;&gt;建议合同修改成什么&lt;/div&gt;&lt;div class=&quot;ri-field-content ri-rule-suggestion&quot;&gt;${rule.suggestion}&lt;/div&gt;&lt;/div&gt;
+          &lt;div class=&quot;ri-field&quot;&gt;&lt;div class=&quot;ri-field-label&quot;&gt;生成依据&lt;/div&gt;&lt;div class=&quot;ri-field-content&quot;&gt;来源Word原则 + 甲方采购规则模板；AI置信度 ${rule.level===&#x27;high&#x27;?&#x27;96&#x27;:&#x27;92&#x27;}%&lt;/div&gt;&lt;/div&gt;
+          &lt;div class=&quot;ri-actions&quot; style=&quot;justify-content:flex-start&quot;&gt;
+            &lt;button type=&quot;button&quot; class=&quot;ri-button ri-button-primary&quot; id=&quot;ri-confirm-one&quot;&gt;&lt;i data-lucide=&quot;check&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;${rule.status===&#x27;confirmed&#x27;?&#x27;已采纳&#x27;:&#x27;采纳&#x27;}&lt;/button&gt;
+            &lt;button type=&quot;button&quot; class=&quot;ri-button&quot; id=&quot;ri-edit-one&quot;&gt;&lt;i data-lucide=&quot;pencil&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;修改&lt;/button&gt;
+            &lt;button type=&quot;button&quot; class=&quot;ri-button ri-button-danger&quot; id=&quot;ri-exclude-one&quot;&gt;&lt;i data-lucide=&quot;x&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;不采纳&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;ri-edit-area&quot; id=&quot;ri-edit-area&quot;&gt;
+            &lt;label class=&quot;ri-label&quot; for=&quot;ri-edit-trigger&quot;&gt;合同风险表述&lt;/label&gt;&lt;textarea class=&quot;ri-textarea&quot; id=&quot;ri-edit-trigger&quot;&gt;${rule.trigger}&lt;/textarea&gt;
+            &lt;label class=&quot;ri-label&quot; for=&quot;ri-edit-suggestion&quot;&gt;甲方建议约定&lt;/label&gt;&lt;textarea class=&quot;ri-textarea&quot; id=&quot;ri-edit-suggestion&quot;&gt;${rule.suggestion}&lt;/textarea&gt;
+            &lt;div class=&quot;ri-actions&quot; style=&quot;justify-content:flex-start&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;ri-button ri-button-primary&quot; id=&quot;ri-save-edit&quot;&gt;保存并采纳&lt;/button&gt;&lt;button type=&quot;button&quot; class=&quot;ri-button&quot; id=&quot;ri-cancel-edit&quot;&gt;取消&lt;/button&gt;&lt;/div&gt;
+          &lt;/div&gt;`;
+        root.querySelector(&#x27;#ri-confirm-one&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; updateRuleStatus(rule,&#x27;confirmed&#x27;));
+        root.querySelector(&#x27;#ri-exclude-one&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; updateRuleStatus(rule,&#x27;excluded&#x27;));
+        root.querySelector(&#x27;#ri-edit-one&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; root.querySelector(&#x27;#ri-edit-area&#x27;).classList.add(&#x27;is-visible&#x27;));
+        root.querySelector(&#x27;#ri-cancel-edit&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; root.querySelector(&#x27;#ri-edit-area&#x27;).classList.remove(&#x27;is-visible&#x27;));
+        root.querySelector(&#x27;#ri-save-edit&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+          rule.trigger = root.querySelector(&#x27;#ri-edit-trigger&#x27;).value.trim() || rule.trigger;
+          rule.suggestion = root.querySelector(&#x27;#ri-edit-suggestion&#x27;).value.trim() || rule.suggestion;
+          updateRuleStatus(rule,&#x27;confirmed&#x27;);
+        });
+        iconRefresh();
+      };
+      const updateRuleStatus = (rule,status) =&gt; {
+        rule.status = status;
+        const next = filteredRules().find(item =&gt; item.status === &#x27;pending&#x27; &amp;&amp; item.id !== rule.id) || filteredRules()[0];
+        if (next) activeRuleId = next.id;
+        renderRules();
+        toast(status === &#x27;confirmed&#x27; ? &#x27;候选规则已采纳&#x27; : &#x27;候选规则已标记为不采纳&#x27;);
+      };
+      const renderRules = () =&gt; { renderSummary(); renderRuleList(); renderDetail(); iconRefresh(); };
+      root.querySelectorAll(&#x27;[data-filter]&#x27;).forEach(button =&gt; button.addEventListener(&#x27;click&#x27;, () =&gt; {
+        currentFilter = button.dataset.filter;
+        root.querySelectorAll(&#x27;[data-filter]&#x27;).forEach(item =&gt; item.classList.toggle(&#x27;is-active&#x27;, item === button));
+        renderRules();
+      }));
+      root.querySelector(&#x27;#ri-batch&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+        rules.forEach(rule =&gt; { if (rule.status === &#x27;pending&#x27;) rule.status = &#x27;confirmed&#x27;; });
+        currentFilter = &#x27;all&#x27;; activeRuleId = rules[0].id;
+        root.querySelectorAll(&#x27;[data-filter]&#x27;).forEach(item =&gt; item.classList.toggle(&#x27;is-active&#x27;, item.dataset.filter === &#x27;all&#x27;));
+        renderRules(); toast(&#x27;剩余候选规则已批量采纳&#x27;);
+      });
+      const confirmedRules = () =&gt; rules.filter(rule =&gt; rule.status === &#x27;confirmed&#x27;);
+      const renderChunks = () =&gt; {
+        const rows = [];
+        confirmedRules().slice(0, 6).forEach((rule, index) =&gt; {
+          rows.push(`&lt;tr&gt;&lt;td class=&quot;ri-code&quot;&gt;CHK-${String(index * 2 + 1).padStart(3,&#x27;0&#x27;)}&lt;/td&gt;&lt;td&gt;${rule.id}&lt;/td&gt;&lt;td&gt;${rule.trigger}&lt;/td&gt;&lt;td&gt;${rule.trigger.length}&lt;/td&gt;&lt;td class=&quot;ri-ok&quot;&gt;已索引&lt;/td&gt;&lt;/tr&gt;`);
+          rows.push(`&lt;tr&gt;&lt;td class=&quot;ri-code&quot;&gt;CHK-${String(index * 2 + 2).padStart(3,&#x27;0&#x27;)}&lt;/td&gt;&lt;td&gt;${rule.id}&lt;/td&gt;&lt;td&gt;${rule.suggestion}&lt;/td&gt;&lt;td&gt;${rule.suggestion.length}&lt;/td&gt;&lt;td class=&quot;ri-ok&quot;&gt;已索引&lt;/td&gt;&lt;/tr&gt;`);
+        });
+        root.querySelector(&#x27;#ri-chunk-body&#x27;).innerHTML = rows.join(&#x27;&#x27;) + `&lt;tr&gt;&lt;td colspan=&quot;5&quot; style=&quot;text-align:center;color:var(--ri-muted)&quot;&gt;展示前 ${rows.length} 个切片，共 ${chunkCount} 个&lt;/td&gt;&lt;/tr&gt;`;
+      };
+      const resetRagStages = () =&gt; {
+        root.querySelectorAll(&#x27;[data-rag-stage]&#x27;).forEach(stage =&gt; {
+          stage.classList.remove(&#x27;is-running&#x27;,&#x27;is-done&#x27;);
+          stage.querySelector(&#x27;.ri-rag-stage-state&#x27;).textContent = &#x27;等待处理&#x27;;
+        });
+        root.querySelector(&#x27;#ri-rag-progress-bar&#x27;).style.width = &#x27;0%&#x27;;
+        root.querySelector(&#x27;#ri-rag-progress-value&#x27;).textContent = &#x27;0%&#x27;;
+        root.querySelector(&#x27;#ri-rag-progress&#x27;).setAttribute(&#x27;aria-valuenow&#x27;,&#x27;0&#x27;);
+        root.querySelector(&#x27;#ri-rag-progress-label&#x27;).textContent = &#x27;尚未开始&#x27;;
+        root.querySelector(&#x27;#ri-rag-chunk-count&#x27;).textContent = &#x27;—&#x27;;
+        root.querySelector(&#x27;#ri-rag-vector-count&#x27;).textContent = &#x27;—&#x27;;
+        root.querySelector(&#x27;#ri-index-check&#x27;).textContent = &#x27;等待处理&#x27;;
+        root.querySelector(&#x27;#ri-external-task&#x27;).textContent = &#x27;等待推送&#x27;;
+        root.querySelector(&#x27;#ri-to-test&#x27;).disabled = true;
+      };
+      root.querySelector(&#x27;#ri-store&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+        const c = counts();
+        ragReady = false; retrievalPassed = false;
+        chunkCount = Math.max(1, c.confirmed * 2 - 2);
+        root.querySelector(&#x27;#ri-rag-rule-count&#x27;).textContent = c.confirmed;
+        root.querySelector(&#x27;#ri-job-rule-count&#x27;).textContent = c.confirmed;
+        root.querySelector(&#x27;#ri-job-table-count&#x27;).textContent = c.confirmed;
+        root.querySelector(&#x27;#ri-job-file&#x27;).textContent = selectedFile;
+        root.querySelector(&#x27;#ri-job-status&#x27;).textContent = &#x27;待推送&#x27;;
+        root.querySelector(&#x27;#ri-job-status&#x27;).className = &#x27;ri-badge medium&#x27;;
+        root.querySelector(&#x27;#ri-job-pending&#x27;).textContent = &#x27;1&#x27;;
+        root.querySelector(&#x27;#ri-ingestion-count&#x27;).classList.add(&#x27;is-visible&#x27;);
+        root.querySelector(&#x27;#ri-start-ingestion&#x27;).disabled = false;
+        root.querySelector(&#x27;#ri-start-ingestion&#x27;).textContent = &#x27;推送API&#x27;;
+        root.querySelector(&#x27;#ri-start-rag&#x27;).disabled = true;
+        root.querySelector(&#x27;#ri-start-rag&#x27;).innerHTML = &#x27;&lt;i data-lucide=&quot;loader-circle&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;等待FastGPT回调&#x27;;
+        root.querySelector(&#x27;#ri-final-confirmed&#x27;).textContent = `${c.confirmed} 条`;
+        root.querySelector(&#x27;#ri-final-excluded&#x27;).textContent = `${c.excluded} 条`;
+        root.querySelector(&#x27;#ri-final-file&#x27;).textContent = selectedFile;
+        resetRagStages();
+        showView(&#x27;ingestion&#x27;,4); iconRefresh();
+      });
+      root.querySelector(&#x27;#ri-ingestion-back&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; { showView(&#x27;rules&#x27;,3); renderRules(); });
+      root.querySelector(&#x27;#ri-start-ingestion&#x27;).addEventListener(&#x27;click&#x27;, async () =&gt; {
+        const button = root.querySelector(&#x27;#ri-start-ingestion&#x27;);
+        button.disabled = true; button.textContent = &#x27;已推送&#x27;;
+        root.querySelector(&#x27;#ri-job-status&#x27;).textContent = &#x27;推送中&#x27;;
+        root.querySelector(&#x27;#ri-job-status&#x27;).className = &#x27;ri-badge&#x27;;
+        root.querySelector(&#x27;#ri-external-task&#x27;).textContent = &#x27;RAG-&#x27; + Date.now().toString(36).toUpperCase();
+        await runProcess({phase:&#x27;FastGPT API推送&#x27;,title:&#x27;正在向FastGPT推送测试入库任务&#x27;,label:&#x27;API推送进度&#x27;,orb:&#x27;API&#x27;,nextView:&#x27;rag-processing&#x27;,nextStep:5,stages:[[16,&#x27;封装规则正文与业务元数据&#x27;],[38,&#x27;绑定测试 datasetId&#x27;],[61,&#x27;提交FastGPT知识库API&#x27;],[82,&#x27;登记外部任务ID与回调地址&#x27;],[100,&#x27;API推送成功，等待FastGPT处理&#x27;]]});
+        root.querySelector(&#x27;#ri-job-status&#x27;).textContent = &#x27;处理中&#x27;;
+        root.querySelector(&#x27;#ri-start-rag&#x27;).innerHTML = &#x27;&lt;i data-lucide=&quot;loader-circle&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;FastGPT处理中&#x27;;
+        iconRefresh();
+        await startFastGptProcessing();
+      });
+      const startFastGptProcessing = async () =&gt; {
+        if (ragReady) return;
+        const button = root.querySelector(&#x27;#ri-start-rag&#x27;);
+        button.disabled = true;
+        const stages = [
+          [&#x27;FastGPT接收任务&#x27;,&#x27;任务校验成功，开始处理规则文本&#x27;,12],
+          [&#x27;规则文本切片&#x27;,`FastGPT已生成 ${chunkCount} 个语义切片`,36],
+          [&#x27;Embedding向量化&#x27;,`FastGPT已生成 ${chunkCount} 条1024维向量`,61],
+          [&#x27;写入向量库&#x27;,`FastGPT已写入 ${chunkCount} 条向量及元数据`,81],
+          [&#x27;建立检索索引&#x27;,&#x27;FastGPT索引完成，正在回调企业平台&#x27;,100]
+        ];
+        for (let i=0;i&lt;stages.length;i++) {
+          const stage = root.querySelector(`[data-rag-stage=&quot;${i}&quot;]`);
+          stage.classList.add(&#x27;is-running&#x27;);
+          stage.querySelector(&#x27;.ri-rag-stage-state&#x27;).textContent = &#x27;处理中…&#x27;;
+          root.querySelector(&#x27;#ri-rag-progress-label&#x27;).textContent = stages[i][0];
+          await pause(760);
+          stage.classList.remove(&#x27;is-running&#x27;); stage.classList.add(&#x27;is-done&#x27;);
+          stage.querySelector(&#x27;.ri-rag-stage-state&#x27;).textContent = &#x27;已完成&#x27;;
+          root.querySelector(&#x27;#ri-rag-progress-bar&#x27;).style.width = `${stages[i][2]}%`;
+          root.querySelector(&#x27;#ri-rag-progress-value&#x27;).textContent = `${stages[i][2]}%`;
+          root.querySelector(&#x27;#ri-rag-progress&#x27;).setAttribute(&#x27;aria-valuenow&#x27;, String(stages[i][2]));
+          root.querySelector(&#x27;#ri-rag-progress-label&#x27;).textContent = stages[i][1];
+        }
+        ragReady = true;
+        root.querySelector(&#x27;#ri-rag-chunk-count&#x27;).textContent = chunkCount;
+        root.querySelector(&#x27;#ri-rag-vector-count&#x27;).textContent = `${chunkCount} / ${chunkCount}`;
+        root.querySelector(&#x27;#ri-index-check&#x27;).innerHTML = `&lt;span class=&quot;ri-ok&quot;&gt;通过 · 切片、向量、索引数量一致&lt;/span&gt;`;
+        root.querySelector(&#x27;#ri-to-test&#x27;).disabled = false;
+        root.querySelector(&#x27;#ri-final-chunks&#x27;).textContent = `${chunkCount} 个`;
+        root.querySelector(&#x27;#ri-final-vectors&#x27;).textContent = `${chunkCount} / ${chunkCount} · 一致`;
+        root.querySelector(&#x27;#ri-job-status&#x27;).textContent = &#x27;处理完成&#x27;;
+        root.querySelector(&#x27;#ri-job-status&#x27;).className = &#x27;ri-badge confirmed&#x27;;
+        root.querySelector(&#x27;#ri-job-pending&#x27;).textContent = &#x27;0&#x27;;
+        root.querySelector(&#x27;#ri-ingestion-count&#x27;).classList.remove(&#x27;is-visible&#x27;);
+        renderChunks(); button.innerHTML = &#x27;&lt;i data-lucide=&quot;circle-check&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;FastGPT回调完成&#x27;;
+        toast(&#x27;已收到FastGPT回调，处理结果已回写&#x27;); iconRefresh();
+      };
+      root.querySelectorAll(&#x27;[data-rag-tab]&#x27;).forEach(tab =&gt; tab.addEventListener(&#x27;click&#x27;, () =&gt; {
+        root.querySelectorAll(&#x27;[data-rag-tab]&#x27;).forEach(item =&gt; item.classList.toggle(&#x27;is-active&#x27;, item === tab));
+        root.querySelectorAll(&#x27;[data-rag-panel]&#x27;).forEach(panel =&gt; panel.classList.toggle(&#x27;is-active&#x27;, panel.dataset.ragPanel === tab.dataset.ragTab));
+      }));
+      root.querySelector(&#x27;#ri-rag-back&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; showView(&#x27;ingestion&#x27;,4));
+      root.querySelector(&#x27;#ri-to-test&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; { if (ragReady) showView(&#x27;retrieval&#x27;,6); });
+      root.querySelector(&#x27;#ri-test-back&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; showView(&#x27;rag-processing&#x27;,5));
+      root.querySelector(&#x27;#ri-run-test&#x27;).addEventListener(&#x27;click&#x27;, async () =&gt; {
+        const query = root.querySelector(&#x27;#ri-test-query&#x27;).value.trim();
+        if (!query) { toast(&#x27;请先输入待审核合同条款&#x27;); return; }
+        const button = root.querySelector(&#x27;#ri-run-test&#x27;);
+        const loading = root.querySelector(&#x27;#ri-test-loading&#x27;);
+        const results = root.querySelector(&#x27;#ri-retrieval-results&#x27;);
+        button.disabled = true; results.innerHTML = &#x27;&#x27;; loading.classList.add(&#x27;is-visible&#x27;);
+        root.querySelector(&#x27;#ri-judgement-empty&#x27;).style.display = &#x27;&#x27;;
+        root.querySelector(&#x27;#ri-judgement&#x27;).classList.remove(&#x27;is-visible&#x27;);
+        await pause(1900);
+        loading.classList.remove(&#x27;is-visible&#x27;);
+        const hits = [
+          [&#x27;ERP-PRICE-002&#x27;,&#x27;续订调价须书面确认&#x27;,&#x27;94%&#x27;,&#x27;续订调价至少提前60日通知并经双方书面确认。&#x27;,&#x27;CHK-020 · 原则6「价格」&#x27;],
+          [&#x27;ERP-PRICE-001&#x27;,&#x27;合同期内价格保持不变&#x27;,&#x27;87%&#x27;,&#x27;合同有效期内价格锁定，不因乙方成本变化而调整。&#x27;,&#x27;CHK-018 · 原则6「价格」&#x27;],
+          [&#x27;ERP-PAY-001&#x27;,&#x27;付款节点必须与验收挂钩&#x27;,&#x27;61%&#x27;,&#x27;按启动、初验、上线和终验分期付款。&#x27;,&#x27;CHK-014 · 原则5「付款」&#x27;]
+        ];
+        results.innerHTML = &#x27;&lt;div class=&quot;ri-field-label&quot;&gt;Top 3 召回结果&lt;/div&gt;&#x27; + hits.map((hit,index) =&gt; `&lt;div class=&quot;ri-hit&quot;&gt;&lt;div class=&quot;ri-hit-head&quot;&gt;&lt;strong&gt;${index+1}. ${hit[0]} · ${hit[1]}&lt;/strong&gt;&lt;span class=&quot;ri-score&quot;&gt;${hit[2]}&lt;/span&gt;&lt;/div&gt;&lt;p&gt;${hit[3]}&lt;/p&gt;&lt;small&gt;${hit[4]} · ${index&lt;2?&#x27;被AI采用&#x27;:&#x27;未采用（相关度不足）&#x27;}&lt;/small&gt;&lt;/div&gt;`).join(&#x27;&#x27;);
+        root.querySelector(&#x27;#ri-judgement-empty&#x27;).style.display = &#x27;none&#x27;;
+        root.querySelector(&#x27;#ri-judgement&#x27;).classList.add(&#x27;is-visible&#x27;);
+        retrievalPassed = true; root.querySelector(&#x27;#ri-publish&#x27;).disabled = false;
+        button.disabled = false; toast(&#x27;检索验证通过，可发布规则库&#x27;); iconRefresh();
+      });
+      root.querySelector(&#x27;#ri-publish&#x27;).addEventListener(&#x27;click&#x27;, async () =&gt; {
+        if (!retrievalPassed) return;
+        await runProcess({phase:&#x27;规则库发布&#x27;,title:&#x27;正在发布RAG审核规则库&#x27;,label:&#x27;发布进度&#x27;,orb:&#x27;发布&#x27;,nextView:&#x27;complete&#x27;,nextStep:7,stages:[[18,&#x27;冻结法务已采纳规则版本&#x27;],[42,&#x27;绑定向量集合与检索索引&#x27;],[67,&#x27;配置ERP SaaS合同审核场景&#x27;],[86,&#x27;执行发布前一致性检查&#x27;],[100,&#x27;规则库 V1.0 发布成功&#x27;]]});
+      });
+      root.querySelector(&#x27;#ri-manage&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; showView(&#x27;retrieval&#x27;,6));
+      root.querySelector(&#x27;#ri-restart&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+        clearFile(); rules.forEach(rule =&gt; rule.status=&#x27;pending&#x27;); currentFilter=&#x27;all&#x27;; activeRuleId=rules[0].id;
+        ragReady=false; retrievalPassed=false; chunkCount=0;
+        root.querySelector(&#x27;#ri-publish&#x27;).disabled = true;
+        root.querySelector(&#x27;#ri-retrieval-results&#x27;).innerHTML = &#x27;&#x27;;
+        root.querySelector(&#x27;#ri-judgement-empty&#x27;).style.display = &#x27;&#x27;;
+        root.querySelector(&#x27;#ri-judgement&#x27;).classList.remove(&#x27;is-visible&#x27;);
+        root.querySelector(&#x27;#ri-start-rag&#x27;).disabled = true;
+        root.querySelector(&#x27;#ri-start-rag&#x27;).innerHTML = &#x27;&lt;i data-lucide=&quot;loader-circle&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;等待FastGPT回调&#x27;;
+        root.querySelector(&#x27;#ri-ingestion-count&#x27;).classList.remove(&#x27;is-visible&#x27;);
+        root.querySelector(&#x27;#ri-start-ingestion&#x27;).disabled = false;
+        root.querySelector(&#x27;#ri-start-ingestion&#x27;).textContent = &#x27;推送API&#x27;;
+        root.querySelectorAll(&#x27;[data-filter]&#x27;).forEach(item=&gt;item.classList.toggle(&#x27;is-active&#x27;,item.dataset.filter===&#x27;all&#x27;));
+        showView(&#x27;upload&#x27;,1); iconRefresh();
+      });
+      const toast = text =&gt; {
+        root.querySelector(&#x27;#ri-toast-text&#x27;).textContent = text;
+        const element = root.querySelector(&#x27;#ri-toast&#x27;);
+        element.classList.add(&#x27;is-visible&#x27;);
+        setTimeout(() =&gt; element.classList.remove(&#x27;is-visible&#x27;), 1800);
+      };
+      renderPrinciples(); iconRefresh();
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handleLeave = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</body>
+</html>

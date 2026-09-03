@@ -1,0 +1,1929 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>星途AI · ERP合同AI审核闭环Demo</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe sandbox="allow-scripts" referrerpolicy="no-referrer" title="星途AI · ERP合同AI审核闭环Demo" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;星途AI · ERP合同AI审核闭环Demo&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(
+    --background,
+    var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
+  ) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --color-background-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --card: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  --card-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --popover: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255), rgb(45 45 45))
+  );
+  --popover-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --primary: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --primary-foreground: var(
+    --color-text-inverse,
+    light-dark(rgb(255 255 255), rgb(13 13 13))
+  );
+  --secondary: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%))
+  );
+  --secondary-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: var(
+    --color-text-secondary,
+    light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%))
+  );
+  --accent: var(
+    --color-background-info,
+    light-dark(rgb(229 242 255), rgb(13 39 63))
+  );
+  --accent-foreground: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --destructive: var(
+    --color-text-warning,
+    light-dark(rgb(226 85 7), rgb(255 133 73))
+  );
+  --border: var(
+    --color-border-secondary,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+  --input: var(
+    --color-border-primary,
+    light-dark(
+      rgb(26 28 31 / 11.8%),
+      color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+    )
+  );
+  --ring: var(
+    --color-ring-primary,
+    light-dark(rgb(51 156 255), rgb(131 195 255 / 76%))
+  );
+  --font-size-base: var(--font-text-md-size, 14px);
+  --blue: light-dark(rgb(51 156 255), rgb(51 156 255));
+  --orange: light-dark(rgb(226 85 7), rgb(251 106 34));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+  --red: light-dark(rgb(224 46 42), rgb(255 103 100));
+  --purple: light-dark(rgb(146 79 247), rgb(173 123 249));
+  --yellow: light-dark(rgb(255 195 0), rgb(255 210 64));
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --radius: var(--border-radius-lg, 12.5px);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  /* Preserve MCP aliases for older inline renderers without creating :root cycles. */
+  --color-background-primary: var(
+    --background,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --color-text-primary: var(
+    --foreground,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --color-border-secondary: var(
+    --border,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+
+  margin: 0;
+  padding: 5px;
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans) !important;
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--font-weight-medium, 500);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive &gt; .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align=&quot;right&quot;]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align=&quot;center&quot;]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: superellipse(1.5);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card, .progress) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress {
+  display: flex;
+  height: 6px;
+  margin-block: calc((var(--line-height-normal, 1.5em) - 6px) / 2);
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+}
+
+.progress-bar {
+  height: 100%;
+  flex-shrink: 0;
+  border: 0;
+  background: var(--viz-series-1);
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: superellipse(1.5);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+  [aria-pressed=&quot;true&quot;],
+  [aria-selected=&quot;true&quot;],
+  .is-selected
+) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+/* Model-authored chart rules can otherwise stretch icons after these styles load. */
+svg.lucide {
+  display: block;
+  width: 16px !important;
+  height: 16px !important;
+  flex: none;
+  margin: 0 !important;
+  stroke-width: 1.6;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;erp-contract-demo&quot;&gt;
+  &lt;style&gt;
+    #erp-contract-demo {
+      color-scheme: light dark;
+      --fc-bg: light-dark(#f4f7fb, #10151f);
+      --fc-surface: light-dark(#ffffff, #171e2a);
+      --fc-surface-2: light-dark(#f8fafc, #1d2635);
+      --fc-ink: light-dark(#182333, #eef3f9);
+      --fc-muted: light-dark(#64748b, #9ba9bc);
+      --fc-line: light-dark(#dfe6ef, #2d394b);
+      --fc-brand: light-dark(#234e8f, #78a8ef);
+      --fc-brand-soft: light-dark(#e8f0fc, #1a3152);
+      --fc-danger: light-dark(#b42318, #ff8b82);
+      --fc-danger-soft: light-dark(#fff0ee, #45201f);
+      --fc-warn: light-dark(#a15c00, #ffbd66);
+      --fc-warn-soft: light-dark(#fff5e7, #3f2d17);
+      --fc-success: light-dark(#087a55, #58d3a6);
+      --fc-success-soft: light-dark(#e8f8f2, #17382e);
+      --fc-shadow: light-dark(0 18px 50px rgba(25, 47, 80, .1), 0 18px 50px rgba(0, 0, 0, .3));
+      font-family: Inter, &quot;Microsoft YaHei&quot;, &quot;PingFang SC&quot;, system-ui, sans-serif;
+      color: var(--fc-ink);
+      width: 100%;
+    }
+    #erp-contract-demo * { box-sizing: border-box; }
+    #erp-contract-demo button, #erp-contract-demo input { font: inherit; }
+    #erp-contract-demo button { cursor: pointer; }
+    #erp-contract-demo .fc-window {
+      background: var(--fc-bg);
+      border: 1px solid var(--fc-line);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--fc-shadow);
+      min-height: 680px;
+    }
+    #erp-contract-demo .fc-topbar {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 22px;
+      background: var(--fc-surface);
+      border-bottom: 1px solid var(--fc-line);
+    }
+    #erp-contract-demo .fc-brand { display: flex; align-items: center; gap: 10px; font-weight: 500; }
+    #erp-contract-demo .fc-mark {
+      width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center;
+      color: light-dark(#fff, #0f1722); background: var(--fc-brand);
+    }
+    #erp-contract-demo .fc-brand small { display: block; color: var(--fc-muted); font-weight: 400; margin-top: 2px; }
+    #erp-contract-demo .fc-top-actions { display: flex; align-items: center; gap: 10px; color: var(--fc-muted); }
+    #erp-contract-demo .fc-avatar {
+      width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center;
+      background: var(--fc-brand-soft); color: var(--fc-brand); font-weight: 500;
+    }
+    #erp-contract-demo .fc-main { min-height: 616px; }
+    #erp-contract-demo .fc-view { display: none; }
+    #erp-contract-demo .fc-view.is-active { display: block; }
+    #erp-contract-demo .fc-upload-view { padding: 52px 28px; }
+    #erp-contract-demo .fc-upload-wrap { max-width: 680px; margin: 0 auto; text-align: center; }
+    #erp-contract-demo .fc-eyebrow { color: var(--fc-brand); font-weight: 500; margin-bottom: 10px; }
+    #erp-contract-demo h1 { margin: 0; font-size: clamp(26px, 4vw, 38px); line-height: 1.2; font-weight: 500; }
+    #erp-contract-demo .fc-lead { color: var(--fc-muted); margin: 14px auto 28px; max-width: 580px; }
+    #erp-contract-demo .fc-dropzone {
+      display: block; padding: 34px 24px; background: var(--fc-surface); border: 1.5px dashed var(--fc-line);
+      border-radius: 16px; text-align: center; transition: .2s ease; cursor: pointer;
+    }
+    #erp-contract-demo .fc-dropzone.is-ready { border-color: var(--fc-brand); background: var(--fc-brand-soft); }
+    #erp-contract-demo .fc-dropzone:hover, #erp-contract-demo .fc-dropzone:focus-within { border-color: var(--fc-danger); }
+    #erp-contract-demo .fc-upload-icon {
+      width: 52px; height: 52px; margin: 0 auto 14px; border-radius: 14px; display: grid; place-items: center;
+      background: var(--fc-brand-soft); color: var(--fc-brand);
+    }
+    #erp-contract-demo .fc-drop-title { font-weight: 500; }
+    #erp-contract-demo .fc-drop-sub { color: var(--fc-muted); margin-top: 7px; }
+    #erp-contract-demo .fc-file-input { position: absolute; inline-size: 1px; block-size: 1px; opacity: 0; }
+    #erp-contract-demo .fc-file-row {
+      display: none; align-items: center; gap: 12px; text-align: left; margin-top: 16px; padding: 14px 16px;
+      border: 1px solid var(--fc-line); border-radius: 12px; background: var(--fc-surface);
+    }
+    #erp-contract-demo .fc-file-row.is-visible { display: flex; }
+    #erp-contract-demo .fc-file-meta { min-width: 0; flex: 1; }
+    #erp-contract-demo .fc-file-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 500; }
+    #erp-contract-demo .fc-file-size { color: var(--fc-muted); margin-top: 3px; }
+    #erp-contract-demo .fc-action-row { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    #erp-contract-demo .fc-button {
+      min-height: 40px; border: 1px solid var(--fc-line); border-radius: 10px; padding: 0 15px;
+      background: var(--fc-surface); color: var(--fc-ink); display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    #erp-contract-demo .fc-button:hover { background: var(--fc-surface-2); }
+    #erp-contract-demo .fc-button-primary { background: var(--fc-brand); color: light-dark(#fff, #0f1722); border-color: var(--fc-brand); }
+    #erp-contract-demo .fc-button-primary:hover { filter: brightness(.96); background: var(--fc-brand); }
+    #erp-contract-demo .fc-button:disabled { cursor: not-allowed; opacity: .45; }
+    #erp-contract-demo .fc-mode-row { margin-top: 22px; display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--fc-muted); flex-wrap: wrap; }
+    #erp-contract-demo .fc-chip { border-radius: 999px; padding: 5px 9px; background: var(--fc-surface-2); color: var(--fc-muted); border: 1px solid var(--fc-line); }
+    #erp-contract-demo .fc-process-view { padding: 74px 28px; }
+    #erp-contract-demo .fc-process-wrap { max-width: 560px; margin: 0 auto; text-align: center; }
+    #erp-contract-demo .fc-radar {
+      width: 92px; height: 92px; border-radius: 50%; margin: 0 auto 24px; position: relative;
+      background: conic-gradient(from 0deg, var(--fc-brand), transparent 45%, var(--fc-brand));
+      animation: fc-spin 1.4s linear infinite;
+    }
+    #erp-contract-demo .fc-radar::after { content: &quot;&quot;; position: absolute; inset: 7px; border-radius: 50%; background: var(--fc-bg); }
+    #erp-contract-demo .fc-radar::before { content: attr(data-label); position: absolute; inset: 0; display: grid; place-items: center; color: var(--fc-brand); z-index: 1; font-weight: 500; }
+    @keyframes fc-spin { to { transform: rotate(360deg); } }
+    #erp-contract-demo .fc-process-phase { display: inline-block; margin-bottom: 9px; color: var(--fc-brand); }
+    #erp-contract-demo .fc-progress { height: 8px; border-radius: 999px; background: var(--fc-line); overflow: hidden; margin: 24px 0 12px; }
+    #erp-contract-demo .fc-progress &gt; span { display: block; height: 100%; width: 0; background: var(--fc-brand); transition: width .35s ease; }
+    #erp-contract-demo .fc-process-step { color: var(--fc-muted); min-height: 24px; }
+    #erp-contract-demo .fc-result-head {
+      background: var(--fc-surface); border-bottom: 1px solid var(--fc-line); padding: 16px 20px;
+    }
+    #erp-contract-demo .fc-result-title-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+    #erp-contract-demo .fc-result-file { min-width: 0; }
+    #erp-contract-demo .fc-result-file strong { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 560px; }
+    #erp-contract-demo .fc-result-file span { color: var(--fc-muted); display: block; margin-top: 4px; }
+    #erp-contract-demo .fc-summary-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+    #erp-contract-demo .fc-metric { background: var(--fc-surface-2); padding: 12px 14px; border-radius: 10px; }
+    #erp-contract-demo .fc-metric span { display: block; color: var(--fc-muted); margin-bottom: 5px; }
+    #erp-contract-demo .fc-metric strong { font-size: 20px; font-weight: 500; }
+    #erp-contract-demo .fc-metric-danger strong { color: var(--fc-danger); }
+    #erp-contract-demo .fc-workspace { display: grid; grid-template-columns: 260px minmax(0, 1fr) 310px; min-height: 520px; }
+    #erp-contract-demo .fc-pane { background: var(--fc-surface); min-width: 0; }
+    #erp-contract-demo .fc-pane + .fc-pane { border-left: 1px solid var(--fc-line); }
+    #erp-contract-demo .fc-pane-head { padding: 13px 14px; border-bottom: 1px solid var(--fc-line); display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    #erp-contract-demo .fc-pane-head strong { font-weight: 500; }
+    #erp-contract-demo .fc-filter-row { display: flex; gap: 6px; padding: 10px 12px; border-bottom: 1px solid var(--fc-line); overflow-x: auto; }
+    #erp-contract-demo .fc-status-row { padding-top: 7px; padding-bottom: 7px; background: var(--fc-surface-2); }
+    #erp-contract-demo .fc-filter {
+      border: 0; background: transparent; color: var(--fc-muted); padding: 5px 8px; border-radius: 7px; white-space: nowrap;
+    }
+    #erp-contract-demo .fc-filter.is-active { color: var(--fc-brand); background: var(--fc-brand-soft); }
+    #erp-contract-demo .fc-tab-count { margin-left: 3px; }
+    #erp-contract-demo .fc-empty-list { padding: 28px 12px; text-align: center; color: var(--fc-muted); }
+    #erp-contract-demo .fc-empty-list i { display: block; margin: 0 auto 8px; color: var(--fc-line); }
+    #erp-contract-demo .fc-risk-list { padding: 8px; }
+    #erp-contract-demo .fc-risk-item {
+      width: 100%; border: 0; border-radius: 10px; padding: 11px 10px; display: grid; grid-template-columns: 8px 1fr;
+      gap: 10px; text-align: left; background: transparent; color: var(--fc-ink); margin-bottom: 3px;
+    }
+    #erp-contract-demo .fc-risk-item:hover { background: var(--fc-surface-2); }
+    #erp-contract-demo .fc-risk-item.is-active { background: var(--fc-brand-soft); }
+    #erp-contract-demo .fc-risk-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; background: var(--fc-warn); }
+    #erp-contract-demo .fc-risk-item[data-level=&quot;high&quot;] .fc-risk-dot { background: var(--fc-danger); }
+    #erp-contract-demo .fc-risk-item[data-decision=&quot;accepted&quot;] .fc-risk-dot { background: var(--fc-success); }
+    #erp-contract-demo .fc-risk-item[data-decision=&quot;modified&quot;] .fc-risk-dot { background: var(--fc-brand); }
+    #erp-contract-demo .fc-risk-item[data-decision=&quot;rejected&quot;] .fc-risk-dot { background: var(--fc-muted); }
+    #erp-contract-demo .fc-risk-name { font-weight: 500; display: block; }
+    #erp-contract-demo .fc-risk-clause { color: var(--fc-muted); display: block; margin-top: 3px; }
+    #erp-contract-demo .fc-contract-toolbar { padding: 9px 14px; border-bottom: 1px solid var(--fc-line); color: var(--fc-muted); display: flex; justify-content: space-between; gap: 10px; }
+    #erp-contract-demo .fc-document { padding: 22px clamp(18px, 4vw, 42px) 32px; background: var(--fc-surface-2); min-height: 100%; }
+    #erp-contract-demo .fc-paper { background: var(--fc-surface); border: 1px solid var(--fc-line); padding: 28px clamp(20px, 4vw, 42px); box-shadow: 0 5px 22px light-dark(rgba(20,42,72,.06), rgba(0,0,0,.18)); }
+    #erp-contract-demo .fc-paper h2 { text-align: center; margin: 0 0 6px; font-weight: 500; }
+    #erp-contract-demo .fc-paper .fc-doc-sub { color: var(--fc-muted); text-align: center; margin-bottom: 26px; }
+    #erp-contract-demo .fc-paper h3 { margin: 22px 0 10px; font-weight: 500; }
+    #erp-contract-demo .fc-paper p { margin: 0 0 12px; line-height: 1.85; }
+    #erp-contract-demo .fc-highlight { background: var(--fc-danger-soft); color: var(--fc-ink); border-bottom: 2px solid var(--fc-danger); padding: 2px 1px; }
+    #erp-contract-demo .fc-highlight-medium { background: var(--fc-warn-soft); border-bottom-color: var(--fc-warn); }
+    #erp-contract-demo .fc-opinion { padding: 15px; }
+    #erp-contract-demo .fc-severity { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 5px 9px; background: var(--fc-danger-soft); color: var(--fc-danger); font-weight: 500; }
+    #erp-contract-demo .fc-severity.medium { background: var(--fc-warn-soft); color: var(--fc-warn); }
+    #erp-contract-demo .fc-severity.handled { background: var(--fc-success-soft); color: var(--fc-success); }
+    #erp-contract-demo .fc-opinion h3 { margin: 13px 0 8px; font-weight: 500; }
+    #erp-contract-demo .fc-opinion-section { padding: 13px 0; border-top: 1px solid var(--fc-line); }
+    #erp-contract-demo .fc-opinion-section:first-of-type { border-top: 0; }
+    #erp-contract-demo .fc-opinion-label { color: var(--fc-muted); margin-bottom: 6px; }
+    #erp-contract-demo .fc-legal-opinion { margin: 13px 0 4px; padding: 12px; border-radius: 10px; background: var(--fc-brand-soft); color: var(--fc-ink); line-height: 1.7; }
+    #erp-contract-demo .fc-legal-opinion .fc-opinion-label { color: var(--fc-brand); font-weight: 600; }
+    #erp-contract-demo .fc-suggestion { background: var(--fc-success-soft); padding: 12px; border-radius: 10px; line-height: 1.7; }
+    #erp-contract-demo .fc-decision-actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 7px; margin-top: 13px; }
+    #erp-contract-demo .fc-decision-actions .fc-button { padding: 0 9px; }
+    #erp-contract-demo .fc-decision-actions .is-selected { background: var(--fc-brand-soft); color: var(--fc-brand); border-color: var(--fc-brand); }
+    #erp-contract-demo .fc-edit-box { margin-top: 10px; padding: 12px; border-radius: 10px; background: var(--fc-surface-2); border: 1px solid var(--fc-line); }
+    #erp-contract-demo .fc-edit-box[hidden] { display: none; }
+    #erp-contract-demo .fc-edit-label { display: block; color: var(--fc-muted); margin-bottom: 6px; }
+    #erp-contract-demo .fc-edit-control {
+      display: block; width: 100%; border: 1px solid var(--fc-line); border-radius: 8px; padding: 9px 10px;
+      color: var(--fc-ink); background: var(--fc-surface); resize: vertical;
+    }
+    #erp-contract-demo textarea.fc-edit-control { min-height: 112px; line-height: 1.65; }
+    #erp-contract-demo .fc-edit-actions { display: flex; gap: 7px; margin-top: 9px; }
+    #erp-contract-demo .fc-decision-status { display: none; align-items: flex-start; gap: 7px; margin-top: 11px; padding: 10px; border-radius: 9px; }
+    #erp-contract-demo .fc-decision-status.is-visible { display: flex; }
+    #erp-contract-demo .fc-decision-status.accepted, #erp-contract-demo .fc-decision-status.modified { color: var(--fc-success); background: var(--fc-success-soft); }
+    #erp-contract-demo .fc-decision-status.rejected { color: var(--fc-warn); background: var(--fc-warn-soft); }
+    #erp-contract-demo .fc-toast {
+      display: none; position: absolute; right: 18px; top: 76px; z-index: 5; padding: 12px 15px;
+      background: var(--fc-success-soft); color: var(--fc-success); border: 1px solid var(--fc-success); border-radius: 10px;
+    }
+    #erp-contract-demo .fc-toast.is-visible { display: flex; align-items: center; gap: 8px; }
+    #erp-contract-demo .fc-report-view { padding: 28px; background: var(--fc-surface-subtle); }
+    #erp-contract-demo .fc-report-wrap { max-width: 900px; margin: 0 auto; }
+    #erp-contract-demo .fc-report-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 18px; }
+    #erp-contract-demo .fc-report-sheet { background: var(--fc-surface); border: 1px solid var(--fc-line); border-radius: 14px; padding: 34px; box-shadow: var(--fc-shadow); }
+    #erp-contract-demo .fc-report-sheet h2 { margin: 0 0 8px; font-size: 25px; font-weight: 500; text-align: center; }
+    #erp-contract-demo .fc-report-meta { text-align: center; color: var(--fc-muted); margin-bottom: 26px; }
+    #erp-contract-demo .fc-report-section { padding: 18px 0; border-top: 1px solid var(--fc-line); }
+    #erp-contract-demo .fc-report-section h3 { margin: 0 0 12px; font-size: 17px; font-weight: 500; }
+    #erp-contract-demo .fc-report-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    #erp-contract-demo .fc-report-stat { padding: 12px; background: var(--fc-surface-subtle); border-radius: 10px; }
+    #erp-contract-demo .fc-report-stat span { display: block; color: var(--fc-muted); margin-bottom: 4px; }
+    #erp-contract-demo .fc-report-stat strong { font-size: 20px; font-weight: 500; }
+    #erp-contract-demo .fc-report-conclusion { padding: 14px; border-radius: 10px; background: var(--fc-danger-soft); color: var(--fc-ink); line-height: 1.7; }
+    #erp-contract-demo .fc-report-risk { display: grid; grid-template-columns: 76px minmax(0, 1fr) 88px; gap: 12px; align-items: start; padding: 11px 0; border-top: 1px solid var(--fc-line); }
+    #erp-contract-demo .fc-report-risk:first-child { border-top: 0; }
+    #erp-contract-demo .fc-report-risk small { color: var(--fc-muted); }
+    #erp-contract-demo .fc-report-risk-status { text-align: right; color: var(--fc-muted); }
+    #erp-contract-demo .fc-window { position: relative; }
+    @media (max-width: 860px) {
+      #erp-contract-demo .fc-workspace { grid-template-columns: 220px minmax(0, 1fr); }
+      #erp-contract-demo .fc-opinion-pane { grid-column: 1 / -1; border-left: 0 !important; border-top: 1px solid var(--fc-line); }
+      #erp-contract-demo .fc-summary-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      #erp-contract-demo .fc-report-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    #erp-contract-demo .fc-author-footer { padding: 10px 16px 14px; border-top: 1px solid var(--fc-line); color: var(--fc-muted); font-size: 11px; text-align: center; background: light-dark(#f8fbff,#0a1628); }
+    @media (max-width: 620px) {
+      #erp-contract-demo .fc-topbar { padding: 0 14px; }
+      #erp-contract-demo .fc-top-actions &gt; span { display: none; }
+      #erp-contract-demo .fc-upload-view { padding: 34px 14px; }
+      #erp-contract-demo .fc-workspace { display: block; }
+      #erp-contract-demo .fc-pane + .fc-pane { border-left: 0; border-top: 1px solid var(--fc-line); }
+      #erp-contract-demo .fc-summary-strip { grid-template-columns: 1fr 1fr; }
+      #erp-contract-demo .fc-result-file strong { max-width: 270px; }
+      #erp-contract-demo .fc-risk-list { display: grid; grid-template-columns: 1fr 1fr; }
+      #erp-contract-demo .fc-report-view { padding: 14px; }
+      #erp-contract-demo .fc-report-sheet { padding: 20px; }
+      #erp-contract-demo .fc-report-toolbar { align-items: stretch; flex-direction: column; }
+      #erp-contract-demo .fc-report-risk { grid-template-columns: 64px minmax(0, 1fr); }
+      #erp-contract-demo .fc-report-risk-status { grid-column: 2; text-align: left; }
+    }
+  &lt;/style&gt;
+
+  &lt;section class=&quot;fc-window&quot; aria-label=&quot;星途AI甲方法务合同审核原型&quot;&gt;
+    &lt;header class=&quot;fc-topbar&quot;&gt;
+      &lt;div class=&quot;fc-brand&quot;&gt;
+        &lt;span class=&quot;fc-mark&quot;&gt;&lt;i data-lucide=&quot;scale&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;
+        &lt;span&gt;星途AI&lt;small&gt;甲方合同审核工作台&lt;/small&gt;&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;fc-top-actions&quot;&gt;&lt;span&gt;wzp&lt;/span&gt;&lt;span&gt;采购方 · 法务视角&lt;/span&gt;&lt;span class=&quot;fc-avatar&quot;&gt;星&lt;/span&gt;&lt;/div&gt;
+    &lt;/header&gt;
+
+    &lt;main class=&quot;fc-main&quot;&gt;
+      &lt;section class=&quot;fc-view fc-upload-view is-active&quot; data-view=&quot;upload&quot;&gt;
+        &lt;div class=&quot;fc-upload-wrap&quot;&gt;
+          &lt;div class=&quot;fc-eyebrow&quot;&gt;ERP 私有云采购合同&lt;/div&gt;
+          &lt;h1&gt;上传乙方合同，生成甲方法务审查意见&lt;/h1&gt;
+          &lt;p class=&quot;fc-lead&quot;&gt;识别付款、验收、数据安全、知识产权、SLA、责任限制与退出机制风险，并生成可直接谈判的修改条款。&lt;/p&gt;
+          &lt;label class=&quot;fc-dropzone&quot; id=&quot;fc-dropzone&quot; for=&quot;fc-file-input&quot;&gt;
+            &lt;span class=&quot;fc-upload-icon&quot;&gt;&lt;i data-lucide=&quot;file-up&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;
+            &lt;span class=&quot;fc-drop-title&quot;&gt;点击选择合同，或拖放到此处&lt;/span&gt;
+            &lt;span class=&quot;fc-drop-sub&quot;&gt;支持 DOCX、PDF，单份不超过 20MB&lt;/span&gt;
+          &lt;/label&gt;
+          &lt;input class=&quot;fc-file-input&quot; id=&quot;fc-file-input&quot; type=&quot;file&quot; accept=&quot;.docx,.pdf,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document&quot; aria-label=&quot;上传合同&quot;&gt;
+          &lt;div class=&quot;fc-file-row&quot; id=&quot;fc-file-row&quot; aria-live=&quot;polite&quot;&gt;
+            &lt;i data-lucide=&quot;file-text&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+            &lt;div class=&quot;fc-file-meta&quot;&gt;&lt;div class=&quot;fc-file-name&quot; id=&quot;fc-file-name&quot;&gt;&lt;/div&gt;&lt;div class=&quot;fc-file-size&quot; id=&quot;fc-file-size&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+            &lt;i data-lucide=&quot;circle-check&quot; aria-hidden=&quot;true&quot; style=&quot;color:var(--fc-success)&quot;&gt;&lt;/i&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;fc-action-row&quot;&gt;
+            &lt;button type=&quot;button&quot; class=&quot;fc-button&quot; id=&quot;fc-sample&quot;&gt;&lt;i data-lucide=&quot;wand-sparkles&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;载入测试合同&lt;/button&gt;
+            &lt;button type=&quot;button&quot; class=&quot;fc-button fc-button-primary&quot; id=&quot;fc-upload-submit&quot; disabled&gt;&lt;i data-lucide=&quot;upload&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;上传合同&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;fc-mode-row&quot;&gt;&lt;span&gt;审核配置&lt;/span&gt;&lt;span class=&quot;fc-chip&quot;&gt;甲方 / 采购方&lt;/span&gt;&lt;span class=&quot;fc-chip&quot;&gt;企业法务&lt;/span&gt;&lt;span class=&quot;fc-chip&quot;&gt;严格模式&lt;/span&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/section&gt;
+
+      &lt;section class=&quot;fc-view fc-upload-view&quot; data-view=&quot;uploaded&quot;&gt;
+        &lt;div class=&quot;fc-upload-wrap&quot;&gt;
+          &lt;span class=&quot;fc-upload-icon&quot; style=&quot;color:var(--fc-success);background:var(--fc-success-soft)&quot;&gt;&lt;i data-lucide=&quot;circle-check&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;
+          &lt;div class=&quot;fc-eyebrow&quot; style=&quot;color:var(--fc-success)&quot;&gt;合同上传完成&lt;/div&gt;
+          &lt;h1&gt;文件已就绪，可以开始审核&lt;/h1&gt;
+          &lt;p class=&quot;fc-lead&quot; id=&quot;fc-uploaded-file&quot;&gt;ERP软件订阅及私有云部署服务合同_乙方版本_测试用.docx&lt;/p&gt;
+          &lt;div class=&quot;fc-action-row&quot;&gt;
+            &lt;button type=&quot;button&quot; class=&quot;fc-button&quot; id=&quot;fc-change-file&quot;&gt;&lt;i data-lucide=&quot;file-up&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;更换合同&lt;/button&gt;
+            &lt;button type=&quot;button&quot; class=&quot;fc-button fc-button-primary&quot; id=&quot;fc-audit-start&quot;&gt;&lt;i data-lucide=&quot;scan-text&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;开始 AI 审核&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;fc-mode-row&quot;&gt;&lt;span&gt;审核配置&lt;/span&gt;&lt;span class=&quot;fc-chip&quot;&gt;甲方 / 采购方&lt;/span&gt;&lt;span class=&quot;fc-chip&quot;&gt;企业法务&lt;/span&gt;&lt;span class=&quot;fc-chip&quot;&gt;严格模式&lt;/span&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/section&gt;
+
+      &lt;section class=&quot;fc-view fc-process-view&quot; data-view=&quot;processing&quot; aria-live=&quot;polite&quot;&gt;
+        &lt;div class=&quot;fc-process-wrap&quot;&gt;
+          &lt;div class=&quot;fc-radar&quot; id=&quot;fc-radar&quot; data-label=&quot;AI&quot; aria-hidden=&quot;true&quot;&gt;&lt;/div&gt;
+          &lt;div class=&quot;fc-process-phase&quot; id=&quot;fc-process-phase&quot;&gt;AI 法务审核&lt;/div&gt;
+          &lt;h1 id=&quot;fc-process-title&quot;&gt;正在进行 AI 审核&lt;/h1&gt;
+          &lt;p class=&quot;fc-lead&quot; id=&quot;fc-processing-file&quot;&gt;正在解析合同结构与附件……&lt;/p&gt;
+          &lt;div class=&quot;fc-progress&quot; role=&quot;progressbar&quot; aria-label=&quot;合同上传进度&quot; aria-valuemin=&quot;0&quot; aria-valuemax=&quot;100&quot; aria-valuenow=&quot;0&quot;&gt;&lt;span id=&quot;fc-progress-bar&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+          &lt;div class=&quot;fc-process-step&quot; id=&quot;fc-process-step&quot;&gt;正在建立安全上传通道&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/section&gt;
+
+      &lt;section class=&quot;fc-view&quot; data-view=&quot;results&quot;&gt;
+        &lt;div class=&quot;fc-result-head&quot;&gt;
+          &lt;div class=&quot;fc-result-title-row&quot;&gt;
+            &lt;div class=&quot;fc-result-file&quot;&gt;&lt;strong id=&quot;fc-result-name&quot;&gt;ERP软件订阅及私有云部署服务合同_乙方版本_测试用.docx&lt;/strong&gt;&lt;span&gt;审核完成 · 甲方企业法务 · 严格模式&lt;/span&gt;&lt;/div&gt;
+            &lt;div class=&quot;fc-action-row&quot; style=&quot;margin-top:0&quot;&gt;
+              &lt;button type=&quot;button&quot; class=&quot;fc-button&quot; id=&quot;fc-reupload&quot;&gt;&lt;i data-lucide=&quot;rotate-ccw&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;重新上传&lt;/button&gt;
+              &lt;button type=&quot;button&quot; class=&quot;fc-button fc-button-primary&quot; id=&quot;fc-report&quot;&gt;&lt;i data-lucide=&quot;file-down&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;生成审核报告&lt;/button&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;fc-summary-strip&quot;&gt;
+            &lt;div class=&quot;fc-metric fc-metric-danger&quot;&gt;&lt;span&gt;合同风险分&lt;/span&gt;&lt;strong&gt;28 / 100&lt;/strong&gt;&lt;/div&gt;
+            &lt;div class=&quot;fc-metric&quot;&gt;&lt;span&gt;高风险&lt;/span&gt;&lt;strong style=&quot;color:var(--fc-danger)&quot;&gt;25&lt;/strong&gt;&lt;/div&gt;
+            &lt;div class=&quot;fc-metric&quot;&gt;&lt;span&gt;中风险&lt;/span&gt;&lt;strong style=&quot;color:var(--fc-warn)&quot;&gt;13&lt;/strong&gt;&lt;/div&gt;
+            &lt;div class=&quot;fc-metric&quot;&gt;&lt;span&gt;合同金额&lt;/span&gt;&lt;strong&gt;392 万&lt;/strong&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;fc-workspace&quot;&gt;
+          &lt;aside class=&quot;fc-pane&quot;&gt;
+            &lt;div class=&quot;fc-pane-head&quot;&gt;&lt;strong&gt;风险清单&lt;/strong&gt;&lt;span class=&quot;fc-chip&quot; id=&quot;fc-decision-count&quot;&gt;处理进度 0 / 38&lt;/span&gt;&lt;/div&gt;
+            &lt;div class=&quot;fc-filter-row&quot; aria-label=&quot;风险等级&quot;&gt;
+              &lt;button type=&quot;button&quot; class=&quot;fc-filter is-active&quot; data-severity=&quot;high&quot;&gt;高风险 &lt;span class=&quot;fc-tab-count&quot;&gt;25&lt;/span&gt;&lt;/button&gt;
+              &lt;button type=&quot;button&quot; class=&quot;fc-filter&quot; data-severity=&quot;medium&quot;&gt;中风险 &lt;span class=&quot;fc-tab-count&quot;&gt;13&lt;/span&gt;&lt;/button&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;fc-filter-row fc-status-row&quot; aria-label=&quot;处理状态&quot;&gt;
+              &lt;button type=&quot;button&quot; class=&quot;fc-filter is-active&quot; data-status=&quot;pending&quot;&gt;待处理 &lt;span class=&quot;fc-tab-count&quot; id=&quot;fc-tab-pending-count&quot;&gt;25&lt;/span&gt;&lt;/button&gt;
+              &lt;button type=&quot;button&quot; class=&quot;fc-filter&quot; data-status=&quot;processed&quot;&gt;已处理 &lt;span class=&quot;fc-tab-count&quot; id=&quot;fc-tab-processed-count&quot;&gt;0&lt;/span&gt;&lt;/button&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;fc-risk-list&quot; id=&quot;fc-risk-list&quot;&gt;&lt;/div&gt;
+          &lt;/aside&gt;
+
+          &lt;section class=&quot;fc-pane&quot;&gt;
+            &lt;div class=&quot;fc-contract-toolbar&quot;&gt;&lt;span&gt;合同正文 · 原文定位&lt;/span&gt;&lt;span id=&quot;fc-page-label&quot;&gt;第 6 页 / 共 12 页&lt;/span&gt;&lt;/div&gt;
+            &lt;div class=&quot;fc-document&quot;&gt;
+              &lt;article class=&quot;fc-paper&quot; id=&quot;fc-paper&quot; aria-live=&quot;polite&quot;&gt;&lt;/article&gt;
+            &lt;/div&gt;
+          &lt;/section&gt;
+
+          &lt;aside class=&quot;fc-pane fc-opinion-pane&quot;&gt;
+            &lt;div class=&quot;fc-pane-head&quot;&gt;&lt;strong&gt;甲方法务意见&lt;/strong&gt;&lt;span id=&quot;fc-clause-id&quot;&gt;第 5.3 条&lt;/span&gt;&lt;/div&gt;
+            &lt;div class=&quot;fc-opinion&quot; id=&quot;fc-opinion&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
+          &lt;/aside&gt;
+        &lt;/div&gt;
+      &lt;/section&gt;
+
+      &lt;section class=&quot;fc-view fc-report-view&quot; data-view=&quot;report&quot; aria-live=&quot;polite&quot;&gt;
+        &lt;div class=&quot;fc-report-wrap&quot;&gt;
+          &lt;div class=&quot;fc-report-toolbar&quot;&gt;
+            &lt;div class=&quot;fc-result-file&quot;&gt;&lt;strong&gt;审核报告已生成&lt;/strong&gt;&lt;span&gt;报告内容已同步当前风险处理状态&lt;/span&gt;&lt;/div&gt;
+            &lt;div class=&quot;fc-action-row&quot; style=&quot;margin-top:0&quot;&gt;
+              &lt;button type=&quot;button&quot; class=&quot;fc-button&quot; id=&quot;fc-report-back&quot;&gt;&lt;i data-lucide=&quot;arrow-left&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;返回审核&lt;/button&gt;
+              &lt;button type=&quot;button&quot; class=&quot;fc-button fc-button-primary&quot; id=&quot;fc-report-download&quot;&gt;&lt;i data-lucide=&quot;download&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;下载报告&lt;/button&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;article class=&quot;fc-report-sheet&quot;&gt;
+            &lt;h2&gt;ERP SaaS 私有云采购合同审核报告&lt;/h2&gt;
+            &lt;div class=&quot;fc-report-meta&quot; id=&quot;fc-report-meta&quot;&gt;&lt;/div&gt;
+            &lt;section class=&quot;fc-report-section&quot;&gt;
+              &lt;h3&gt;一、审核结论&lt;/h3&gt;
+              &lt;div class=&quot;fc-report-conclusion&quot;&gt;从甲方立场，不建议按乙方原稿直接签署。合同存在数据使用、验收标准、责任限制、价格调整及退出机制等重大风险，应完成高风险条款修改并经相关负责人确认后再行签署。&lt;/div&gt;
+            &lt;/section&gt;
+            &lt;section class=&quot;fc-report-section&quot;&gt;
+              &lt;h3&gt;二、风险及处理概况&lt;/h3&gt;
+              &lt;div class=&quot;fc-report-grid&quot; id=&quot;fc-report-stats&quot;&gt;&lt;/div&gt;
+            &lt;/section&gt;
+            &lt;section class=&quot;fc-report-section&quot;&gt;
+              &lt;h3&gt;三、重点风险清单&lt;/h3&gt;
+              &lt;div id=&quot;fc-report-risks&quot;&gt;&lt;/div&gt;
+            &lt;/section&gt;
+          &lt;/article&gt;
+        &lt;/div&gt;
+      &lt;/section&gt;
+    &lt;/main&gt;
+    &lt;footer class=&quot;fc-author-footer&quot;&gt;星途AI · 甲方合同审核工作台 · 作者 wzp&lt;/footer&gt;
+    &lt;div class=&quot;fc-toast&quot; id=&quot;fc-toast&quot; role=&quot;status&quot;&gt;&lt;i data-lucide=&quot;circle-check&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;span&gt;审核报告已生成&lt;/span&gt;&lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;script&gt;
+    (() =&gt; {
+      const root = document.getElementById(&#x27;erp-contract-demo&#x27;);
+      const views = [...root.querySelectorAll(&#x27;.fc-view&#x27;)];
+      const fileInput = root.querySelector(&#x27;#fc-file-input&#x27;);
+      const fileRow = root.querySelector(&#x27;#fc-file-row&#x27;);
+      const fileName = root.querySelector(&#x27;#fc-file-name&#x27;);
+      const fileSize = root.querySelector(&#x27;#fc-file-size&#x27;);
+      const uploadButton = root.querySelector(&#x27;#fc-upload-submit&#x27;);
+      const auditButton = root.querySelector(&#x27;#fc-audit-start&#x27;);
+      const sampleButton = root.querySelector(&#x27;#fc-sample&#x27;);
+      const resultName = root.querySelector(&#x27;#fc-result-name&#x27;);
+      let selectedFileName = &#x27;&#x27;;
+      let activeRiskId = null;
+      let currentSeverity = &#x27;high&#x27;;
+      let currentStatus = &#x27;pending&#x27;;
+      const decisions = {};
+      const reportDecisionLabels = {accepted:&#x27;已采纳&#x27;, modified:&#x27;已修改后采纳&#x27;, rejected:&#x27;不采纳&#x27;};
+
+      const risks = [
+        {id:&#x27;5.3&#x27;, level:&#x27;high&#x27;, title:&#x27;合同期内单方涨价&#x27;, page:6, issue:&#x27;乙方可以仅提前15日通知调整后续年度订阅价格，甲方继续使用即视为接受。&#x27;, consequence:&#x27;三年期392万元项目的预算无法锁定；甲方拒绝涨价时缺少无责退出和退款权。&#x27;, suggestion:&#x27;本合同三年有效期内订阅价格保持不变。续订价格调整应至少提前60日书面通知，并由双方另行书面确认。&#x27;, section:&#x27;第五条 合同金额与支付&#x27;, before:&#x27;5.3 乙方有权根据人工、基础软件或监管成本变化调整后续年度订阅价格，并提前15日通知甲方；甲方继续使用即视为接受调整。&#x27;},
+        {id:&#x27;4.3&#x27;, level:&#x27;high&#x27;, title:&#x27;沉默及登录视为验收&#x27;, page:5, issue:&#x27;甲方仅有5个工作日提出全部异议，任一用户登录即视为项目全部验收合格。&#x27;, consequence:&#x27;试用、培训或技术验证都可能触发验收，甲方将提前失去拒收和要求整改的权利。&#x27;, suggestion:&#x27;验收应以双方签署书面验收单为准。试用、培训、登录及部分功能使用均不构成验收。&#x27;, section:&#x27;第四条 项目计划、交付与验收&#x27;, before:&#x27;4.3 乙方通知甲方验收后，甲方应在5个工作日内一次性书面提出全部异议；逾期未回复、甲方开始试运行或任一用户登录软件的，均视为项目全部验收合格。&#x27;},
+        {id:&#x27;8.2&#x27;, level:&#x27;high&#x27;, title:&#x27;甲方数据用于算法训练&#x27;, page:8, issue:&#x27;乙方可自行判断数据已去标识化，并将甲方数据用于算法训练、行业分析和商业展示。&#x27;, consequence:&#x27;可能超出项目履约必要范围，带来商业秘密、个人信息和数据泄露风险。&#x27;, suggestion:&#x27;未经甲方事先书面同意，乙方不得将甲方数据用于模型训练、产品开发、行业分析、商业展示或向第三方提供。&#x27;, section:&#x27;第八条 数据处理、迁移与备份&#x27;, before:&#x27;8.2 乙方可将甲方数据去标识化或汇总后用于算法训练、产品改进、行业分析、商业展示及其他经营目的。&#x27;},
+        {id:&#x27;15.3&#x27;, level:&#x27;high&#x27;, title:&#x27;乙方责任上限过低&#x27;, page:10, issue:&#x27;乙方累计责任仅为事发前连续三个月订阅费，且数据安全、保密和知识产权责任也受限。&#x27;, consequence:&#x27;以年费108万元计算，责任上限约27万元，明显不足以覆盖重大数据或停产损失。&#x27;, suggestion:&#x27;一般责任上限调整为合同总金额；数据安全、保密、知识产权侵权、故意或重大过失不适用责任上限。&#x27;, section:&#x27;第十五条 陈述保证与责任限制&#x27;, before:&#x27;15.3 乙方在本合同项下的累计责任总额不超过导致索赔事件发生前连续三个月甲方已支付的软件订阅费。&#x27;},
+        {id:&#x27;16.3&#x27;, level:&#x27;high&#x27;, title:&#x27;终止权严重不对等&#x27;, page:11, issue:&#x27;甲方提前终止需支付剩余全部订阅费，乙方却可以经营调整为由提前30日终止。&#x27;, consequence:&#x27;甲方被长期锁定，乙方退出成本很低，核心ERP业务连续性无法保障。&#x27;, suggestion:&#x27;设置对等终止权；乙方无因终止时应退还未履行费用，并承担数据迁移和合理替代成本。&#x27;, section:&#x27;第十六条 合同期限、续订与终止&#x27;, before:&#x27;16.3 甲方确需提前终止的，应提前90日书面通知乙方，并支付剩余合同期全部订阅费及未结费用。&#x27;},
+        {id:&#x27;3.2&#x27;, level:&#x27;high&#x27;, title:&#x27;故障归责倒置&#x27;, page:3, issue:&#x27;凡不能证明由软件代码直接造成的故障，均推定为甲方私有云环境原因。&#x27;, consequence:&#x27;复杂系统故障通常涉及软件、数据库和基础设施，甲方将承担几乎全部举证和停机风险。&#x27;, suggestion:&#x27;故障责任应依据双方联合根因分析确定；原因不明时，双方先恢复服务，再按过错和因果关系分担责任。&#x27;, section:&#x27;第三条 私有云部署条件与责任边界&#x27;, before:&#x27;3.2 凡无法明确证明由软件代码直接引起的故障，均视为甲方环境原因。&#x27;},
+        {id:&#x27;7.1&#x27;, level:&#x27;high&#x27;, title:&#x27;重大故障无恢复时限&#x27;, page:7, issue:&#x27;P1重大故障仅承诺4小时首次响应，没有临时恢复或最终修复时限。&#x27;, consequence:&#x27;ERP停机可能影响采购、库存、生产和财务结账，但合同没有可执行的恢复目标。&#x27;, suggestion:&#x27;P1故障应在30分钟内响应、2小时内提供临时恢复方案、4小时内恢复核心服务，并在2个工作日内提交根因报告。&#x27;, section:&#x27;第七条 运维支持与服务等级&#x27;, before:&#x27;7.1 重大故障的首次响应时间不超过4小时。首次响应仅指乙方确认收到问题。&#x27;},
+        {id:&#x27;20.1&#x27;, level:&#x27;medium&#x27;, title:&#x27;争议管辖地不利&#x27;, page:12, issue:&#x27;所有争议均由乙方住所地法院管辖。&#x27;, consequence:&#x27;甲方异地维权成本增加，也不符合采购方通常的管辖政策。&#x27;, suggestion:&#x27;因本合同产生的争议，由甲方住所地有管辖权的人民法院管辖。&#x27;, section:&#x27;第二十条 法律适用与争议解决&#x27;, before:&#x27;20.1 协商不成的，任何一方均应向乙方住所地有管辖权的人民法院提起诉讼。&#x27;},
+        {id:&#x27;1.3&#x27;, level:&#x27;high&#x27;, title:&#x27;在线规则优先于盖章合同&#x27;, page:2, issue:&#x27;乙方未来发布的产品规则和服务政策优先于双方盖章合同。&#x27;, consequence:&#x27;乙方可以绕过书面签署程序改变价格、服务范围和责任边界。&#x27;, suggestion:&#x27;双方盖章的合同正文及附件具有最高优先级；在线规则仅经甲方书面确认后生效。&#x27;, section:&#x27;第一条 定义与合同文件&#x27;, before:&#x27;1.3 前述文件不一致时，以更新时间较晚的乙方产品规则或服务政策为准。&#x27;},
+        {id:&#x27;2.1&#x27;, level:&#x27;medium&#x27;, title:&#x27;软件使用主体范围过窄&#x27;, page:2, issue:&#x27;软件许可仅限甲方本部，关联公司、分支机构使用需另行付费。&#x27;, consequence:&#x27;集团化ERP实际使用可能被认定为超许可，带来预算外费用。&#x27;, suggestion:&#x27;将甲方控股子公司、分公司及项目公司纳入授权使用主体，并以附件列明。&#x27;, section:&#x27;第二条 服务内容与项目范围&#x27;, before:&#x27;2.1 许可仅限甲方本部使用，甲方关联公司、分支机构及外部合作方使用应另行购买许可。&#x27;},
+        {id:&#x27;2.2/2.3&#x27;, level:&#x27;high&#x27;, title:&#x27;实施范围和追加收费不确定&#x27;, page:2, issue:&#x27;实施边界在项目启动后再确认，乙方可单方判断是否超出标准范围。&#x27;, consequence:&#x27;接口、数据清洗和个性化需求可能不断产生高额追加费用。&#x27;, suggestion:&#x27;签约前冻结实施清单、交付成果、接口数量、数据量、人天单价和变更审批机制。&#x27;, section:&#x27;第二条 服务内容与项目范围&#x27;, before:&#x27;2.3 乙方判断超出标准范围的工作，按实际人天另行收费。&#x27;},
+        {id:&#x27;2.4/13&#x27;, level:&#x27;high&#x27;, title:&#x27;乙方可单方变更或停止功能&#x27;, page:3, issue:&#x27;乙方可以升级、合并、替换或停止维护软件功能，无需甲方同意。&#x27;, consequence:&#x27;核心业务功能可能被降级或停止，甲方却没有退款和退出权。&#x27;, suggestion:&#x27;重大功能变更须经甲方书面同意；无法维持核心功能时，甲方可解除并获得未履行费用退款。&#x27;, section:&#x27;第二条 服务内容与项目范围&#x27;, before:&#x27;2.4 乙方可根据产品规划对模块和功能进行升级、合并、替换或停止维护。&#x27;},
+        {id:&#x27;3.3&#x27;, level:&#x27;high&#x27;, title:&#x27;远程运维权限过宽&#x27;, page:3, issue:&#x27;乙方及合作伙伴可无需逐次审批访问日志、配置和业务数据。&#x27;, consequence:&#x27;甲方私有云的高权限账号和敏感业务数据缺少最小权限及审计约束。&#x27;, suggestion:&#x27;采用工单审批、实名账号、最小权限、双因素认证、操作留痕和离场回收机制。&#x27;, section:&#x27;第三条 私有云部署条件与责任边界&#x27;, before:&#x27;3.3 乙方可在必要范围内调取系统日志、配置文件、业务数据样本和数据库信息，无需逐次取得甲方确认。&#x27;},
+        {id:&#x27;4.1&#x27;, level:&#x27;medium&#x27;, title:&#x27;项目周期仅为预估&#x27;, page:4, issue:&#x27;六个月实施周期不构成乙方的确定交付承诺。&#x27;, consequence:&#x27;项目可能长期延期，甲方无法依据明确日期追究责任。&#x27;, suggestion:&#x27;明确各阶段里程碑、最终交付日期、延期违约金及超过宽限期的解约权。&#x27;, section:&#x27;第四条 项目计划、交付与验收&#x27;, before:&#x27;4.1 预计实施周期为六个月。该周期为预估时间，不构成乙方的确定交付承诺。&#x27;},
+        {id:&#x27;5.1/5.5&#x27;, level:&#x27;high&#x27;, title:&#x27;付款节点与验收脱钩&#x27;, page:5, issue:&#x27;首年订阅费、全部实施费和迁移费在签约后一次付清，发票也不是付款前提。&#x27;, consequence:&#x27;甲方在乙方尚未完成实施和验收前失去主要付款制衡手段。&#x27;, suggestion:&#x27;按启动、初验、上线、终验分期付款，每期付款以验收和收到合格发票为前提。&#x27;, section:&#x27;第五条 合同金额与支付&#x27;, before:&#x27;5.1 甲方应在合同签署后5个工作日内支付首年订阅费、全部实施费及全部数据迁移费。&#x27;},
+        {id:&#x27;5.2&#x27;, level:&#x27;high&#x27;, title:&#x27;全部费用一律不退&#x27;, page:5, issue:&#x27;即使乙方延期、部分模块未上线或合同提前终止，全部费用也不予退还。&#x27;, consequence:&#x27;乙方未完整履约时，甲方仍可能承担392万元合同项下的全部付款义务。&#x27;, suggestion:&#x27;因乙方违约、未交付或无因终止，应退还未履行期间费用，并赔偿甲方损失。&#x27;, section:&#x27;第五条 合同金额与支付&#x27;, before:&#x27;5.2 所有费用一经支付不予退还。&#x27;},
+        {id:&#x27;5.4&#x27;, level:&#x27;medium&#x27;, title:&#x27;逾期付款责任过高&#x27;, page:6, issue:&#x27;甲方每日承担0.1%违约金，逾期3日乙方即可暂停关键服务。&#x27;, consequence:&#x27;违约金负担较重，短期付款争议也可能导致ERP停服。&#x27;, suggestion:&#x27;降低违约金比例，设置书面催告和合理宽限期，争议款项及关键业务不得直接停服。&#x27;, section:&#x27;第五条 合同金额与支付&#x27;, before:&#x27;5.4 每逾期一日按应付未付金额的0.1%支付违约金。逾期超过3日，乙方可暂停服务。&#x27;},
+        {id:&#x27;6.2&#x27;, level:&#x27;medium&#x27;, title:&#x27;许可审计及加价处罚&#x27;, page:6, issue:&#x27;乙方可单方审计用户数量，并按届时价格追补及加收50%管理费。&#x27;, consequence:&#x27;审计范围和计费标准不透明，可能产生较大追加费用。&#x27;, suggestion:&#x27;限定审计频率和范围，提前通知并遵守保密要求，删除50%的惩罚性管理费。&#x27;, section:&#x27;第六条 订阅许可与账号管理&#x27;, before:&#x27;6.2 超出许可的，甲方应按乙方届时公开价格补缴费用并加付50%的许可管理费。&#x27;},
+        {id:&#x27;7.2-7.4&#x27;, level:&#x27;high&#x27;, title:&#x27;SLA不可用时间排除过宽&#x27;, page:7, issue:&#x27;升级、紧急维护、安全攻击和多种第三方原因均不计入不可用时间。&#x27;, consequence:&#x27;即使业务实际中断，甲方也可能无法获得任何SLA补偿。&#x27;, suggestion:&#x27;仅排除甲方单独原因和法定不可抗力；乙方升级、漏洞和分包方原因应计入不可用时间。&#x27;, section:&#x27;第七条 运维支持与服务等级&#x27;, before:&#x27;7.2 因计划维护、版本升级、安全攻击或乙方合理控制范围之外的原因造成的中断，不计入不可用时间。&#x27;},
+        {id:&#x27;7.3&#x27;, level:&#x27;medium&#x27;, title:&#x27;SLA补偿不足且为唯一救济&#x27;, page:7, issue:&#x27;补偿上限仅为当月订阅费10%，申请期只有5日，并排除其他救济。&#x27;, consequence:&#x27;对于影响生产和财务结账的重大停机，补偿与实际损失不匹配。&#x27;, suggestion:&#x27;采用分级补偿，延长申请期，并保留根本违约下的解约和索赔权。&#x27;, section:&#x27;第七条 运维支持与服务等级&#x27;, before:&#x27;7.3 服务期限抵扣是甲方就服务不可用可获得的唯一救济。&#x27;},
+        {id:&#x27;8.3&#x27;, level:&#x27;high&#x27;, title:&#x27;个人信息责任单方转嫁&#x27;, page:8, issue:&#x27;甲方承担全部个人信息合法性责任，乙方没有承诺按委托范围处理。&#x27;, consequence:&#x27;乙方超范围处理或安全措施不足时，责任边界仍可能全部压给甲方。&#x27;, suggestion:&#x27;签署数据处理附件，明确双方角色、处理目的、范围、期限、安全措施和协助义务。&#x27;, section:&#x27;第八条 数据处理、迁移与备份&#x27;, before:&#x27;8.3 因甲方数据引发的投诉、调查或索赔由甲方承担。&#x27;},
+        {id:&#x27;8.5&#x27;, level:&#x27;high&#x27;, title:&#x27;数据副本保存不受控&#x27;, page:8, issue:&#x27;乙方可在其或合作伙伴环境临时保存甲方数据副本，期限由乙方自行决定。&#x27;, consequence:&#x27;私有云数据可能离开甲方控制环境，保存位置、访问人员和删除结果均不透明。&#x27;, suggestion:&#x27;原则上禁止数据离开甲方环境；确需导出时逐次审批、加密、限期删除并提供证明。&#x27;, section:&#x27;第八条 数据处理、迁移与备份&#x27;, before:&#x27;8.5 乙方可根据排障需要在其或合作伙伴环境中临时保存数据副本。&#x27;},
+        {id:&#x27;8.6&#x27;, level:&#x27;high&#x27;, title:&#x27;退出和数据导出机制受限&#x27;, page:8, issue:&#x27;甲方结清全部费用并额外付费后才能导出数据，下载窗口仅7日。&#x27;, consequence:&#x27;合同终止时可能无法及时获得完整数据并平稳迁移到替代系统。&#x27;, suggestion:&#x27;提供不少于60日的免费结构化数据导出期、完整性校验和合理的退出协助。&#x27;, section:&#x27;第八条 数据处理、迁移与备份&#x27;, before:&#x27;8.6 甲方应在终止后7日内完成下载，逾期乙方可删除数据且不承担责任。&#x27;},
+        {id:&#x27;9.1/9.2&#x27;, level:&#x27;high&#x27;, title:&#x27;安全义务及事件通知不足&#x27;, page:9, issue:&#x27;乙方仅采取其认为合理的措施，并在内部核实后自行决定是否通知安全事件。&#x27;, consequence:&#x27;甲方可能无法及时采取止损、监管报告和个人信息通知措施。&#x27;, suggestion:&#x27;约定明确安全基线、事件发现后立即通知、持续通报、根因报告和调查配合义务。&#x27;, section:&#x27;第九条 网络与信息安全&#x27;, before:&#x27;9.2 乙方将在完成内部核实并确认事件对甲方产生实质影响后通知甲方。&#x27;},
+        {id:&#x27;9.3&#x27;, level:&#x27;high&#x27;, title:&#x27;混合原因安全事件乙方免责&#x27;, page:9, issue:&#x27;只要安全事件存在双方混合原因，乙方即完全免责。&#x27;, consequence:&#x27;即使乙方软件漏洞或运维操作造成部分损害，也可能不承担责任。&#x27;, suggestion:&#x27;根据双方过错和因果关系分担责任，乙方对软件漏洞、运维行为和人员行为负责。&#x27;, section:&#x27;第九条 网络与信息安全&#x27;, before:&#x27;9.3 因甲方环境或双方原因混合导致的安全事件，乙方不承担责任。&#x27;},
+        {id:&#x27;9.4&#x27;, level:&#x27;medium&#x27;, title:&#x27;甲方安全审计权受限&#x27;, page:9, issue:&#x27;甲方开展渗透测试或安全评估须提前30日并使用乙方认可的机构。&#x27;, consequence:&#x27;可能影响甲方执行集团安全制度和监管合规审计。&#x27;, suggestion:&#x27;保留甲方及其监管机构的合理安全审计权，仅约定提前通知和不影响生产的测试窗口。&#x27;, section:&#x27;第九条 网络与信息安全&#x27;, before:&#x27;9.4 甲方开展安全测试应至少提前30日取得乙方书面同意。&#x27;},
+        {id:&#x27;10.2&#x27;, level:&#x27;high&#x27;, title:&#x27;付费定制成果仍归乙方&#x27;, page:9, issue:&#x27;甲方付费形成的脚本、报表、接口和流程配置全部归乙方。&#x27;, consequence:&#x27;订阅终止后甲方可能无法继续使用或维护自身出资形成的成果。&#x27;, suggestion:&#x27;区分乙方底层平台与甲方定制成果，至少授予甲方永久、不可撤销的使用和维护权。&#x27;, section:&#x27;第十条 知识产权&#x27;, before:&#x27;10.2 无论是否由甲方付费提出需求，定制成果知识产权均归乙方所有。&#x27;},
+        {id:&#x27;10.4&#x27;, level:&#x27;high&#x27;, title:&#x27;知识产权侵权救济不足&#x27;, page:9, issue:&#x27;乙方可仅修改、替换或退款，且以此作为全部侵权责任。&#x27;, consequence:&#x27;甲方可能遭遇第三方索赔和系统停用，却得不到完整抗辩与赔偿。&#x27;, suggestion:&#x27;乙方负责抗辩并赔偿，保障甲方持续使用；侵权责任不受一般责任上限限制。&#x27;, section:&#x27;第十条 知识产权&#x27;, before:&#x27;10.4 前述修改、替换或退款措施为乙方承担的全部责任。&#x27;},
+        {id:&#x27;11&#x27;, level:&#x27;high&#x27;, title:&#x27;保密义务明显不对等&#x27;, page:10, issue:&#x27;甲方承担严格保密义务，乙方仅保护明确标注为保密的书面资料。&#x27;, consequence:&#x27;未标注的业务数据、口头披露信息和商业秘密可能失去合同保护。&#x27;, suggestion:&#x27;自动纳入依法应保密的信息和甲方业务数据，双方义务对等，披露遵循最小必要原则。&#x27;, section:&#x27;第十一条 保密&#x27;, before:&#x27;11.2 乙方仅对甲方明确标注为“保密”的书面资料承担保密义务。&#x27;},
+        {id:&#x27;12.1&#x27;, level:&#x27;high&#x27;, title:&#x27;分包和数据处理无需同意&#x27;, page:10, issue:&#x27;乙方可任意分包实施、运维和数据处理，并可随时更换分包方。&#x27;, consequence:&#x27;甲方难以掌握实际接触数据的主体及其安全能力。&#x27;, suggestion:&#x27;重要分包须经甲方事先书面同意，披露分包清单，乙方对分包方行为承担完整责任。&#x27;, section:&#x27;第十二条 分包与第三方服务&#x27;, before:&#x27;12.1 乙方可将实施、运维、客服、数据处理委托第三方，无需甲方另行同意。&#x27;},
+        {id:&#x27;14&#x27;, level:&#x27;high&#x27;, title:&#x27;乙方暂停服务权过宽&#x27;, page:10, issue:&#x27;乙方可根据主观判断立即暂停许可、升级和支持，暂停期间仍计费。&#x27;, consequence:&#x27;轻微争议也可能影响甲方ERP连续运行和数据访问。&#x27;, suggestion:&#x27;仅在重大违约或紧急安全风险时暂停，原则上先书面催告，并保障数据导出和核心业务连续性。&#x27;, section:&#x27;第十四条 暂停服务&#x27;, before:&#x27;14.1 乙方认为可能影响软件安全时，可立即暂停服务且无需承担责任。&#x27;},
+        {id:&#x27;15.4&#x27;, level:&#x27;medium&#x27;, title:&#x27;软件计算结果风险全部转嫁&#x27;, page:10, issue:&#x27;乙方对软件报表、算法和计算结果造成的经营、财务或税务损失不负责。&#x27;, consequence:&#x27;即使因软件缺陷产生错误结果，甲方也可能无法追责。&#x27;, suggestion:&#x27;乙方应保证软件按文档和验收标准正确运行，并修复及赔偿可归责的软件计算错误。&#x27;, section:&#x27;第十五条 陈述保证与责任限制&#x27;, before:&#x27;15.4 因甲方依据软件报表、算法或计算结果作出决策产生的损失，由甲方自行承担。&#x27;},
+        {id:&#x27;16.1&#x27;, level:&#x27;high&#x27;, title:&#x27;订阅服务期起算过早&#x27;, page:11, issue:&#x27;管理员账号交付即开始三年服务期，实施和试运行也消耗订阅期限。&#x27;, consequence:&#x27;甲方尚未正式上线就开始支付和消耗订阅服务。&#x27;, suggestion:&#x27;订阅期从最终上线验收或生产环境正式启用之日开始计算。&#x27;, section:&#x27;第十六条 合同期限、续订与终止&#x27;, before:&#x27;16.1 服务期自乙方交付管理员账号之日起计算，实施期和试运行期均计入服务期。&#x27;},
+        {id:&#x27;16.2&#x27;, level:&#x27;medium&#x27;, title:&#x27;默认自动续订&#x27;, page:11, issue:&#x27;甲方未提前60日提出不续订，合同即自动续订一年。&#x27;, consequence:&#x27;内部采购流程未完成时，也可能产生新的年度付款义务。&#x27;, suggestion:&#x27;改为双方书面续签；如保留自动续订，应缩短通知期并明确续订价格上限。&#x27;, section:&#x27;第十六条 合同期限、续订与终止&#x27;, before:&#x27;16.2 服务期届满前60日甲方未提出不续订，本合同自动续订一年。&#x27;},
+        {id:&#x27;17.3&#x27;, level:&#x27;medium&#x27;, title:&#x27;乙方延期责任过低&#x27;, page:11, issue:&#x27;延期违约金仅以实施费为基数，日万分之一且累计不超过2%。&#x27;, consequence:&#x27;最高约1.04万元，难以约束数百万元ERP项目长期延期。&#x27;, suggestion:&#x27;以合同总价或受影响费用为基数提高违约金，并设置超期解除和损失赔偿权。&#x27;, section:&#x27;第十七条 违约责任与赔偿&#x27;, before:&#x27;17.3 乙方延期违约金累计不超过实施服务费的2%，且为甲方唯一救济。&#x27;},
+        {id:&#x27;18&#x27;, level:&#x27;medium&#x27;, title:&#x27;不可抗力范围被不当扩大&#x27;, page:11, issue:&#x27;网络攻击、云商和基础软件供应商故障被当然列为不可抗力。&#x27;, consequence:&#x27;本应由乙方管理的技术和供应链风险可能被用于免责。&#x27;, suggestion:&#x27;按法定不可抗力标准认定，可预防的安全事件和供应链故障不当然免责，未履行费用应退还。&#x27;, section:&#x27;第十八条 不可抗力&#x27;, before:&#x27;18.1 不可抗力包括网络攻击、病毒、云服务商或基础软件供应商故障。&#x27;},
+        {id:&#x27;19.1/19.2&#x27;, level:&#x27;medium&#x27;, title:&#x27;通知和电子证据规则单方化&#x27;, page:12, issue:&#x27;乙方后台消息发送即视为送达，并突出乙方服务器记录的证据效力。&#x27;, consequence:&#x27;甲方可能未实际收到重大通知，证据形成和控制也不对等。&#x27;, suggestion:&#x27;重大通知应送达指定联系人并能证明接收，双方电子证据均依法质证。&#x27;, section:&#x27;第十九条 通知与电子证据&#x27;, before:&#x27;19.1 乙方向管理后台发送信息后即视为送达。&#x27;},
+        {id:&#x27;21.1&#x27;, level:&#x27;medium&#x27;, title:&#x27;合同转让权不对等&#x27;, page:12, issue:&#x27;甲方不得转让合同，乙方却可转给关联公司或业务承继方。&#x27;, consequence:&#x27;乙方可能将合同转给资质、能力或信用较弱的主体。&#x27;, suggestion:&#x27;乙方重大转让须经甲方书面同意，受让方资质下降时甲方有权解除。&#x27;, section:&#x27;第二十一条 其他&#x27;, before:&#x27;21.1 乙方可将本合同转让给其关联公司或业务承继方，并通知甲方。&#x27;}
+      ];
+
+      const showView = (name) =&gt; views.forEach(v =&gt; v.classList.toggle(&#x27;is-active&#x27;, v.dataset.view === name));
+      const humanSize = bytes =&gt; bytes ? `${(bytes / 1024).toFixed(1)} KB` : &#x27;46.9 KB&#x27;;
+      const setFile = (name, size) =&gt; {
+        selectedFileName = name;
+        fileName.textContent = name;
+        fileSize.textContent = `${size} · DOCX · 已准备审核`;
+        fileRow.classList.add(&#x27;is-visible&#x27;);
+        root.querySelector(&#x27;#fc-dropzone&#x27;).classList.add(&#x27;is-ready&#x27;);
+        uploadButton.disabled = false;
+        if (window.lucide) lucide.createIcons({ attrs: { width: 16, height: 16 } });
+      };
+
+      fileInput.addEventListener(&#x27;change&#x27;, () =&gt; {
+        const file = fileInput.files &amp;&amp; fileInput.files[0];
+        if (!file) return;
+        const valid = /\.(docx|pdf)$/i.test(file.name);
+        if (!valid) {
+          fileRow.classList.add(&#x27;is-visible&#x27;);
+          fileName.textContent = &#x27;文件格式不支持&#x27;;
+          fileSize.textContent = &#x27;请选择 DOCX 或 PDF 文件&#x27;;
+          uploadButton.disabled = true;
+          return;
+        }
+        setFile(file.name, humanSize(file.size));
+      });
+
+      sampleButton.addEventListener(&#x27;click&#x27;, () =&gt; setFile(&#x27;ERP软件订阅及私有云部署服务合同_乙方版本_测试用.docx&#x27;, &#x27;46.9 KB&#x27;));
+
+      const bar = root.querySelector(&#x27;#fc-progress-bar&#x27;);
+      const progress = root.querySelector(&#x27;.fc-progress&#x27;);
+      const step = root.querySelector(&#x27;#fc-process-step&#x27;);
+      const processTitle = root.querySelector(&#x27;#fc-process-title&#x27;);
+      const processPhase = root.querySelector(&#x27;#fc-process-phase&#x27;);
+      const radar = root.querySelector(&#x27;#fc-radar&#x27;);
+      const pause = duration =&gt; new Promise(resolve =&gt; setTimeout(resolve, duration));
+      const runStages = (stages, interval) =&gt; new Promise(resolve =&gt; {
+        let index = 0;
+        const timer = setInterval(() =&gt; {
+          const [value, label] = stages[index];
+          bar.style.width = `${value}%`;
+          progress.setAttribute(&#x27;aria-valuenow&#x27;, value);
+          step.textContent = label;
+          index += 1;
+          if (index === stages.length) {
+            clearInterval(timer);
+            setTimeout(resolve, 300);
+          }
+        }, interval);
+      });
+      const prepareProgress = (phaseLabel, titleLabel, radarLabel, ariaLabel, firstStep) =&gt; {
+        processPhase.textContent = phaseLabel;
+        processTitle.textContent = titleLabel;
+        radar.dataset.label = radarLabel;
+        progress.setAttribute(&#x27;aria-label&#x27;, ariaLabel);
+        progress.setAttribute(&#x27;aria-valuenow&#x27;, &#x27;0&#x27;);
+        bar.style.width = &#x27;0%&#x27;;
+        step.textContent = firstStep;
+        root.querySelector(&#x27;#fc-processing-file&#x27;).textContent = selectedFileName;
+      };
+
+      uploadButton.addEventListener(&#x27;click&#x27;, async () =&gt; {
+        uploadButton.disabled = true;
+        prepareProgress(&#x27;文件上传&#x27;, &#x27;正在上传合同&#x27;, &#x27;上传&#x27;, &#x27;合同上传进度&#x27;, &#x27;正在建立安全上传通道&#x27;);
+        showView(&#x27;processing&#x27;);
+        await runStages([
+          [8, &#x27;正在建立安全上传通道&#x27;],
+          [22, &#x27;正在上传合同文件&#x27;],
+          [39, &#x27;合同上传中 · 39%&#x27;],
+          [57, &#x27;合同上传中 · 57%&#x27;],
+          [74, &#x27;合同上传中 · 74%&#x27;],
+          [91, &#x27;正在校验文件完整性&#x27;],
+          [100, &#x27;合同上传完成&#x27;]
+        ], 470);
+        await pause(500);
+        root.querySelector(&#x27;#fc-uploaded-file&#x27;).textContent = selectedFileName;
+        showView(&#x27;uploaded&#x27;);
+        uploadButton.disabled = false;
+        if (window.lucide) lucide.createIcons({ attrs: { width: 16, height: 16 } });
+      });
+
+      auditButton.addEventListener(&#x27;click&#x27;, async () =&gt; {
+        auditButton.disabled = true;
+        prepareProgress(&#x27;AI 法务审核&#x27;, &#x27;正在进行 AI 审核&#x27;, &#x27;AI&#x27;, &#x27;AI审核进度&#x27;, &#x27;正在准备合同解析&#x27;);
+        showView(&#x27;processing&#x27;);
+        await pause(400);
+        await runStages([
+          [9, &#x27;解析合同正文、目录与附件&#x27;],
+          [24, &#x27;提取合同主体、金额与服务范围&#x27;],
+          [41, &#x27;识别ERP私有云部署责任边界&#x27;],
+          [58, &#x27;检查付款、验收、SLA与退出机制&#x27;],
+          [74, &#x27;比对甲方法务审核规则库&#x27;],
+          [89, &#x27;生成风险意见与替换条款&#x27;],
+          [100, &#x27;AI审核完成，共识别38项风险&#x27;]
+        ], 560);
+        await pause(550);
+
+        resultName.textContent = selectedFileName;
+        currentSeverity = &#x27;high&#x27;;
+        currentStatus = &#x27;pending&#x27;;
+        activeRiskId = null;
+        syncTabState();
+        updateTabCounts();
+        renderRiskList();
+        selectRisk(getVisibleRisks()[0]);
+        showView(&#x27;results&#x27;);
+        auditButton.disabled = false;
+        if (window.lucide) lucide.createIcons({ attrs: { width: 16, height: 16 } });
+      });
+
+      root.querySelector(&#x27;#fc-change-file&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+        fileInput.value = &#x27;&#x27;;
+        selectedFileName = &#x27;&#x27;;
+        fileRow.classList.remove(&#x27;is-visible&#x27;);
+        root.querySelector(&#x27;#fc-dropzone&#x27;).classList.remove(&#x27;is-ready&#x27;);
+        uploadButton.disabled = true;
+        showView(&#x27;upload&#x27;);
+      });
+
+      const getVisibleRisks = () =&gt; risks.filter(risk =&gt; {
+        const severityMatch = risk.level === currentSeverity;
+        const statusMatch = currentStatus === &#x27;processed&#x27; ? Boolean(decisions[risk.id]) : !decisions[risk.id];
+        return severityMatch &amp;&amp; statusMatch;
+      });
+
+      const updateTabCounts = () =&gt; {
+        const sameSeverity = risks.filter(risk =&gt; risk.level === currentSeverity);
+        const processed = sameSeverity.filter(risk =&gt; decisions[risk.id]).length;
+        root.querySelector(&#x27;#fc-tab-pending-count&#x27;).textContent = sameSeverity.length - processed;
+        root.querySelector(&#x27;#fc-tab-processed-count&#x27;).textContent = processed;
+        root.querySelector(&#x27;#fc-decision-count&#x27;).textContent = `处理进度 ${Object.keys(decisions).length} / 38`;
+      };
+
+      const syncTabState = () =&gt; {
+        root.querySelectorAll(&#x27;[data-severity]&#x27;).forEach(button =&gt; button.classList.toggle(&#x27;is-active&#x27;, button.dataset.severity === currentSeverity));
+        root.querySelectorAll(&#x27;[data-status]&#x27;).forEach(button =&gt; button.classList.toggle(&#x27;is-active&#x27;, button.dataset.status === currentStatus));
+      };
+
+      const renderRiskList = () =&gt; {
+        const list = root.querySelector(&#x27;#fc-risk-list&#x27;);
+        const shown = getVisibleRisks();
+        list.innerHTML = shown.length ? shown.map((risk, index) =&gt; `
+          &lt;button type=&quot;button&quot; class=&quot;fc-risk-item${risk.id === activeRiskId || (!activeRiskId &amp;&amp; index === 0) ? &#x27; is-active&#x27; : &#x27;&#x27;}&quot; data-risk-id=&quot;${risk.id}&quot; data-level=&quot;${risk.level}&quot; data-decision=&quot;${decisions[risk.id] ? decisions[risk.id].type : &#x27;&#x27;}&quot;&gt;
+            &lt;span class=&quot;fc-risk-dot&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+            &lt;span&gt;&lt;span class=&quot;fc-risk-name&quot;&gt;${risk.title}&lt;/span&gt;&lt;span class=&quot;fc-risk-clause&quot;&gt;${decisions[risk.id] ? ({accepted:&#x27;已采纳&#x27;, modified:&#x27;已修改&#x27;, rejected:&#x27;不采纳&#x27;}[decisions[risk.id].type] + &#x27; · &#x27;) : &#x27;&#x27;}第 ${risk.id} 条&lt;/span&gt;&lt;/span&gt;
+          &lt;/button&gt;`).join(&#x27;&#x27;) : `&lt;div class=&quot;fc-empty-list&quot;&gt;&lt;i data-lucide=&quot;inbox&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;${currentStatus === &#x27;processed&#x27; ? &#x27;暂无已处理风险&#x27; : &#x27;当前等级风险已全部处理&#x27;}&lt;/div&gt;`;
+        list.querySelectorAll(&#x27;.fc-risk-item&#x27;).forEach(button =&gt; button.addEventListener(&#x27;click&#x27;, () =&gt; {
+          list.querySelectorAll(&#x27;.fc-risk-item&#x27;).forEach(item =&gt; item.classList.remove(&#x27;is-active&#x27;));
+          button.classList.add(&#x27;is-active&#x27;);
+          selectRisk(risks.find(r =&gt; r.id === button.dataset.riskId));
+        }));
+      };
+
+      const buildLegalOpinion = risk =&gt; {
+        const mustChange = risk.level === &#x27;high&#x27;;
+        let escalation;
+        if (/数据|个人信息|安全|算法/.test(risk.title)) {
+          escalation = &#x27;如乙方拒绝修改，建议提交数据合规及信息安全负责人评估；未获专项批准前，不建议签署。&#x27;;
+        } else if (/付款|价格|费用|涨价/.test(risk.title)) {
+          escalation = &#x27;请采购及财务确认预算影响；在价格与付款条件锁定前，不建议放行。&#x27;;
+        } else if (/验收|交付|SLA|故障|服务/.test(risk.title)) {
+          escalation = &#x27;请业务及 IT 负责人确认可执行标准；未形成书面验收或服务指标前，不建议放行。&#x27;;
+        } else if (/责任|免责|赔偿|侵权/.test(risk.title)) {
+          escalation = &#x27;该项不宜作为一般商务让步；乙方拒绝调整时，应升级至项目决策人审批。&#x27;;
+        } else if (/终止|续订|退出/.test(risk.title)) {
+          escalation = &#x27;应确保甲方具备可执行的退出、退款和迁移安排，否则不建议签署。&#x27;;
+        } else {
+          escalation = mustChange
+            ? &#x27;如乙方拒绝修改，应升级至项目负责人审批；未获批准前，不建议签署。&#x27;
+            : &#x27;如业务坚持保留，应由业务负责人书面确认并接受该风险。&#x27;;
+        }
+        const stance = mustChange
+          ? &#x27;不同意按乙方原文签署，本条应列为签约前必须修改项。&#x27;
+          : &#x27;原则上不接受乙方原文，建议在本轮谈判中争取调整。&#x27;;
+        return `${stance}${escalation}`;
+      };
+
+      const selectRisk = risk =&gt; {
+        activeRiskId = risk.id;
+        const existingDecision = decisions[risk.id];
+        const decisionShortLabel = existingDecision ? ({accepted:&#x27;已采纳&#x27;, modified:&#x27;已修改后采纳&#x27;, rejected:&#x27;已不采纳&#x27;}[existingDecision.type]) : &#x27;&#x27;;
+        const severityLabel = existingDecision
+          ? `${risk.level === &#x27;high&#x27; ? &#x27;高风险&#x27; : &#x27;中风险&#x27;} · 已处理（${decisionShortLabel}）`
+          : `${risk.level === &#x27;high&#x27; ? &#x27;高风险 · 必须修改&#x27; : &#x27;中风险 · 建议争取&#x27;}`;
+        root.querySelector(&#x27;#fc-page-label&#x27;).textContent = `第 ${risk.page} 页 / 共 12 页`;
+        root.querySelector(&#x27;#fc-clause-id&#x27;).textContent = `第 ${risk.id} 条`;
+        root.querySelector(&#x27;#fc-paper&#x27;).innerHTML = `
+          &lt;h2&gt;ERP软件订阅及私有云部署服务合同&lt;/h2&gt;
+          &lt;div class=&quot;fc-doc-sub&quot;&gt;合同编号：YH-ERP-2026-0829&lt;/div&gt;
+          &lt;h3&gt;${risk.section}&lt;/h3&gt;
+          &lt;p&gt;双方应按照本合同及附件约定履行各自义务，并配合完成项目实施、上线及后续运维工作。&lt;/p&gt;
+          &lt;p&gt;&lt;mark class=&quot;fc-highlight${risk.level === &#x27;medium&#x27; ? &#x27; fc-highlight-medium&#x27; : &#x27;&#x27;}&quot;&gt;${risk.before}&lt;/mark&gt;&lt;/p&gt;
+          &lt;p&gt;本条未约定事项，按照乙方届时有效的产品规则和服务政策执行。&lt;/p&gt;`;
+        root.querySelector(&#x27;#fc-opinion&#x27;).innerHTML = `
+          &lt;span class=&quot;fc-severity ${existingDecision ? &#x27;handled&#x27; : (risk.level === &#x27;medium&#x27; ? &#x27;medium&#x27; : &#x27;&#x27;)}&quot;&gt;&lt;i data-lucide=&quot;${existingDecision ? &#x27;circle-check&#x27; : (risk.level === &#x27;high&#x27; ? &#x27;circle-alert&#x27; : &#x27;triangle-alert&#x27;)}&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;${severityLabel}&lt;/span&gt;
+          &lt;h3&gt;${risk.title}&lt;/h3&gt;
+          &lt;div class=&quot;fc-legal-opinion&quot;&gt;&lt;div class=&quot;fc-opinion-label&quot;&gt;甲方法务审查意见&lt;/div&gt;&lt;div&gt;${buildLegalOpinion(risk)}&lt;/div&gt;&lt;/div&gt;
+          &lt;div class=&quot;fc-opinion-section&quot;&gt;&lt;div class=&quot;fc-opinion-label&quot;&gt;风险说明&lt;/div&gt;&lt;div&gt;${risk.issue}&lt;/div&gt;&lt;/div&gt;
+          &lt;div class=&quot;fc-opinion-section&quot;&gt;&lt;div class=&quot;fc-opinion-label&quot;&gt;对甲方的影响&lt;/div&gt;&lt;div&gt;${risk.consequence}&lt;/div&gt;&lt;/div&gt;
+          &lt;div class=&quot;fc-opinion-section&quot;&gt;&lt;div class=&quot;fc-opinion-label&quot;&gt;建议替换条款&lt;/div&gt;&lt;div class=&quot;fc-suggestion&quot;&gt;${risk.suggestion}&lt;/div&gt;&lt;/div&gt;
+          &lt;div class=&quot;fc-decision-actions&quot; aria-label=&quot;法务处理决定&quot;&gt;
+            &lt;button type=&quot;button&quot; class=&quot;fc-button fc-button-primary&quot; id=&quot;fc-accept&quot;&gt;&lt;i data-lucide=&quot;check&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;${existingDecision &amp;&amp; existingDecision.type === &#x27;accepted&#x27; ? &#x27;已采纳&#x27; : &#x27;采纳&#x27;}&lt;/button&gt;
+            &lt;button type=&quot;button&quot; class=&quot;fc-button&quot; id=&quot;fc-modify&quot;&gt;&lt;i data-lucide=&quot;pencil&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;${existingDecision &amp;&amp; existingDecision.type === &#x27;modified&#x27; ? &#x27;已修改&#x27; : &#x27;修改&#x27;}&lt;/button&gt;
+            &lt;button type=&quot;button&quot; class=&quot;fc-button&quot; id=&quot;fc-reject&quot;&gt;&lt;i data-lucide=&quot;x&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;${existingDecision &amp;&amp; existingDecision.type === &#x27;rejected&#x27; ? &#x27;已不采纳&#x27; : &#x27;不采纳&#x27;}&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;fc-edit-box&quot; id=&quot;fc-modify-panel&quot; hidden&gt;
+            &lt;label class=&quot;fc-edit-label&quot; for=&quot;fc-modify-text&quot;&gt;修改后的替换条款&lt;/label&gt;
+            &lt;textarea class=&quot;fc-edit-control&quot; id=&quot;fc-modify-text&quot;&gt;${(decisions[risk.id] &amp;&amp; decisions[risk.id].type === &#x27;modified&#x27;) ? decisions[risk.id].text : risk.suggestion}&lt;/textarea&gt;
+            &lt;div class=&quot;fc-edit-actions&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;fc-button fc-button-primary&quot; id=&quot;fc-save-modify&quot;&gt;保存并采纳&lt;/button&gt;&lt;button type=&quot;button&quot; class=&quot;fc-button&quot; data-close-panel&gt;取消&lt;/button&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;fc-edit-box&quot; id=&quot;fc-reject-panel&quot; hidden&gt;
+            &lt;label class=&quot;fc-edit-label&quot; for=&quot;fc-reject-reason&quot;&gt;不采纳原因&lt;/label&gt;
+            &lt;select class=&quot;fc-edit-control&quot; id=&quot;fc-reject-reason&quot;&gt;
+              &lt;option&gt;经业务确认，风险可接受&lt;/option&gt;
+              &lt;option&gt;已通过其他条款覆盖&lt;/option&gt;
+              &lt;option&gt;谈判后决定保留原条款&lt;/option&gt;
+              &lt;option&gt;其他&lt;/option&gt;
+            &lt;/select&gt;
+            &lt;div class=&quot;fc-edit-actions&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;fc-button fc-button-primary&quot; id=&quot;fc-save-reject&quot;&gt;确认不采纳&lt;/button&gt;&lt;button type=&quot;button&quot; class=&quot;fc-button&quot; data-close-panel&gt;取消&lt;/button&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;fc-decision-status&quot; id=&quot;fc-decision-status&quot;&gt;&lt;/div&gt;`;
+
+        const closePanels = () =&gt; {
+          root.querySelector(&#x27;#fc-modify-panel&#x27;).hidden = true;
+          root.querySelector(&#x27;#fc-reject-panel&#x27;).hidden = true;
+        };
+        const saveDecision = decision =&gt; {
+          decisions[risk.id] = decision;
+          updateTabCounts();
+          const nextRisk = getVisibleRisks()[0];
+          activeRiskId = nextRisk ? nextRisk.id : risk.id;
+          renderRiskList();
+          selectRisk(nextRisk || risk);
+        };
+        root.querySelector(&#x27;#fc-accept&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; saveDecision({type:&#x27;accepted&#x27;, text:risk.suggestion}));
+        root.querySelector(&#x27;#fc-modify&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+          root.querySelector(&#x27;#fc-reject-panel&#x27;).hidden = true;
+          root.querySelector(&#x27;#fc-modify-panel&#x27;).hidden = false;
+          root.querySelector(&#x27;#fc-modify-text&#x27;).focus();
+        });
+        root.querySelector(&#x27;#fc-reject&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+          root.querySelector(&#x27;#fc-modify-panel&#x27;).hidden = true;
+          root.querySelector(&#x27;#fc-reject-panel&#x27;).hidden = false;
+          root.querySelector(&#x27;#fc-reject-reason&#x27;).focus();
+        });
+        root.querySelector(&#x27;#fc-save-modify&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+          const text = root.querySelector(&#x27;#fc-modify-text&#x27;).value.trim();
+          if (text) saveDecision({type:&#x27;modified&#x27;, text});
+        });
+        root.querySelector(&#x27;#fc-save-reject&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; saveDecision({type:&#x27;rejected&#x27;, reason:root.querySelector(&#x27;#fc-reject-reason&#x27;).value}));
+        root.querySelectorAll(&#x27;[data-close-panel]&#x27;).forEach(button =&gt; button.addEventListener(&#x27;click&#x27;, closePanels));
+        const decision = existingDecision;
+        if (decision) {
+          const status = root.querySelector(&#x27;#fc-decision-status&#x27;);
+          const labels = {
+            accepted:&#x27;已采纳：建议条款已加入合同修改清单&#x27;,
+            modified:&#x27;已修改后采纳：以法务编辑后的条款进入修改清单&#x27;,
+            rejected:`已不采纳：${decision.reason || &#x27;保留乙方原条款&#x27;}`
+          };
+          const icons = {accepted:&#x27;circle-check&#x27;, modified:&#x27;file-pen-line&#x27;, rejected:&#x27;circle-minus&#x27;};
+          status.className = `fc-decision-status is-visible ${decision.type}`;
+          status.innerHTML = `&lt;i data-lucide=&quot;${icons[decision.type]}&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;span&gt;${labels[decision.type]}&lt;/span&gt;`;
+          const selectedButton = {accepted:&#x27;#fc-accept&#x27;, modified:&#x27;#fc-modify&#x27;, rejected:&#x27;#fc-reject&#x27;}[decision.type];
+          root.querySelector(selectedButton).classList.add(&#x27;is-selected&#x27;);
+        }
+        if (window.lucide) lucide.createIcons({ attrs: { width: 16, height: 16 } });
+      };
+
+      root.querySelectorAll(&#x27;[data-severity]&#x27;).forEach(button =&gt; button.addEventListener(&#x27;click&#x27;, () =&gt; {
+        currentSeverity = button.dataset.severity;
+        activeRiskId = null;
+        syncTabState();
+        updateTabCounts();
+        renderRiskList();
+        const first = getVisibleRisks()[0];
+        if (first) selectRisk(first);
+        if (window.lucide) lucide.createIcons({ attrs: { width: 16, height: 16 } });
+      }));
+
+      root.querySelectorAll(&#x27;[data-status]&#x27;).forEach(button =&gt; button.addEventListener(&#x27;click&#x27;, () =&gt; {
+        currentStatus = button.dataset.status;
+        activeRiskId = null;
+        syncTabState();
+        updateTabCounts();
+        renderRiskList();
+        const first = getVisibleRisks()[0];
+        if (first) selectRisk(first);
+        if (window.lucide) lucide.createIcons({ attrs: { width: 16, height: 16 } });
+      }));
+
+      root.querySelector(&#x27;#fc-reupload&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+        fileInput.value = &#x27;&#x27;;
+        selectedFileName = &#x27;&#x27;;
+        activeRiskId = null;
+        currentSeverity = &#x27;high&#x27;;
+        currentStatus = &#x27;pending&#x27;;
+        Object.keys(decisions).forEach(key =&gt; delete decisions[key]);
+        syncTabState();
+        updateTabCounts();
+        fileRow.classList.remove(&#x27;is-visible&#x27;);
+        root.querySelector(&#x27;#fc-dropzone&#x27;).classList.remove(&#x27;is-ready&#x27;);
+        uploadButton.disabled = true;
+        showView(&#x27;upload&#x27;);
+      });
+
+      const buildReportText = () =&gt; {
+        const processed = Object.keys(decisions).length;
+        return `ERP SaaS私有云采购合同审核报告\n\n合同：${selectedFileName}\n审核立场：甲方企业法务\n合同金额：3,920,000元\n风险评分：28/100\n高风险：25项\n中风险：13项\n已处理：${processed}项\n待处理：${risks.length - processed}项\n\n审核结论：\n不建议按乙方原稿直接签署。应完成高风险条款修改并经相关负责人确认后再行签署。\n\n重点风险：\n${risks.map((r, i) =&gt; `${i + 1}. [${r.level === &#x27;high&#x27; ? &#x27;高风险&#x27; : &#x27;中风险&#x27;}] ${r.title}（第${r.id}条）— ${decisions[r.id] ? reportDecisionLabels[decisions[r.id].type] : &#x27;待处理&#x27;}`).join(&#x27;\n&#x27;)}\n`;
+      };
+
+      const renderReport = () =&gt; {
+        const processed = Object.keys(decisions).length;
+        root.querySelector(&#x27;#fc-report-meta&#x27;).textContent = `合同：${selectedFileName} · 审核立场：甲方企业法务 · 合同金额：392 万元`;
+        root.querySelector(&#x27;#fc-report-stats&#x27;).innerHTML = `
+          &lt;div class=&quot;fc-report-stat&quot;&gt;&lt;span&gt;合同风险分&lt;/span&gt;&lt;strong&gt;28 / 100&lt;/strong&gt;&lt;/div&gt;
+          &lt;div class=&quot;fc-report-stat&quot;&gt;&lt;span&gt;高风险&lt;/span&gt;&lt;strong&gt;25 项&lt;/strong&gt;&lt;/div&gt;
+          &lt;div class=&quot;fc-report-stat&quot;&gt;&lt;span&gt;中风险&lt;/span&gt;&lt;strong&gt;13 项&lt;/strong&gt;&lt;/div&gt;
+          &lt;div class=&quot;fc-report-stat&quot;&gt;&lt;span&gt;处理进度&lt;/span&gt;&lt;strong&gt;${processed} / 38&lt;/strong&gt;&lt;/div&gt;`;
+        root.querySelector(&#x27;#fc-report-risks&#x27;).innerHTML = risks.map(risk =&gt; {
+        const status = decisions[risk.id] ? reportDecisionLabels[decisions[risk.id].type] : &#x27;待处理&#x27;;
+          return `&lt;div class=&quot;fc-report-risk&quot;&gt;&lt;span class=&quot;${risk.level === &#x27;high&#x27; ? &#x27;fc-risk-high&#x27; : &#x27;fc-risk-medium&#x27;}&quot;&gt;${risk.level === &#x27;high&#x27; ? &#x27;高风险&#x27; : &#x27;中风险&#x27;}&lt;/span&gt;&lt;div&gt;&lt;strong&gt;${risk.title}&lt;/strong&gt;&lt;br&gt;&lt;small&gt;第 ${risk.id} 条 · ${risk.issue}&lt;/small&gt;&lt;/div&gt;&lt;span class=&quot;fc-report-risk-status&quot;&gt;${status}&lt;/span&gt;&lt;/div&gt;`;
+        }).join(&#x27;&#x27;);
+      };
+
+      root.querySelector(&#x27;#fc-report&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+        renderReport();
+        showView(&#x27;report&#x27;);
+        if (window.lucide) lucide.createIcons({ attrs: { width: 16, height: 16 } });
+      });
+
+      root.querySelector(&#x27;#fc-report-back&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; showView(&#x27;results&#x27;));
+
+      root.querySelector(&#x27;#fc-report-download&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+        const report = buildReportText();
+        const blob = new Blob([report], {type:&#x27;text/plain;charset=utf-8&#x27;});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement(&#x27;a&#x27;);
+        a.href = url;
+        a.download = &#x27;ERP合同审核报告_甲方法务版.txt&#x27;;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() =&gt; URL.revokeObjectURL(url), 1000);
+        const toast = root.querySelector(&#x27;#fc-toast&#x27;);
+        toast.classList.add(&#x27;is-visible&#x27;);
+        setTimeout(() =&gt; toast.classList.remove(&#x27;is-visible&#x27;), 2200);
+      });
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handleLeave = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</body>
+</html>
