@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>海睿星 · 智能客服 · 原型与交互设计</title>
+<style>
+:root {
+  --c-bg: #f0f2f5;
+  --c-white: #fff;
+  --c-text: #1a1a1a;
+  --c-muted: #6b7280;
+  --c-border: #e5e7eb;
+  --c-blue: #4F7DF5;
+  --c-blue-dark: #3B6AE8;
+  --c-blue-light: #eef3ff;
+  --c-navy: #0f1729;
+  --c-green: #059669;
+  --c-green-light: #ecfdf5;
+  --c-orange: #d97706;
+  --c-orange-light: #fffbeb;
+  --c-red: #dc2626;
+  --c-red-light: #fef2f2;
+  --c-purple: #7c3aed;
+  --c-purple-light: #f5f3ff;
+  --ai-bubble: #f0f7ff;
+  --user-bubble: #4F7DF5;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.08);
+  --shadow-md: 0 4px 16px rgba(0,0,0,.10);
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;
+  background: var(--c-navy);
+  background-image:
+    linear-gradient(rgba(79,125,245,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79,125,245,.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+  display: flex; justify-content: center; align-items: center;
+  min-height: 100vh; padding: 20px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---- 全局容器 ---- */
+.app-shell {
+  width: 1300px; max-width: 100%;
+  background: var(--c-white); border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.12);
+  overflow: hidden; display: flex; flex-direction: column;
+  min-height: 85vh; max-height: 95vh;
+}
+
+/* ---- 顶部导航 ---- */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px; height: 56px;
+  border-bottom: 1px solid var(--c-border);
+  background: #fafbfc; flex-shrink: 0;
+}
+.topbar .logo {
+  font-size: 17px; font-weight: 700; color: var(--c-text);
+  display: flex; align-items: center; gap: 8px;
+}
+.topbar .logo .icon { font-size: 22px; }
+.view-tabs {
+  display: flex; gap: 4px; background: #f1f5f9; border-radius: 10px; padding: 3px;
+}
+.view-tab {
+  padding: 7px 18px; border-radius: 8px; font-size: 13px; font-weight: 600;
+  cursor: pointer; border: none; background: transparent; color: var(--c-muted);
+  transition: all .15s; white-space: nowrap;
+}
+.view-tab.active { background: #fff; color: var(--c-text); box-shadow: var(--shadow-sm); }
+.view-tab:hover:not(.active) { color: var(--c-text); }
+.topbar .meta { font-size: 12px; color: var(--c-muted); display: flex; gap: 16px; }
+
+/* ---- 主体区域 ---- */
+.main-area { display: flex; flex: 1; overflow: hidden; }
+
+/* ======================== C端：用户视角 ======================== */
+.c-end { display: flex; flex: 1; flex-direction: column; background: var(--c-bg); }
+.c-end.hidden { display: none; }
+
+/* 聊天头部 */
+.chat-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px; background: #fff;
+  border-bottom: 1px solid var(--c-border); flex-shrink: 0;
+}
+.chat-header .avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(135deg, #4F7DF5, #6B9AFF);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 18px; font-weight: 700; flex-shrink: 0;
+}
+.chat-header .info { flex: 1; }
+.chat-header .name { font-size: 15px; font-weight: 700; color: var(--c-text); }
+.chat-header .sub { font-size: 12px; color: var(--c-muted); }
+.chat-header .status { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--c-green); }
+.chat-header .status .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--c-green); }
+
+.scenario-bar {
+  display: flex; gap: 8px; padding: 10px 20px; background: #fff;
+  border-bottom: 1px solid var(--c-border); overflow-x: auto; flex-shrink: 0;
+}
+.scenario-chip {
+  padding: 7px 12px; border-radius: 18px; border: 1px solid #dbeafe;
+  background: #eff6ff; color: #1e40af; font-size: 12px; font-weight: 600;
+  white-space: nowrap; cursor: pointer; transition: all .15s;
+}
+.scenario-chip:hover { background: #dbeafe; border-color: #93c5fd; }
+.scenario-chip.warn { background: #fffbeb; border-color: #fcd34d; color: #92400e; }
+.scenario-chip.danger { background: #fef2f2; border-color: #fecaca; color: #991b1b; }
+
+/* 聊天消息区 */
+.chat-messages {
+  flex: 1; overflow-y: auto; padding: 16px 20px;
+  display: flex; flex-direction: column; gap: 12px;
+  scroll-behavior: smooth;
+}
+.chat-messages::-webkit-scrollbar { width: 5px; }
+.chat-messages::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+/* 消息气泡 */
+.msg { display: flex; gap: 10px; max-width: 85%; animation: msgIn .3s ease; }
+@keyframes msgIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.msg.user { align-self: flex-end; flex-direction: row-reverse; }
+.msg.ai { align-self: flex-start; }
+.msg .avatar-sm {
+  width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; color: #fff;
+}
+.msg.ai .avatar-sm { background: linear-gradient(135deg, #4F7DF5, #6B9AFF); }
+.msg.user .avatar-sm { background: #f59e0b; }
+.msg .bubble {
+  padding: 12px 16px; border-radius: var(--radius);
+  font-size: 14px; line-height: 1.7; position: relative;
+}
+.msg.ai .bubble { background: #fff; border: 1px solid #e5e7eb; color: var(--c-text); }
+.msg.user .bubble { background: var(--user-bubble); color: #fff; }
+.msg .time { font-size: 11px; color: var(--c-muted); margin-top: 4px; }
+
+/* AI消息内嵌元素 */
+.msg.ai .confidence-tag {
+  display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 20px;
+  margin-bottom: 6px; font-weight: 600;
+}
+.conf-high { background: #d1fae5; color: #065f46; }
+.conf-mid { background: #fef3c7; color: #92400e; }
+.conf-low { background: #fee2e2; color: #991b1b; }
+
+.msg.ai .source-ref {
+  margin-top: 8px; padding-top: 8px; border-top: 1px dashed #e5e7eb;
+  font-size: 12px; color: var(--c-muted);
+  display: flex; align-items: center; gap: 4px; cursor: pointer;
+}
+.msg.ai .source-ref:hover { color: var(--c-blue); }
+.msg.ai .source-pop {
+  display: none; margin-top: 6px; padding: 10px 12px;
+  background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+  font-size: 12px; color: #475569; line-height: 1.6;
+}
+.msg.ai .source-pop.show { display: block; }
+
+.msg.ai .action-row {
+  display: flex; gap: 8px; margin-top: 8px;
+}
+.msg.ai .btn-feedback {
+  width: 32px; height: 32px; border-radius: 50%; border: 1px solid #e5e7eb;
+  background: #fff; cursor: pointer; font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s;
+}
+.msg.ai .btn-feedback:hover { background: #f1f5f9; border-color: #94a3b8; }
+.msg.ai .btn-feedback.active-good { background: #d1fae5; border-color: #059669; }
+.msg.ai .btn-feedback.active-bad { background: #fee2e2; border-color: #dc2626; }
+
+/* 待审核AI回答气泡 */
+.draft-bubble {
+  border: 2px dashed #f59e0b !important;
+  background: #fffdf5 !important;
+  position: relative;
+}
+.draft-badge {
+  display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 20px;
+  background: #fef3c7; color: #92400e; font-weight: 700; margin-bottom: 8px;
+  animation: pulse-border 2s infinite;
+}
+@keyframes pulse-border {
+  0%,100% { box-shadow: 0 0 0 0 rgba(245,158,11,.4); }
+  50% { box-shadow: 0 0 0 6px rgba(245,158,11,0); }
+}
+.draft-actions {
+  display: flex; gap: 8px; margin-top: 10px; padding-top: 10px;
+  border-top: 1px dashed #fcd34d;
+}
+.btn-approve {
+  padding: 7px 18px; border-radius: 8px; border: none;
+  background: #059669; color: #fff; cursor: pointer;
+  font-size: 12px; font-weight: 700; transition: all .15s;
+}
+.btn-approve:hover { background: #047857; }
+.btn-reject {
+  padding: 7px 18px; border-radius: 8px; border: 1px solid #d1d5db;
+  background: #fff; color: #6b7280; cursor: pointer;
+  font-size: 12px; font-weight: 600; transition: all .15s;
+}
+.btn-reject:hover { border-color: #dc2626; color: #dc2626; }
+.btn-edit-draft {
+  padding: 7px 18px; border-radius: 8px; border: 1px solid #4F7DF5;
+  background: #eef3ff; color: #4F7DF5; cursor: pointer;
+  font-size: 12px; font-weight: 600; transition: all .15s;
+}
+.btn-edit-draft:hover { background: #dbeafe; }
+.draft-approved { opacity: .7; pointer-events: none; }
+.draft-approved .draft-badge { background: #d1fae5; color: #065f46; animation: none; }
+.draft-approved .draft-actions { display: none; }
+
+/* 侧边栏AI回答展示 */
+.ai-answer-display {
+  padding: 12px 14px; background: #fffdf5; border: 1px solid #fcd34d;
+  border-radius: 8px; font-size: 13px; line-height: 1.7; margin-top: 8px;
+  position: relative;
+}
+.ai-answer-display .answer-label {
+  font-size: 11px; color: #92400e; font-weight: 700; margin-bottom: 6px;
+  display: flex; align-items: center; gap: 4px;
+}
+
+/* 转人工提示卡片 */
+.transfer-card {
+  align-self: center; margin: 12px 0; padding: 16px 20px;
+  background: #fff; border: 1px solid #fcd34d; border-radius: var(--radius);
+  text-align: center; max-width: 280px; animation: msgIn .3s ease;
+}
+.transfer-card .icon { font-size: 32px; margin-bottom: 8px; }
+.transfer-card .title { font-size: 14px; font-weight: 700; color: #92400e; }
+.transfer-card .desc { font-size: 12px; color: var(--c-muted); margin: 4px 0 10px; }
+.transfer-card .wait { font-size: 12px; color: var(--c-green); font-weight: 600; }
+.transfer-card .steps {
+  margin-top: 10px; padding-top: 10px; border-top: 1px dashed #fde68a;
+  text-align: left; font-size: 11px; color: #6b7280; line-height: 1.7;
+}
+.feedback-followup {
+  margin-top: 10px; padding: 10px 12px; border-radius: 8px;
+  background: #fef2f2; border: 1px solid #fecaca; font-size: 12px; color: #991b1b;
+}
+.feedback-followup .mini-actions { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.mini-btn {
+  padding: 6px 10px; border-radius: 8px; border: 1px solid #fecaca;
+  background: #fff; color: #991b1b; font-size: 12px; font-weight: 600; cursor: pointer;
+}
+.mini-btn:hover { background: #fee2e2; }
+
+/* 快捷问题 */
+.quick-asks {
+  display: flex; flex-wrap: wrap; gap: 6px; padding: 4px 0;
+}
+.quick-ask {
+  padding: 6px 14px; border-radius: 20px; font-size: 12px;
+  background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe;
+  cursor: pointer; white-space: nowrap; transition: all .15s;
+}
+.quick-ask:hover { background: #dbeafe; }
+
+/* 输入区 */
+.chat-input-area {
+  padding: 12px 20px; background: #fff; border-top: 1px solid var(--c-border);
+  display: flex; gap: 10px; align-items: flex-end; flex-shrink: 0;
+}
+.chat-input-area textarea {
+  flex: 1; resize: none; border: 1px solid #d1d5db; border-radius: 24px;
+  padding: 10px 18px; font-size: 14px; font-family: inherit; line-height: 1.5;
+  min-height: 44px; max-height: 150px; outline: none;
+  overflow-y: auto; transition: border-color .15s;
+}
+.chat-input-area textarea:focus { border-color: var(--c-blue); }
+.chat-input-area .btn-send {
+  width: 42px; height: 42px; border-radius: 50%; border: none;
+  background: var(--c-blue); color: #fff; cursor: pointer; font-size: 18px;
+  flex-shrink: 0; transition: all .15s;
+}
+.chat-input-area .btn-send:hover { background: #3B6AE8; }
+.chat-input-area .btn-send:disabled { background: #94a3b8; cursor: not-allowed; }
+.btn-transfer {
+  padding: 8px 16px; border-radius: 20px; border: 1px solid #d1d5db;
+  background: #fff; color: var(--c-muted); font-size: 12px; cursor: pointer;
+  white-space: nowrap; transition: all .15s; flex-shrink: 0;
+}
+.btn-transfer:hover { border-color: #f59e0b; color: #92400e; }
+
+/* 思考动画 */
+.typing-dots { display: flex; gap: 4px; padding: 4px 0; }
+.typing-dots span {
+  width: 8px; height: 8px; border-radius: 50%; background: #94a3b8;
+  animation: bounce 1.4s infinite ease-in-out both;
+}
+.typing-dots span:nth-child(1) { animation-delay: 0s; }
+.typing-dots span:nth-child(2) { animation-delay: .16s; }
+.typing-dots span:nth-child(3) { animation-delay: .32s; }
+@keyframes bounce {
+  0%,80%,100% { transform: scale(.6); }
+  40% { transform: scale(1); }
+}
+
+/* ======================== B端：客服工作台 ======================== */
+.b-end { display: none; flex: 1; background: #f8fafc; }
+.b-end.hidden { display: none; }
+.b-end.active { display: flex; }
+
+/* 左侧会话列表 */
+.conv-list {
+  width: 280px; flex-shrink: 0; background: #fff;
+  border-right: 1px solid var(--c-border); display: flex; flex-direction: column;
+}
+.conv-list .list-header {
+  padding: 14px 16px; border-bottom: 1px solid var(--c-border);
+  font-size: 14px; font-weight: 700; display: flex; justify-content: space-between;
+}
+.conv-list .list-header .count {
+  font-size: 12px; color: var(--c-muted); font-weight: 400;
+}
+.conv-list .list-body { flex: 1; overflow-y: auto; }
+.conv-item {
+  padding: 14px 16px; border-bottom: 1px solid #f1f5f9; cursor: pointer;
+  transition: background .15s; position: relative;
+}
+.conv-item:hover { background: #f8fafc; }
+.conv-item.active { background: #eff6ff; border-left: 3px solid var(--c-blue); padding-left: 13px; }
+.conv-item .conv-user { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+.conv-item .conv-preview { font-size: 12px; color: var(--c-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.conv-item .conv-time { font-size: 11px; color: #94a3b8; margin-top: 4px; }
+.conv-item .badge-urgent {
+  position: absolute; top: 14px; right: 12px;
+  width: 8px; height: 8px; border-radius: 50%; background: var(--c-red);
+}
+.conv-item .badge-ai {
+  position: absolute; top: 14px; right: 12px;
+  font-size: 10px; padding: 2px 6px; border-radius: 10px;
+  background: #dbeafe; color: #1e40af; font-weight: 600;
+}
+.conv-item .feedback-flag {
+  display: inline-block; margin-top: 6px; padding: 2px 6px; border-radius: 8px;
+  background: #fee2e2; color: #991b1b; font-size: 10px; font-weight: 700;
+}
+
+/* 中间对话区 */
+.conv-main {
+  flex: 1; display: flex; flex-direction: column; background: #f0f2f5;
+  border-right: 1px solid var(--c-border);
+}
+.conv-main .chat-messages { background: #f0f2f5; }
+
+/* 客服回复栏 */
+.agent-reply-bar {
+  padding: 12px 16px; background: #fff; border-top: 1px solid var(--c-border);
+  display: flex; gap: 8px; align-items: flex-end;
+}
+.agent-reply-bar textarea {
+  flex: 1; resize: none; border: 1px solid #d1d5db; border-radius: 10px;
+  padding: 10px 14px; font-size: 14px; font-family: inherit; line-height: 1.6;
+  min-height: 44px; max-height: 200px; outline: none;
+  overflow-y: auto; transition: border-color .15s;
+}
+.agent-reply-bar textarea:focus { border-color: var(--c-blue); }
+.agent-reply-bar .btn-send {
+  padding: 10px 20px; border-radius: 10px; border: none;
+  background: var(--c-blue); color: #fff; cursor: pointer;
+  font-size: 14px; font-weight: 600; white-space: nowrap;
+}
+.agent-reply-bar .btn-send:hover { background: #3B6AE8; }
+
+/* 右侧AI侧边栏 */
+.ai-sidebar {
+  width: 340px; flex-shrink: 0; background: #fff;
+  display: flex; flex-direction: column; overflow-y: auto;
+}
+.ai-sidebar .section {
+  padding: 14px 16px; border-bottom: 1px solid var(--c-border);
+}
+.ai-sidebar .section-title {
+  font-size: 13px; font-weight: 700; color: var(--c-text);
+  margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+}
+.ai-sidebar .section-title .icon { font-size: 16px; }
+
+/* 用户信息卡 */
+.user-card {
+  display: flex; gap: 12px; align-items: center;
+}
+.user-card .u-avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: #f59e0b; display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 18px; font-weight: 700; flex-shrink: 0;
+}
+.user-card .u-info { flex: 1; font-size: 13px; line-height: 1.6; }
+.user-card .u-name { font-weight: 700; }
+.user-card .u-tags { display: flex; gap: 4px; margin-top: 2px; flex-wrap: wrap; }
+.user-card .u-tag {
+  font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600;
+}
+.tag-vip { background: #fef3c7; color: #92400e; }
+.tag-risk { background: #fee2e2; color: #991b1b; }
+.tag-new { background: #dbeafe; color: #1e40af; }
+
+/* AI检索结果 */
+.ai-result-item {
+  padding: 10px 12px; background: #f8fafc; border-radius: 8px;
+  margin-bottom: 8px; border: 1px solid #e5e7eb; cursor: pointer;
+  transition: all .15s; font-size: 12px;
+}
+.ai-result-item:hover { border-color: #93c5fd; background: #eff6ff; }
+.ai-result-item .r-title { font-weight: 700; color: var(--c-text); margin-bottom: 2px; }
+.ai-result-item .r-src { color: var(--c-muted); font-size: 11px; }
+.ai-result-item .r-score {
+  display: inline-block; font-size: 10px; padding: 1px 6px;
+  border-radius: 8px; background: #d1fae5; color: #065f46; font-weight: 600;
+  margin-left: 6px;
+}
+
+/* AI推荐话术 */
+.script-card {
+  padding: 10px 12px; background: #f0fdf4; border: 1px solid #bbf7d0;
+  border-radius: 8px; margin-bottom: 8px; cursor: pointer;
+  transition: all .15s; font-size: 13px; line-height: 1.6;
+}
+.script-card:hover { background: #dcfce7; }
+.script-card .s-label { font-size: 11px; color: #059669; font-weight: 600; margin-bottom: 4px; }
+.script-card .btn-use {
+  margin-top: 6px; padding: 4px 12px; border-radius: 6px; border: 1px solid #059669;
+  background: #fff; color: #059669; cursor: pointer; font-size: 11px; font-weight: 600;
+}
+.script-card .btn-use:hover { background: #059669; color: #fff; }
+
+/* AI判断 */
+.ai-judge {
+  padding: 10px 12px; border-radius: 8px; font-size: 12px; line-height: 1.6;
+  margin-bottom: 6px;
+}
+.ai-judge.info { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; }
+.ai-judge.warn { background: #fffbeb; border: 1px solid #fcd34d; color: #92400e; }
+.ai-judge.danger { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+.case-metric-grid {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 8px;
+}
+.case-metric {
+  padding: 8px 10px; background: #f8fafc; border: 1px solid #e5e7eb;
+  border-radius: 8px; font-size: 12px;
+}
+.case-metric strong { display: block; color: var(--c-text); margin-bottom: 2px; }
+
+/* 通知Toast */
+.toast {
+  position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+  padding: 10px 24px; border-radius: 10px; font-size: 13px; font-weight: 600;
+  z-index: 1000; animation: toastIn .3s ease, toastOut .3s ease 2s forwards;
+  box-shadow: var(--shadow-md);
+}
+@keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(-10px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+@keyframes toastOut { from { opacity: 1; } to { opacity: 0; } }
+.toast-success { background: #d1fae5; color: #065f46; }
+.toast-info { background: #dbeafe; color: #1e40af; }
+
+/* 满意度追问弹窗 */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 500;
+  display: flex; align-items: center; justify-content: center;
+  animation: fadeIn .2s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.modal-box {
+  background: #fff; border-radius: 16px; padding: 24px;
+  width: 360px; max-width: 90vw; box-shadow: 0 20px 60px rgba(0,0,0,.2);
+}
+.modal-box h3 { font-size: 16px; margin-bottom: 14px; }
+.modal-box .option {
+  display: block; width: 100%; padding: 10px 14px; border-radius: 8px;
+  border: 1px solid #e5e7eb; background: #fff; cursor: pointer;
+  text-align: left; font-size: 13px; margin-bottom: 8px; transition: all .15s;
+}
+.modal-box .option:hover { background: #f1f5f9; border-color: #94a3b8; }
+.modal-box .btn-close {
+  margin-top: 8px; padding: 8px 20px; border-radius: 8px; border: none;
+  background: #f1f5f9; color: var(--c-muted); cursor: pointer; font-size: 13px;
+}
+
+/* ---- 登录页 ---- */
+.login-overlay {
+  position: fixed; inset: 0; z-index: 2000;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--c-navy);
+  background-image:
+    linear-gradient(rgba(79,125,245,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79,125,245,.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+  transition: opacity .35s ease, visibility .35s ease;
+}
+.login-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.login-card {
+  width: 400px; max-width: 92vw; background: #fff;
+  border-radius: 20px; padding: 40px 36px 32px;
+  box-shadow: 0 24px 64px rgba(0,0,0,.25);
+  text-align: center;
+}
+.login-logo {
+  width: 64px; height: 64px; margin: 0 auto 16px;
+  background: linear-gradient(135deg, #4F7DF5, #6B9AFF);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 28px; color: #fff;
+}
+.login-title { font-size: 28px; font-weight: 800; color: #4F7DF5; margin-bottom: 6px; }
+.login-subtitle { font-size: 13px; color: var(--c-muted); margin-bottom: 28px; }
+.login-tabs {
+  display: flex; border-bottom: 1px solid var(--c-border); margin-bottom: 24px;
+}
+.login-tab {
+  flex: 1; padding: 10px 0; font-size: 15px; font-weight: 600;
+  color: var(--c-muted); cursor: pointer; border: none; background: none;
+  position: relative;
+}
+.login-tab.active { color: #4F7DF5; }
+.login-tab.active::after {
+  content: ''; position: absolute; bottom: -1px; left: 20%; right: 20%;
+  height: 2px; background: #4F7DF5; border-radius: 2px;
+}
+.login-field {
+  display: flex; align-items: center; gap: 10px;
+  border: 1px solid #e5e7eb; border-radius: 10px;
+  padding: 12px 14px; margin-bottom: 14px; background: #fff;
+}
+.login-field:focus-within { border-color: #4F7DF5; box-shadow: 0 0 0 3px rgba(79,125,245,.12); }
+.login-field .field-icon { color: #94a3b8; font-size: 16px; }
+.login-field input {
+  flex: 1; border: none; outline: none; font-size: 14px; font-family: inherit;
+}
+.login-btn {
+  width: 100%; padding: 13px; border: none; border-radius: 10px;
+  background: linear-gradient(135deg, #4F7DF5, #6B9AFF);
+  color: #fff; font-size: 16px; font-weight: 700; cursor: pointer;
+  margin-top: 8px; transition: opacity .15s;
+}
+.login-btn:hover { opacity: .92; }
+.login-agree {
+  margin-top: 20px; font-size: 12px; color: var(--c-muted);
+  display: flex; align-items: flex-start; gap: 8px; text-align: left;
+}
+.login-agree input { margin-top: 2px; accent-color: #4F7DF5; }
+.login-agree a { color: #4F7DF5; text-decoration: none; }
+.login-agree a:hover { text-decoration: underline; }
+.login-skip {
+  margin-top: 14px; font-size: 12px; color: #94a3b8; cursor: pointer;
+  background: none; border: none; font-family: inherit;
+}
+.login-skip:hover { color: #4F7DF5; }
+
+@media (max-width: 1000px) {
+  .b-end.active { flex-direction: column; }
+  .conv-list { width: 100%; max-height: 200px; }
+  .ai-sidebar { width: 100%; max-height: 300px; }
+}
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+  }
+  .app-shell { border-radius: 0; min-height: 100vh; max-height: 100vh; }
+
+  /* 顶栏 */
+  .topbar { height: 50px; padding: 0 12px; }
+  .topbar .logo { font-size: 15px; }
+  .topbar .logo .icon { font-size: 20px; }
+  .topbar .meta { display: none; }
+  .view-tab { padding: 7px 12px; font-size: 12px; font-weight: 600; }
+  .view-tabs { overflow-x: auto; max-width: 100%; }
+
+  /* 聊天头部 */
+  .chat-header { padding: 12px 14px; }
+  .chat-header .avatar { width: 38px; height: 38px; font-size: 16px; }
+  .chat-header .name { font-size: 15px; }
+  .chat-header .sub { font-size: 12px; }
+
+  /* 消息气泡 */
+  .msg { max-width: 92%; }
+  .msg .bubble { font-size: 15px; padding: 12px 14px; line-height: 1.75; }
+  .msg .time { font-size: 11px; }
+  .msg .avatar-sm { width: 30px; height: 30px; font-size: 13px; }
+  .msg.ai .confidence-tag { font-size: 11px; padding: 3px 8px; }
+  .msg.ai .source-ref { font-size: 12px; }
+
+  /* 快捷问题 */
+  .quick-ask { font-size: 13px; padding: 7px 14px; }
+  .scenario-bar { padding: 8px 12px; }
+  .scenario-chip { font-size: 12px; padding: 7px 10px; }
+
+  /* C端输入 */
+  .chat-input-area { padding: 10px 12px; gap: 8px; }
+  .chat-input-area textarea {
+    font-size: 16px; padding: 10px 16px;
+    min-height: 46px; line-height: 1.6;
+  }
+  .chat-input-area .btn-send { width: 40px; height: 40px; font-size: 16px; }
+  .btn-transfer { font-size: 12px; padding: 8px 14px; }
+
+  /* B端 */
+  .conv-list { width: 100%; max-height: 160px; }
+  .conv-item { padding: 12px 14px; }
+  .conv-item .conv-user { font-size: 14px; }
+  .conv-item .conv-preview { font-size: 13px; }
+  .ai-sidebar { width: 100%; max-height: 280px; }
+  .ai-sidebar .section-title { font-size: 14px; }
+  .ai-sidebar .section { padding: 12px 14px; }
+  .ai-result-item { font-size: 13px; padding: 10px 12px; }
+  .ai-result-item .r-title { font-size: 13px; }
+  .script-card { font-size: 14px; }
+  .ai-judge { font-size: 13px; }
+  .user-card .u-info { font-size: 13px; }
+  .ai-answer-display { font-size: 14px; line-height: 1.75; }
+
+  /* B端输入 */
+  .agent-reply-bar { padding: 10px 12px; }
+  .agent-reply-bar textarea {
+    font-size: 16px; padding: 10px 14px;
+    min-height: 44px; line-height: 1.6;
+  }
+  .agent-reply-bar .btn-send { padding: 10px 16px; font-size: 14px; }
+
+  /* 按钮 */
+  .btn-approve, .btn-reject, .btn-edit-draft { font-size: 13px; padding: 8px 14px; }
+  .draft-badge { font-size: 12px; }
+
+  /* 弹窗 */
+  .modal-box { width: 300px; padding: 20px; }
+  .modal-box h3 { font-size: 15px; }
+  .modal-box .option { font-size: 14px; padding: 10px 14px; }
+
+  /* 转人工卡片 */
+  .transfer-card { font-size: 14px; max-width: 250px; }
+  .transfer-card .title { font-size: 15px; }
+  .transfer-card .desc { font-size: 13px; }
+}
+</style>
+</head>
+<body>
+
+<!-- 登录页 -->
+<div class="login-overlay" id="login-overlay">
+  <div class="login-card">
+    <div class="login-logo">✦</div>
+    <div class="login-title">海睿星</div>
+    <div class="login-subtitle">星途 AIGC 服务平台</div>
+    <div class="login-tabs">
+      <button class="login-tab active" onclick="switchLoginTab(this)">登录</button>
+      <button class="login-tab" onclick="switchLoginTab(this)">注册</button>
+    </div>
+    <div class="login-field">
+      <span class="field-icon">👤</span>
+      <input type="text" placeholder="用户名" id="login-user" value="demo">
+    </div>
+    <div class="login-field">
+      <span class="field-icon">🔒</span>
+      <input type="password" placeholder="密码" id="login-pwd" value="123456">
+    </div>
+    <button class="login-btn" onclick="doLogin()">登 录</button>
+    <label class="login-agree">
+      <input type="checkbox" checked id="login-agree">
+      <span>我已阅读并同意<a href="#">《隐私政策》</a>和<a href="#">《服务协议》</a></span>
+    </label>
+    <button class="login-skip" onclick="doLogin()">跳过登录，直接进入原型 →</button>
+  </div>
+</div>
+
+<div class="app-shell" id="app-shell" style="opacity:0;transition:opacity .35s ease;">
+  <!-- 顶部导航 -->
+  <div class="topbar">
+    <div class="logo"><span class="icon">✦</span> 海睿星 · 智能客服 · 原型与交互设计</div>
+    <div class="view-tabs">
+      <button class="view-tab active" onclick="switchView('c-end')" id="tab-c">👤 C端 · 用户视角</button>
+      <button class="view-tab" onclick="switchView('b-end')" id="tab-b">🧑‍💼 B端 · 客服工作台</button>
+    </div>
+    <div class="meta"><span>星途 AIGC 服务平台</span><span>作者 wzp</span></div>
+  </div>
+
+  <div class="main-area">
+
+    <!-- ============ C端：用户聊天窗口 ============ -->
+    <div class="c-end" id="c-end">
+      <div class="chat-header">
+        <div class="avatar" style="background:linear-gradient(135deg,#4F7DF5,#6B9AFF);">海睿</div>
+        <div class="info">
+          <div class="name">海睿 · AI 智能助手</div>
+          <div class="sub">星途 AIGC 服务平台 · 海睿星官方客服 · 复杂问题自动转人工</div>
+        </div>
+        <div class="status"><span class="dot"></span>在线</div>
+      </div>
+      <div class="scenario-bar">
+        <button class="scenario-chip" onclick="quickAsk('我的快递到哪了？订单号ORD20260703002')">查物流</button>
+        <button class="scenario-chip" onclick="quickAsk('我的退款什么时候到账？')">退款进度</button>
+        <button class="scenario-chip" onclick="quickAsk('现在有什么优惠券吗？')">优惠活动</button>
+        <button class="scenario-chip" onclick="quickAsk('蓝牙耳机一边不响了还在保修期吗？')">售后保修</button>
+      </div>
+      <div class="chat-messages" id="c-messages"></div>
+      <div class="chat-input-area">
+        <textarea id="c-input" rows="2" placeholder="输入您的问题…" onkeydown="handleCKey(event)" oninput="autoResize(this)"></textarea>
+        <button class="btn-send" onclick="sendCMsg()" id="c-send-btn">➤</button>
+        <button class="btn-transfer" onclick="requestTransferC()" title="转人工客服">🎧 转人工</button>
+      </div>
+    </div>
+
+    <!-- ============ B端：客服工作台 ============ -->
+    <div class="b-end hidden" id="b-end">
+      <!-- 左侧会话列表 -->
+      <div class="conv-list">
+        <div class="list-header">当前会话 <span class="count" id="b-conv-count">3个进行中</span></div>
+        <div class="list-body" id="b-conv-list"></div>
+      </div>
+      <!-- 中间对话区 -->
+      <div class="conv-main">
+        <div class="chat-header" style="border-bottom:1px solid var(--c-border);">
+          <div class="avatar" id="b-chat-avatar" style="background:#f59e0b;">张</div>
+          <div class="info">
+            <div class="name" id="b-chat-user">张先生</div>
+            <div class="sub" id="b-chat-topic">咨询商品质量问题</div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <span class="u-tag tag-vip" style="font-size:11px;">VIP3</span>
+            <span style="font-size:12px;color:var(--c-muted);" id="b-chat-time">2分钟前</span>
+          </div>
+        </div>
+        <div class="chat-messages" id="b-messages" style="background:#f0f2f5;"></div>
+        <div class="agent-reply-bar">
+          <textarea id="b-input" rows="3" placeholder="输入回复…" onkeydown="handleBKey(event)" oninput="autoResize(this)"></textarea>
+          <button class="btn-send" onclick="sendBMsg()">发送</button>
+        </div>
+      </div>
+      <!-- 右侧AI侧边栏 -->
+      <div class="ai-sidebar" id="ai-sidebar-content"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Toast容器 -->
+<div id="toast-container"></div>
+<!-- 满意度弹窗容器 -->
+<div id="modal-container"></div>
+
+<script>
+// ======================== 登录逻辑 ========================
+function switchLoginTab(btn) {
+  document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function doLogin() {
+  const agree = document.getElementById('login-agree');
+  if (agree && !agree.checked) {
+    showToast('请先阅读并同意隐私政策和服务协议', 'info');
+    return;
+  }
+  document.getElementById('login-overlay').classList.add('hidden');
+  const shell = document.getElementById('app-shell');
+  shell.style.opacity = '1';
+  showToast('欢迎进入海睿星智能客服原型', 'success');
+}
+
+// ======================== 全局状态 ========================
+let currentView = 'c-end';
+let cMessages = [];
+let bMessages = [];
+let bActiveConv = null;
+let transferRequested = false;
+
+// ======================== 预设数据 ========================
+const DEMO_CONVERSATIONS = [
+  {
+    id: 'conv-1', caseType: 'B', user: '张先生', preview: '我买的T恤洗了一次就严重缩水…', time: '2分钟前',
+    urgent: true, tags: ['VIP3','高价值'], topic: '质量问题投诉',
+    messages: [
+      { role: 'user', text: '我买的T恤洗了一次就严重缩水，根本穿不了，你们这质量也太差了！', time: '14:32' },
+      { role: 'ai', text: '非常抱歉给您带来不好的体验！🙏<br><br>根据您的订单<strong>ORD20260701001</strong>（T恤-白色L码，签收后第3天）：<br><br>1️⃣ 纯棉T恤首次水洗有<strong>3%-5%的轻微缩水属于正常现象</strong><br>2️⃣ 但您描述的<strong>"严重缩水、穿不了"已超出正常范围</strong>，属于质量问题<br>3️⃣ 该商品<strong>支持7天无理由退换</strong>，您签收才3天，完全在退换期内<br><br>建议方案：可优先协助您<strong>换新</strong>或<strong>申请退款</strong>，具体金额以售后审核结果为准。您更倾向哪种处理方式？',
+        time: '14:32', confidence: 'mid', source: '退换货政策V3.2 第三章 · 商品详情页 · 订单ORD20260701001',
+        status: 'pending_review' },
+    ]
+  },
+  {
+    id: 'conv-2', caseType: 'A', user: '李女士', preview: '我的快递到哪了？已经三天了还没更新物流…', time: '8分钟前',
+    urgent: false, tags: ['用户点踩'], topic: '物流查询', feedbackAlert: true,
+    messages: [
+      { role: 'user', text: '我的快递到哪了？已经三天了还没更新物流信息，订单号ORD20260703002', time: '14:26' },
+      { role: 'ai', text: '您好，已为您查询。您的订单ORD20260703002目前快递已到达【广州分拨中心】，预计明天（7月8日）送达。因近期华南地区暴雨，物流有1-2天延迟，请您谅解。', time: '14:26', confidence: 'high', source: '物流系统API查询' },
+      { role: 'user', text: '不对，物流页面一直没更新，我不相信这个结果。', time: '14:28' },
+    ]
+  },
+  {
+    id: 'conv-3', caseType: 'C', user: '王同学', preview: '你们上次答应我的处理为什么没兑现？我要投诉…', time: '15分钟前',
+    urgent: true, tags: ['投诉升级'], topic: '历史承诺投诉',
+    messages: [
+      { role: 'user', text: '你们上次答应我的处理为什么没兑现？我已经投诉过一次了，这次必须给我说法。', time: '14:19' },
+      { role: 'ai', text: '我理解您的着急。这个问题涉及之前客服承诺和历史处理记录，我已为您转接人工客服，并同步当前对话和相关订单信息，您不需要重复描述。', time: '14:20', confidence: 'low', source: null, status: 'transferred' },
+    ]
+  },
+];
+
+// 模拟AI回答逻辑
+function getAIResponse(userInput) {
+  const q = userInput.toLowerCase();
+
+  if (q.includes('物流') || q.includes('快递') || q.includes('到哪')) {
+    return {
+      text: '您好，已为您查询。您的订单<span style="font-weight:700;">ORD20260701001</span>（T恤-白色L码）当前物流状态：<br><br>📍 <strong>已到达【杭州萧山分拨中心】</strong><br>🕐 预计送达：<strong>7月9日（后天）</strong><br>📦 快递公司：中通快递 运单号：ZT2026070500123<br><br>物流信息正常，无延迟。还有其他需要帮您的吗？',
+      confidence: 'high',
+      source: '订单系统 · 物流API实时查询',
+    };
+  }
+
+  if (q.includes('缩水') || q.includes('质量') || q.includes('t恤') || q.includes('退') || q.includes('换')) {
+    return {
+      text: '非常抱歉给您带来不好的体验！🙏<br><br>根据您的订单<span style="font-weight:700;">ORD20260701001</span>（T恤-白色L码，签收后第3天）：<br><br>1️⃣ 纯棉T恤首次水洗有<strong>3%-5%的轻微缩水属于正常现象</strong><br>2️⃣ 但您描述的<strong>"严重缩水、穿不了"已超出正常范围</strong>，属于质量问题<br>3️⃣ 该商品<strong>支持7天无理由退换</strong>，您签收才3天，完全在退换期内<br><br>建议方案：可优先协助您<strong>换新</strong>或<strong>申请退款</strong>，具体金额以售后审核结果为准。您更倾向哪种处理方式？',
+      confidence: 'mid',
+      source: '退换货政策V3.2 第三章 · 商品详情页 · 订单ORD20260701001',
+    };
+  }
+
+  if (q.includes('退款') || q.includes('到账') || q.includes('钱')) {
+    return {
+      text: '您好，关于退款进度的查询：<br><br>退款通常在<strong>卖家收到退回商品后1-3个工作日内</strong>原路返回。如果超过3天未到账，建议您：<br>① 检查支付账户（微信/支付宝/银行卡）的交易记录<br>② 确认退货物流是否已被仓库签收<br><br>需要我帮您查询具体的退款单状态吗？请提供订单号即可。',
+      confidence: 'high',
+      source: '售后服务政策V2.8 第五章',
+    };
+  }
+
+  if (q.includes('优惠券') || q.includes('折扣') || q.includes('活动')) {
+    return {
+      text: '目前平台有以下优惠活动：<br><br>🎫 <strong>满199减30</strong> 全场通用券（限7月使用）<br>🎫 <strong>新人专享</strong> 满99减20（首单可用）<br>🎫 <strong>会员日</strong> 每月15日VIP会员满299减50<br><br>您可以在"我的-优惠券"页面查看您的可用券。需要帮您推荐适合的优惠吗？',
+      confidence: 'high',
+      source: '营销活动配置 · 2026年7月',
+    };
+  }
+
+  if (q.includes('保修') || q.includes('耳机') || q.includes('坏')) {
+    return {
+      text: '您好！您购买的蓝牙耳机仍在<strong>12个月保修期</strong>内（购买日期：5月1日）。<br><br>左边无声属于硬件故障，符合保修范围。处理方案：<br>🔧 <strong>寄回维修：</strong>免费，约7个工作日<br>🏢 <strong>到店检测：</strong>授权服务中心当天处理<br><br>我可以先帮您整理保修申请信息，提交前会由客服确认。',
+      confidence: 'high',
+      source: '售后保修政策V3.1 第二章',
+    };
+  }
+
+  // 模糊问题 → 中等置信度
+  if (q.includes('便宜') || q.includes('贵') || q.includes('降价') || q.includes('价格')) {
+    return {
+      text: '我理解您对价格的关注。商品价格会根据促销活动和市场情况调整。如果您购买的商品在<strong>签收后7天内降价</strong>，可以联系客服申请<strong>价格保护</strong>退还差价。<br><br>需要我帮您核查具体商品是否符合价保条件吗？请提供订单号。',
+      confidence: 'mid',
+      source: '价格保护政策V2.1',
+    };
+  }
+
+  // 兜底
+  return {
+    text: '我目前没有找到关于这个问题的相关信息，已为您记录下来。为了更准确地帮助您，建议我为您<strong>转接人工客服</strong>处理，可以吗？',
+    confidence: 'low',
+    source: null,
+  };
+}
+
+// ======================== 视图切换 ========================
+function switchView(view) {
+  currentView = view;
+  document.getElementById('c-end').classList.toggle('hidden', view !== 'c-end');
+  document.getElementById('b-end').classList.toggle('hidden', view !== 'b-end');
+  document.getElementById('b-end').classList.toggle('active', view === 'b-end');
+  document.getElementById('tab-c').classList.toggle('active', view === 'c-end');
+  document.getElementById('tab-b').classList.toggle('active', view === 'b-end');
+
+  if (view === 'b-end') initBEnd();
+}
+
+// ======================== Toast ========================
+function showToast(msg, type) {
+  const t = document.createElement('div');
+  t.className = 'toast toast-' + (type || 'info');
+  t.textContent = msg;
+  document.getElementById('toast-container').appendChild(t);
+  setTimeout(() => t.remove(), 2500);
+}
+
+// ======================== C端逻辑 ========================
+function addCMessage(role, content, opts = {}) {
+  const msgDiv = document.createElement('div');
+  msgDiv.className = 'msg ' + role;
+
+  const avatarText = role === 'user' ? '我' : '海睿';
+  const time = opts.time || new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+
+  let bubbleHTML = '';
+  bubbleHTML += content;
+
+  if (role === 'ai' && opts.source) {
+    bubbleHTML += `
+      <div class="source-ref" onclick="toggleSource(this)">📎 参考来源：${opts.source} ▾</div>
+      <div class="source-pop"><strong>检索来源：</strong><br>${opts.source}<br><br><strong>检索片段预览：</strong><br>${opts.sourcePreview || '（基于检索到的文档内容生成回答）'}</div>
+    `;
+  }
+
+  if (role === 'ai' && !opts.noFeedback) {
+    bubbleHTML += `
+      <div class="action-row">
+        <button class="btn-feedback" onclick="feedbackC(this, 'good', '${msgDiv.id || ''}')" title="有帮助">👍</button>
+        <button class="btn-feedback" onclick="feedbackC(this, 'bad', '${msgDiv.id || ''}')" title="没帮助">👎</button>
+      </div>
+    `;
+  }
+
+  msgDiv.innerHTML = `
+    <div class="avatar-sm">${avatarText}</div>
+    <div><div class="bubble">${bubbleHTML}</div><div class="time">${time}</div></div>
+  `;
+
+  document.getElementById('c-messages').appendChild(msgDiv);
+  scrollBottom('c-messages');
+  return msgDiv;
+}
+
+function addCTyping() {
+  const div = document.createElement('div');
+  div.className = 'msg ai';
+  div.id = 'typing-indicator';
+  div.innerHTML = `
+    <div class="avatar-sm">海睿</div>
+    <div class="bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>
+  `;
+  document.getElementById('c-messages').appendChild(div);
+  scrollBottom('c-messages');
+}
+
+function removeCTyping() {
+  const el = document.getElementById('typing-indicator');
+  if (el) el.remove();
+}
+
+function sendCMsg() {
+  const input = document.getElementById('c-input');
+  const text = input.value.trim();
+  if (!text || transferRequested) return;
+
+  input.value = '';
+  autoResize(input);
+  document.getElementById('c-send-btn').disabled = true;
+
+  addCMessage('user', text);
+  addCTyping();
+
+  // 模拟AI思考延时
+  const delay = 800 + Math.random() * 1200;
+  setTimeout(() => {
+    removeCTyping();
+    const resp = getAIResponse(text);
+
+    if (resp.confidence === 'low') {
+      addCMessage('ai', resp.text, { confidence: 'low', source: null, noFeedback: true });
+      setTimeout(() => addTransferCard(), 800);
+    } else if (resp.confidence === 'mid') {
+      addCMessage('ai', '这个问题我正在为您核实，请稍等。', { noFeedback: true });
+      // 模拟客服确认后再展示正式回复
+      setTimeout(() => {
+        showToast('✅ 客服已确认AI回答并发送', 'success');
+        addCMessage('ai', resp.text, { source: resp.source, sourcePreview: getSourcePreview(text) });
+      }, 2500);
+    } else {
+      addCMessage('ai', resp.text,
+        { confidence: 'high', source: resp.source, sourcePreview: getSourcePreview(text) });
+    }
+
+    document.getElementById('c-send-btn').disabled = false;
+    document.getElementById('c-input').focus();
+  }, delay);
+}
+
+function handleCKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendCMsg();
+  }
+}
+
+function requestTransferC() {
+  if (transferRequested) { showToast('已申请转人工，请稍候…', 'info'); return; }
+  transferRequested = true;
+  document.getElementById('c-send-btn').disabled = true;
+
+  addCMessage('user', '转人工');
+  addCTyping();
+
+  setTimeout(() => {
+    removeCTyping();
+    addCMessage('ai', '好的，正在为您转接人工客服。您之前的问题会同步给客服同事，<strong>不需要重复描述</strong>。', { confidence: 'low', noFeedback: true });
+    setTimeout(() => addTransferCard(), 500);
+  }, 1000);
+}
+
+function addTransferCard() {
+  transferRequested = true;
+  document.getElementById('c-send-btn').disabled = true;
+  const card = document.createElement('div');
+  card.className = 'transfer-card';
+  card.innerHTML = `
+    <div class="icon">🎧</div>
+    <div class="title">已为您转接人工客服</div>
+    <div class="desc">您之前的问题已自动同步，无需重复描述</div>
+    <div class="wait">👩‍💼 当前排队：1人 · 预计等待 30秒</div>
+    <div class="steps">
+      已同步：当前对话、最近订单、AI判断结果、转人工原因<br>
+      当前状态：等待客服接入 → 客服查看摘要 → 继续对话
+    </div>
+  `;
+  document.getElementById('c-messages').appendChild(card);
+  scrollBottom('c-messages');
+
+  // 模拟人工接入
+  setTimeout(() => {
+    const join = document.createElement('div');
+    join.className = 'msg ai';
+    join.innerHTML = `
+      <div class="avatar-sm" style="background:#f59e0b;">李</div>
+      <div>
+        <div class="bubble" style="border-color:#fcd34d;">您好，我是客服<strong>李婷</strong>，已了解您的情况。关于T恤缩水的问题，我马上帮您处理退换申请。请问您希望换新还是退款呢？</div>
+        <div class="time" style="font-size:11px;color:#f59e0b;">🧑 人工客服 · 李婷</div>
+      </div>
+    `;
+    document.getElementById('c-messages').appendChild(join);
+    scrollBottom('c-messages');
+    showToast('🎧 人工客服「李婷」已接入', 'success');
+  }, 3000);
+}
+
+function feedbackC(btn, type) {
+  const siblings = btn.parentElement.querySelectorAll('.btn-feedback');
+  siblings.forEach(b => { b.classList.remove('active-good', 'active-bad'); });
+
+  if (type === 'good') {
+    btn.classList.add('active-good');
+    showToast('感谢反馈！👍 这对改进AI很有帮助', 'success');
+  } else {
+    btn.classList.add('active-bad');
+    showFeedbackModal();
+  }
+}
+
+function showFeedbackModal() {
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `
+    <div class="modal-box">
+      <h3>👎 哪里不够好？</h3>
+      <button class="option" onclick="submitFeedback('没回答到点上', this)">没回答到点上</button>
+      <button class="option" onclick="submitFeedback('信息不准确', this)">信息不准确</button>
+      <button class="option" onclick="submitFeedback('态度不好/太生硬', this)">态度不好/太生硬</button>
+      <button class="option" onclick="submitFeedback('其他原因', this)">其他原因</button>
+      <button class="btn-close" onclick="this.closest('.modal-overlay').remove()">关闭</button>
+    </div>
+  `;
+  document.getElementById('modal-container').appendChild(overlay);
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+}
+
+function submitFeedback(reason, btn) {
+  btn.closest('.modal-overlay').remove();
+  showToast('已记录：「' + reason + '」，我们会持续改进 🙏', 'info');
+  addFeedbackFollowup(reason);
+}
+
+function addFeedbackFollowup(reason) {
+  const div = document.createElement('div');
+  div.className = 'msg ai';
+  div.innerHTML = `
+    <div class="avatar-sm">海睿</div>
+    <div>
+      <div class="bubble">
+        <div class="feedback-followup">
+          已记录您的反馈：<strong>${reason}</strong><br>
+          如果这个回答没有解决问题，您可以继续补充问题，或直接转人工客服。
+          <div class="mini-actions">
+            <button class="mini-btn" onclick="document.getElementById('c-input').focus()">继续追问</button>
+            <button class="mini-btn" onclick="requestTransferC()">转人工处理</button>
+          </div>
+        </div>
+      </div>
+      <div class="time">${new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })}</div>
+    </div>
+  `;
+  document.getElementById('c-messages').appendChild(div);
+  scrollBottom('c-messages');
+}
+
+function simulateBadFeedbackCase() {
+  addCMessage('user', '这个回答不对，我要反馈');
+  addCMessage('ai', '我理解您觉得回答不准确。您可以点击下方👎选择原因，系统会把这条AI回答、反馈原因和上下文一起记录到Bad Case，供后续优化。', {
+    source: '反馈服务 · Bad Case记录规则',
+    sourcePreview: '反馈日志包含message_id、feedback_type、reason、session_id和AI回答内容。'
+  });
+  showToast('请点击最新AI回答下方的👎，查看点踩反馈流程', 'info');
+}
+
+function simulateSystemError() {
+  addCMessage('user', '帮我查一下这个订单现在怎么处理');
+  addCTyping();
+  setTimeout(() => {
+    removeCTyping();
+    const div = document.createElement('div');
+    div.className = 'msg ai';
+    div.innerHTML = `
+      <div class="avatar-sm">海睿</div>
+      <div>
+        <div class="bubble">
+          系统暂时没有查到可靠结果，可能是订单接口超时或知识库没有匹配到相关政策。
+          <div class="feedback-followup" style="background:#fffbeb;border-color:#fcd34d;color:#92400e;">
+            为避免给您不准确的承诺，您可以选择重新查询，或直接转人工客服继续处理。
+            <div class="mini-actions">
+              <button class="mini-btn" style="color:#92400e;border-color:#fcd34d;" onclick="quickAsk('重新查询订单处理进度')">重新查询</button>
+              <button class="mini-btn" style="color:#92400e;border-color:#fcd34d;" onclick="requestTransferC()">转人工处理</button>
+            </div>
+          </div>
+        </div>
+        <div class="time">${new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })}</div>
+      </div>
+    `;
+    document.getElementById('c-messages').appendChild(div);
+    scrollBottom('c-messages');
+  }, 900);
+}
+
+function toggleSource(el) {
+  el.nextElementSibling.classList.toggle('show');
+}
+
+function getSourcePreview(text) {
+  if (text.includes('缩水') || text.includes('质量')) return '《退换货政策V3.2》第三章：质量问题认定——"影响正常穿着的缩水属于质量问题，支持7天内退换"；商品详情页：材质说明"100%纯棉，首次水洗可能有3-5%轻微缩水"';
+  if (text.includes('物流') || text.includes('快递')) return '物流API返回：运单ZT2026070500123，状态"运输中"，当前位置"杭州萧山分拨中心"，预计送达2026-07-09';
+  if (text.includes('退款')) return '《售后服务政策V2.8》第五章：退款时效——"卖家签收退货后1-3个工作日原路退回"；该用户退款单RF20260705001状态"待仓库签收"';
+  return '（基于知识库检索结果生成）';
+}
+
+function scrollBottom(id) {
+  const el = document.getElementById(id);
+  setTimeout(() => { el.scrollTop = el.scrollHeight; }, 50);
+}
+
+// ======================== B端逻辑 ========================
+function initBEnd() {
+  renderConvList();
+  if (!bActiveConv) {
+    selectConv('conv-1');
+  }
+}
+
+function renderConvList() {
+  const container = document.getElementById('b-conv-list');
+  container.innerHTML = DEMO_CONVERSATIONS.map(c => `
+    <div class="conv-item ${bActiveConv === c.id ? 'active' : ''}" onclick="selectConv('${c.id}')" id="conv-item-${c.id}">
+      ${c.feedbackAlert ? '<span class="badge-ai" style="background:#fee2e2;color:#991b1b;">用户点踩</span>' : (c.caseType === 'B' ? '<span class="badge-ai" style="background:#fef3c7;color:#92400e;">Case B · 待审核</span>' : (c.caseType === 'C' ? '<span class="badge-ai" style="background:#fee2e2;color:#991b1b;">Case C · 已转人工</span>' : '<span class="badge-ai">Case A · AI已回复</span>'))}
+      <div class="conv-user">${c.user}</div>
+      <div class="conv-preview">${c.preview}</div>
+      ${c.feedbackAlert ? '<span class="feedback-flag">👎 信息不准确 · 待复盘</span>' : ''}
+      <div class="conv-time">${c.time}</div>
+    </div>
+  `).join('');
+  document.getElementById('b-conv-count').textContent = DEMO_CONVERSATIONS.length + '个进行中';
+}
+
+function selectConv(convId) {
+  bActiveConv = convId;
+  const conv = DEMO_CONVERSATIONS.find(c => c.id === convId);
+  if (!conv) return;
+
+  // 更新头部
+  document.getElementById('b-chat-user').textContent = conv.user;
+  document.getElementById('b-chat-topic').textContent = conv.topic;
+  document.getElementById('b-chat-time').textContent = conv.time;
+  const initial = conv.user.slice(0, 1);
+  const headerAvatar = document.getElementById('b-chat-avatar');
+  headerAvatar.textContent = initial;
+  headerAvatar.style.background = conv.id === 'conv-2' ? '#ec4899' : (conv.id === 'conv-3' ? '#10b981' : '#f59e0b');
+
+  // 更新标签
+  const tagArea = document.getElementById('b-chat-user').parentElement.parentElement.querySelector('div:last-child');
+
+  // 更新会话列表高亮
+  document.querySelectorAll('#b-conv-list .conv-item').forEach(el => el.classList.remove('active'));
+  const item = document.getElementById('conv-item-' + convId);
+  if (item) item.classList.add('active');
+
+  // 渲染对话
+  const msgContainer = document.getElementById('b-messages');
+  msgContainer.innerHTML = '';
+  conv.messages.forEach(m => {
+    if (m.role === 'user') {
+      addBMessage('user', m.text, m.time, { userInitial: initial, userColor: headerAvatar.style.background });
+    } else if (m.role === 'ai') {
+      addBMessage('ai', m.text, m.time, { confidence: m.confidence, source: m.source, status: m.status || 'sent' });
+    }
+  });
+
+  // 更新AI侧边栏
+  updateAISidebar(conv);
+}
+
+function addBMessage(role, text, time, opts = {}) {
+  const msgDiv = document.createElement('div');
+  msgDiv.className = 'msg ' + (role === 'user' ? 'user' : 'ai');
+  const avatarText = role === 'user' ? (opts.userInitial || '张') : (opts.fromAgent ? '李' : '海睿');
+  const avatarBg = role === 'user' ? (opts.userColor || '#f59e0b') : (opts.fromAgent ? '#f59e0b' : 'linear-gradient(135deg, #4F7DF5, #6B9AFF)');
+
+  let bubbleHTML = text;
+  let bubbleExtraClass = '';
+
+  if (role === 'ai' && !opts.fromAgent) {
+    // 待审核状态的AI回答
+    if (opts.status === 'pending_review') {
+      bubbleExtraClass = ' draft-bubble';
+      bubbleHTML = '<span class="draft-badge">⏳ AI生成 · 待客服审核确认</span><br>' + bubbleHTML;
+      if (opts.source) {
+        bubbleHTML += '<br><div class="source-ref">📎 参考来源：' + opts.source + '</div>';
+      }
+      bubbleHTML += `
+        <div class="draft-actions">
+          <button class="btn-approve" onclick="approveDraft(this, '${opts.status}')">✅ 确认发送</button>
+          <button class="btn-edit-draft" onclick="editDraft(this)">✏️ 修改</button>
+          <button class="btn-reject" onclick="rejectDraft(this)">✖ 忽略</button>
+        </div>
+      `;
+    } else if (opts.confidence === 'high') {
+      bubbleHTML = '<span class="confidence-tag conf-high">🟢 AI自动回答</span><br>' + bubbleHTML;
+      if (opts.source) {
+        bubbleHTML += '<div class="source-ref">📎 参考来源：' + opts.source + '</div>';
+      }
+    }
+  }
+
+  msgDiv.innerHTML = `
+    <div class="avatar-sm" style="background:${avatarBg};color:#fff;">${avatarText}</div>
+    <div>
+      <div class="bubble${bubbleExtraClass}" style="${opts.fromAgent ? 'border-color:#fcd34d;' : ''}">${bubbleHTML}</div>
+      <div class="time">${time || ''} ${opts.fromAgent ? '🧑 人工客服 · 李婷' : ''}</div>
+    </div>
+  `;
+
+  document.getElementById('b-messages').appendChild(msgDiv);
+  scrollBottom('b-messages');
+  return msgDiv;
+}
+
+function updateAISidebar(conv) {
+  const sidebar = document.getElementById('ai-sidebar-content');
+
+  let userHTML = '';
+  if (conv.id === 'conv-1') {
+    userHTML = `
+      <div class="section">
+        <div class="section-title"><span class="icon">👤</span>用户信息</div>
+        <div class="user-card">
+          <div class="u-avatar">张</div>
+          <div class="u-info">
+            <div class="u-name">张先生</div>
+            <div style="font-size:11px;color:var(--c-muted);">注册2年 · 累计消费¥12,860</div>
+            <div class="u-tags"><span class="u-tag tag-vip">VIP3</span><span class="u-tag tag-risk" style="background:#fee2e2;color:#991b1b;">近30天3次投诉</span></div>
+          </div>
+        </div>
+        <div style="margin-top:10px;font-size:12px;color:var(--c-muted);line-height:1.6;">
+          📦 最近订单：<strong>ORD20260701001</strong>（T恤-白色L码·¥129）<br>
+          📅 签收时间：2026-07-04（第3天）<br>
+          📝 历史工单：近3个月5单（2投诉+3咨询）
+        </div>
+      </div>`;
+  } else if (conv.id === 'conv-2') {
+    userHTML = `
+      <div class="section">
+        <div class="section-title"><span class="icon">👤</span>用户信息</div>
+        <div class="user-card">
+          <div class="u-avatar" style="background:#ec4899;">李</div>
+          <div class="u-info">
+            <div class="u-name">李女士</div>
+            <div style="font-size:11px;color:var(--c-muted);">注册1年 · 累计消费¥3,240</div>
+            <div class="u-tags"><span class="u-tag tag-new">新客</span></div>
+          </div>
+        </div>
+        <div style="margin-top:10px;font-size:12px;color:var(--c-muted);line-height:1.6;">
+          📦 查询订单：<strong>ORD20260703002</strong><br>
+          📝 历史工单：近3个月1单
+        </div>
+      </div>`;
+  } else {
+    userHTML = `
+      <div class="section">
+        <div class="section-title"><span class="icon">👤</span>用户信息</div>
+        <div class="user-card">
+          <div class="u-avatar" style="background:#10b981;">王</div>
+          <div class="u-info">
+            <div class="u-name">王同学</div>
+            <div style="font-size:11px;color:var(--c-muted);">注册8个月 · 累计消费¥1,580</div>
+            <div class="u-tags"><span class="u-tag tag-risk">投诉升级</span><span class="u-tag tag-new">学生认证</span></div>
+          </div>
+        </div>
+        <div style="margin-top:10px;font-size:12px;color:var(--c-muted);line-height:1.6;">
+          📦 最近订单：<strong>ORD20260501005</strong>（蓝牙耳机·¥299）<br>
+          📝 历史工单：近30天2次售后咨询，1次投诉记录<br>
+          ⚠️ 风险提示：用户提到"上次答应"，需核实历史承诺
+        </div>
+      </div>`;
+  }
+
+  let aiContentHTML = '';
+  if (conv.id === 'conv-1') {
+    aiContentHTML = `
+      <div class="section">
+        <div class="section-title"><span class="icon">🤖</span>AI 判断</div>
+        <div class="ai-judge warn">
+          <strong>⚠️ 置信度：0.78（中）</strong><br>
+          问题类型：<strong>质量投诉</strong> | 情绪：<strong>激动</strong><br>
+          检索命中：3条相关文档 | 匹配度 0.78-0.92
+        </div>
+        <div class="ai-answer-display">
+          <div class="answer-label">🤖 AI生成的回答（待审核）</div>
+          非常抱歉给您带来不好的体验！🙏<br><br>
+          根据您的订单<strong>ORD20260701001</strong>（T恤-白色L码，签收后第3天）：<br><br>
+          1️⃣ 纯棉T恤首次水洗有<strong>3%-5%的轻微缩水属于正常现象</strong><br>
+          2️⃣ 但您描述的<strong>"严重缩水、穿不了"已超出正常范围</strong>，属于质量问题<br>
+          3️⃣ 该商品<strong>支持7天无理由退换</strong>，您签收才3天，完全在退换期内<br><br>
+          建议方案：可优先协助您<strong>换新</strong>或<strong>申请退款</strong>，具体金额以售后审核结果为准。您更倾向哪种处理方式？<br><br>
+          <span style="font-size:11px;color:#94a3b8;">📎 参考：退换货政策V3.2 第三章 · 商品详情页 · 订单系统</span>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:10px;">
+          <button class="btn-approve" onclick="approveDraftFromSidebar()" style="flex:1;">✅ 确认发送</button>
+          <button class="btn-edit-draft" onclick="editDraftFromSidebar()" style="flex:1;">✏️ 修改后发送</button>
+          <button class="btn-reject" onclick="rejectDraftFromSidebar()" style="flex:1;">✖ 忽略，自己写</button>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title"><span class="icon">📚</span>知识检索结果</div>
+        <div class="ai-result-item">
+          <div class="r-title">退换货政策V3.2 · 第三章：质量问题认定</div>
+          <div class="r-src">"影响正常穿着的缩水属于质量问题…"<span class="r-score">匹配度 0.92</span></div>
+        </div>
+        <div class="ai-result-item">
+          <div class="r-title">商品详情 · T恤白色L码</div>
+          <div class="r-src">"100%纯棉，首次水洗可能有3-5%轻微缩水"<span class="r-score">匹配度 0.85</span></div>
+        </div>
+        <div class="ai-result-item">
+          <div class="r-title">客诉处理SOP · 商品质量投诉流程</div>
+          <div class="r-src">"步骤：安抚→核实→提出方案…"<span class="r-score">匹配度 0.78</span></div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title"><span class="icon">💬</span>AI推荐话术</div>
+        <div class="script-card">
+          <div class="s-label">推荐话术 1 · 安抚+核实+方案</div>
+          "非常抱歉给您带来不好的体验！根据您的订单信息，这件T恤签收才3天……可优先协助您换新或申请退款，具体金额以售后审核结果为准。您更倾向哪种处理方式？"
+          <br><button class="btn-use" onclick="useScript('非常抱歉给您带来不好的体验！根据您的订单（ORD20260701001），这件T恤签收才3天，完全在退换期内。可优先协助您换新或申请退款，具体金额以售后审核结果为准。您更倾向哪种处理方式？')">📋 一键使用</button>
+        </div>
+        <div class="script-card">
+          <div class="s-label">推荐话术 2 · 简化版</div>
+          "您好，了解到T恤缩水的情况。该情况属于质量问题，支持免费退换。我帮您操作，大概3分钟就好。换新还是退款呢？"
+          <br><button class="btn-use" onclick="useScript('您好，了解到T恤缩水的情况。该情况属于质量问题，支持免费退换。我帮您操作，大概3分钟就好。换新还是退款呢？')">📋 一键使用</button>
+        </div>
+        <div class="script-card">
+          <div class="s-label">推荐话术 3 · 退款申请说明</div>
+          "如果您不想换新，可以为您发起退款申请。退款金额和到账时间以售后审核及支付渠道结果为准，提交前我会再和您确认。"
+          <br><button class="btn-use" onclick="useScript('如果您不想换新，可以为您发起退款申请。退款金额和到账时间以售后审核及支付渠道结果为准，提交前我会再和您确认。')">📋 一键使用</button>
+        </div>
+      </div>`;
+  } else if (conv.id === 'conv-3') {
+    aiContentHTML = `
+      <div class="section">
+        <div class="section-title"><span class="icon">🤖</span>AI 判断</div>
+        <div class="ai-judge warn">
+          <strong>🔴 置信度：0.42（低）</strong><br>
+          Case C：<strong>低置信度转人工</strong><br>
+          原因：涉及历史承诺、投诉升级和人工处理记录，AI无法确认事实，不生成具体承诺
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title"><span class="icon">🎧</span>转人工摘要</div>
+        <div class="ai-result-item">
+          <div class="r-title">用户当前诉求</div>
+          <div class="r-src">用户称"上次答应的处理没有兑现"，要求给出明确说法，情绪较强。</div>
+        </div>
+        <div class="ai-result-item">
+          <div class="r-title">建议客服动作</div>
+          <div class="r-src">先核实历史工单和承诺内容，再回复处理结果；不要直接承诺赔偿金额。</div>
+        </div>
+        <div class="ai-result-item">
+          <div class="r-title">已同步上下文</div>
+          <div class="r-src">当前对话、用户ID、最近订单、历史工单入口、转人工原因。</div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title"><span class="icon">💬</span>客服建议话术</div>
+        <div class="script-card">
+          <div class="s-label">低风险开场</div>
+          "您好，我已经看到您前面的描述。这个问题涉及之前的处理记录，我先帮您核实承诺内容和当前进度，再给您明确答复。"
+          <br><button class="btn-use" onclick="useScript('您好，我已经看到您前面的描述。这个问题涉及之前的处理记录，我先帮您核实承诺内容和当前进度，再给您明确答复。')">📋 一键使用</button>
+        </div>
+      </div>
+    `;
+  } else {
+    aiContentHTML = `
+      <div class="section">
+        <div class="section-title"><span class="icon">🤖</span>AI 判断</div>
+        <div class="ai-judge ${conv.feedbackAlert ? 'danger' : 'info'}">
+          <strong>✅ 置信度：0.92（高）</strong><br>
+          问题类型：<strong>${conv.topic}</strong><br>
+          状态：<strong>AI已自动回复</strong>${conv.feedbackAlert ? '，但用户点踩并继续追问' : '，无需客服介入'}
+        </div>
+        <div class="case-metric-grid">
+          <div class="case-metric"><strong>Case类型</strong>Case A · 高置信度</div>
+          <div class="case-metric"><strong>处理方式</strong>AI自动回复</div>
+          <div class="case-metric"><strong>用户反馈</strong>${conv.feedbackAlert ? '👎 信息不准确' : '未点踩'}</div>
+          <div class="case-metric"><strong>后续状态</strong>${conv.feedbackAlert ? '待客服复核' : '可关闭观察'}</div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title"><span class="icon">📚</span>知识检索结果</div>
+        <div class="ai-result-item">
+          <div class="r-title">${conv.id === 'conv-2' ? '物流查询API返回' : '售后保修政策V3.1 · 第二章'}</div>
+          <div class="r-src">相关结果已自动匹配<span class="r-score">匹配度 0.94</span></div>
+        </div>
+      </div>
+      ${conv.feedbackAlert ? `
+      <div class="section">
+        <div class="section-title"><span class="icon">👎</span>用户反馈提醒</div>
+        <div class="ai-result-item" style="background:#fef2f2;border-color:#fecaca;">
+          <div class="r-title">反馈原因：信息不准确</div>
+          <div class="r-src">用户在AI自动回复后继续追问：“物流页面一直没更新，我不相信这个结果。”</div>
+        </div>
+        <div class="ai-result-item">
+          <div class="r-title">建议客服动作</div>
+          <div class="r-src">复核物流API和用户端物流页是否数据不同步；必要时转人工解释并标记Bad Case。</div>
+        </div>
+        <div class="script-card">
+          <div class="s-label">客服跟进话术</div>
+          "您好，我看到您反馈物流信息不一致。我先帮您复核平台物流页和快递接口返回结果，如果确实存在延迟同步，我会告诉您最新状态。"
+          <br><button class="btn-use" onclick="useScript('您好，我看到您反馈物流信息不一致。我先帮您复核平台物流页和快递接口返回结果，如果确实存在延迟同步，我会告诉您最新状态。')">📋 一键使用</button>
+        </div>
+      </div>` : ''}
+    `;
+  }
+
+  sidebar.innerHTML = userHTML + aiContentHTML;
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 200) + 'px';
+}
+
+function useScript(text) {
+  const input = document.getElementById('b-input');
+  input.value = text;
+  input.focus();
+  autoResize(input);
+
+  // 使用了推荐话术 → 自动忽略待审核回答
+  dismissDraftIfPending();
+
+  showToast('📋 话术已填入输入框，可修改后发送', 'success');
+}
+
+function dismissDraftIfPending() {
+  const draftEl = document.querySelector('#b-messages .msg.ai .draft-bubble');
+  if (!draftEl) return;
+  const msgDiv = draftEl.closest('.msg');
+  msgDiv.style.opacity = '0.4';
+  const badge = msgDiv.querySelector('.draft-badge');
+  if (badge) { badge.textContent = '⏭ 已选用推荐话术'; badge.style.background = '#dbeafe'; badge.style.color = '#1e40af'; badge.style.animation = 'none'; }
+  const actions = msgDiv.querySelector('.draft-actions');
+  if (actions) actions.remove();
+}
+
+function approveDraft(btn) {
+  const draftEl = btn.closest('.msg');
+  draftEl.classList.add('draft-approved');
+  const badge = draftEl.querySelector('.draft-badge');
+  if (badge) { badge.textContent = '✅ 已确认发送给用户'; badge.style.background = '#d1fae5'; badge.style.color = '#065f46'; }
+  const actions = draftEl.querySelector('.draft-actions');
+  if (actions) actions.remove();
+  showToast('✅ AI回答已确认发送给用户「张先生」', 'success');
+}
+
+function approveDraftFromSidebar() {
+  const draftEl = document.querySelector('#b-messages .msg.ai .draft-bubble');
+  if (draftEl) {
+    const msgDiv = draftEl.closest('.msg');
+    msgDiv.classList.add('draft-approved');
+    const badge = msgDiv.querySelector('.draft-badge');
+    if (badge) { badge.textContent = '✅ 已确认发送给用户'; badge.style.background = '#d1fae5'; badge.style.color = '#065f46'; }
+    const actions = msgDiv.querySelector('.draft-actions');
+    if (actions) actions.remove();
+  }
+  showToast('✅ AI回答已确认发送给用户「张先生」', 'success');
+}
+
+function editDraft(btn) {
+  const draftText = btn.closest('.msg').querySelector('.bubble').innerText.replace('⏳ AI生成 · 待客服审核确认\n', '').replace(/📎 参考来源：.*/, '').trim();
+  const input = document.getElementById('b-input');
+  input.value = draftText;
+  input.focus();
+  autoResize(input);
+  showToast('✏️ AI回答已填入输入框，请修改后发送', 'info');
+}
+
+function editDraftFromSidebar() {
+  const draftText = '非常抱歉给您带来不好的体验！根据您的订单ORD20260701001（T恤-白色L码，签收后第3天），该情况可能属于质量问题，支持发起售后处理。可优先协助您换新或申请退款，具体金额以售后审核结果为准。您更倾向哪种处理方式？';
+  const input = document.getElementById('b-input');
+  input.value = draftText;
+  input.focus();
+  autoResize(input);
+  showToast('✏️ AI回答已填入输入框，请修改后发送', 'info');
+}
+
+function rejectDraft(btn) {
+  const msgDiv = btn.closest('.msg');
+  msgDiv.style.opacity = '0.4';
+  const badge = msgDiv.querySelector('.draft-badge');
+  if (badge) { badge.textContent = '✖ 已忽略，客服自行回复'; badge.style.background = '#fee2e2'; badge.style.color = '#991b1b'; }
+  const actions = msgDiv.querySelector('.draft-actions');
+  if (actions) actions.remove();
+  document.getElementById('b-input').focus();
+  showToast('✖ AI回答已拒绝，请自行输入回复', 'info');
+}
+
+function rejectDraftFromSidebar() {
+  const draftEl = document.querySelector('#b-messages .msg.ai .draft-bubble');
+  if (draftEl) {
+    const msgDiv = draftEl.closest('.msg');
+    msgDiv.style.opacity = '0.4';
+    const badge = msgDiv.querySelector('.draft-badge');
+    if (badge) { badge.textContent = '✖ 已忽略，客服自行回复'; badge.style.background = '#fee2e2'; badge.style.color = '#991b1b'; }
+    const actions = msgDiv.querySelector('.draft-actions');
+    if (actions) actions.remove();
+  }
+  document.getElementById('b-input').focus();
+  showToast('✖ AI回答已拒绝，请自行输入回复', 'info');
+}
+
+function sendBMsg() {
+  const input = document.getElementById('b-input');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  autoResize(input);
+
+  addBMessage('ai', text, new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }), { fromAgent: true });
+  showToast('✅ 消息已发送', 'success');
+}
+
+function handleBKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendBMsg();
+  }
+}
+
+// ======================== 初始化 ========================
+function init() {
+  // C端初始欢迎消息
+  const welcomeHTML = `
+    👋 您好！我是<strong>海睿</strong>，星途 AIGC 服务平台「海睿星」的 AI 智能客服。<br><br>
+    您可以像平时找客服一样直接提问：<br>
+    <div class="quick-asks">
+      <span class="quick-ask" onclick="quickAsk('我的快递到哪了？订单号ORD20260703002')">📦 我的快递到哪了？</span>
+      <span class="quick-ask" onclick="quickAsk('我的退款什么时候到账？')">💰 退款什么时候到账？</span>
+      <span class="quick-ask" onclick="quickAsk('现在有什么优惠券吗？')">🎫 有什么优惠券？</span>
+      <span class="quick-ask" onclick="quickAsk('蓝牙耳机一边不响了还在保修期吗？')">🔧 售后保修</span>
+    </div>
+    <br>如果问题比较复杂，我会为您<strong>转接人工客服</strong>。
+  `;
+  addCMessage('ai', welcomeHTML, { noFeedback: true, confidence: false });
+}
+
+function quickAsk(text) {
+  document.getElementById('c-input').value = text;
+  sendCMsg();
+}
+
+// 启动
+init();
+</script>
+</body>
+</html>
