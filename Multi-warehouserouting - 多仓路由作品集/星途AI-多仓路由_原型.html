@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星途AI-多仓路由 - 运营后台原型</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background:#f0f2f5; color:#2c3e50; line-height:1.6;
+            display:flex; justify-content:center; min-height:100vh;
+            padding:20px;
+        }
+        .app { width:100%; max-width:900px; }
+        .topbar {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color:#fff; padding:16px 24px;
+            display:flex; align-items:center; justify-content:space-between;
+            border-radius:12px 12px 0 0;
+        }
+        .topbar-left { display:flex; align-items:center; gap:12px; }
+        .topbar .logo-icon {
+            width:36px; height:36px; background:#4a90d9; border-radius:8px;
+            display:flex; align-items:center; justify-content:center; font-size:18px;
+        }
+        .topbar .brand { font-size:16px; font-weight:700; }
+        .topbar .brand-sub { font-size:11px; color:#8899aa; font-weight:400; }
+        .topbar .author { font-size:11px; color:#667788; }
+        .tabs { display:flex; background:#fff; border-bottom:2px solid #eee; }
+        .tabs .tab {
+            flex:1; padding:14px 0; text-align:center; font-size:13px; font-weight:500;
+            cursor:pointer; color:#888; border-bottom:3px solid transparent; transition:all 0.2s;
+            background:#fafbfc;
+        }
+        .tabs .tab:hover { color:#333; background:#f8f9fc; }
+        .tabs .tab.active { color:#1a1a2e; border-bottom-color:#4a90d9; font-weight:600; background:#fff; }
+        .tabs .tab .badge { display:inline-block; background:#e74c3c; color:#fff; font-size:10px; padding:1px 7px; border-radius:8px; margin-left:4px; vertical-align:top; }
+        .page { background:#fff; border-radius:0 0 12px 12px; box-shadow:0 4px 24px rgba(0,0,0,0.08); overflow:hidden; }
+        .content { padding:24px; }
+        .tab-panel { display:none; }
+        .tab-panel.active { display:block; }
+
+        .info-card { background:#f8f9fc; border-radius:8px; padding:16px 20px; margin-bottom:20px; }
+        .info-card .row { display:flex; justify-content:space-between; padding:6px 0; font-size:14px; flex-wrap:wrap; }
+        .info-card .row .label { color:#888; min-width:100px; }
+        .info-card .row .value { font-weight:500; }
+        .info-card .row .warn { color:#e67e22; font-weight:600; }
+
+        .route-result { background:#f0faf4; border:2px solid #27ae60; border-radius:8px; padding:18px 20px; margin-bottom:16px; }
+        .route-result h4 { font-size:15px; color:#27ae60; margin-bottom:8px; }
+        .route-result .detail { font-size:14px; }
+        .route-result .saved { color:#27ae60; font-weight:600; font-size:24px; margin-top:8px; }
+
+        .ai-reason {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%);
+            border:1px solid #c8d8f0; border-radius:8px; padding:14px 18px;
+            margin-bottom:16px; font-size:13px;
+        }
+        .ai-reason .ai-tag {
+            display:inline-flex; align-items:center; gap:4px;
+            background:#4a90d9; color:#fff; font-size:11px; font-weight:600;
+            padding:2px 10px; border-radius:10px; margin-bottom:8px;
+        }
+        .ai-reason .reason-text { color:#333; line-height:1.7; }
+
+        .section-title { font-size:14px; font-weight:600; color:#333; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+        .section-title .sub { font-weight:400; font-size:12px; color:#999; }
+
+        table { width:100%; border-collapse:collapse; margin-bottom:16px; font-size:13px; }
+        th, td { padding:10px 12px; text-align:left; border-bottom:1px solid #eee; }
+        th { background:#f5f6fa; font-weight:600; color:#444; font-size:12px; white-space:nowrap; }
+        tr:hover td { background:#fafbfd; }
+        .highlight { background:#f0faf4; }
+        .highlight td { font-weight:600; }
+
+        .tag { display:inline-block; padding:2px 10px; border-radius:10px; font-size:11px; font-weight:500; white-space:nowrap; }
+        .tag-best { background:#27ae60; color:#fff; }
+        .tag-far { background:#e74c3c; color:#fff; }
+        .tag-cur { background:#f39c12; color:#fff; }
+        .tag-active { background:#27ae60; color:#fff; }
+        .tag-trial { background:#f39c12; color:#fff; }
+        .tag-disabled { background:#95a5a6; color:#fff; }
+        .tag-warn { background:#e74c3c; color:#fff; }
+
+        .actions { display:flex; gap:12px; margin-top:20px; }
+        .btn { padding:10px 20px; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; border:none; transition:all 0.2s; }
+        .btn-primary { background:#4a90d9; color:#fff; flex:1; padding:12px 0; }
+        .btn-primary:hover { background:#357abd; }
+        .btn-outline { background:#fff; color:#888; border:1px solid #ddd; flex:1; padding:12px 0; }
+        .btn-outline:hover { background:#f5f5f5; }
+        .btn-ghost { background:transparent; color:#4a90d9; border:1px solid #4a90d9; }
+        .btn-ghost:hover { background:#f0f4ff; }
+        .btn-sm { padding:5px 12px; font-size:12px; border-radius:6px; }
+        .btn-danger { background:#e74c3c; color:#fff; }
+        .btn-danger:hover { background:#c0392b; }
+        .btn-success { background:#27ae60; color:#fff; }
+        .btn-success:hover { background:#219a52; }
+
+        .toast { position:fixed; top:30px; left:50%; transform:translateX(-50%); background:#27ae60; color:#fff; padding:14px 28px; border-radius:8px; font-size:14px; font-weight:500; box-shadow:0 6px 20px rgba(0,0,0,0.15); opacity:0; transition:opacity 0.3s; pointer-events:none; z-index:999; }
+        .toast.show { opacity:1; }
+        .toast-detail { font-size:12px; margin-top:6px; opacity:0.9; }
+
+        .overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:100; justify-content:center; align-items:center; }
+        .overlay.show { display:flex; }
+        .modal { background:#fff; border-radius:12px; width:90%; max-width:520px; padding:24px; box-shadow:0 8px 40px rgba(0,0,0,0.2); }
+        .modal h4 { margin-bottom:14px; font-size:16px; }
+        .modal select, .modal input[type=text] { width:100%; padding:10px; border-radius:6px; border:1px solid #ddd; font-size:14px; margin-bottom:14px; }
+        .modal .modal-actions { display:flex; gap:10px; }
+        .modal .hint { font-size:12px; color:#999; margin-bottom:14px; }
+
+        .wh-card { background:#f8f9fc; border-radius:8px; padding:16px 20px; margin-bottom:14px; border-left:4px solid transparent; }
+        .wh-card.active-wh { border-left-color:#27ae60; }
+        .wh-card.trial-wh { border-left-color:#f39c12; }
+        .wh-card.disabled-wh { border-left-color:#95a5a6; }
+        .wh-card .wh-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px; }
+        .wh-card .wh-name { font-weight:600; font-size:15px; }
+        .wh-card .wh-id { font-size:12px; color:#888; margin-left:8px; }
+        .wh-card .wh-zones { display:flex; flex-wrap:wrap; gap:6px; margin:8px 0; }
+        .wh-card .zone-chip { background:#fff; border:1px solid #ddd; border-radius:14px; padding:3px 12px; font-size:12px; display:flex; align-items:center; gap:6px; }
+        .wh-card .zone-chip .remove { cursor:pointer; color:#ccc; font-weight:bold; font-size:14px; line-height:1; }
+        .wh-card .zone-chip .remove:hover { color:#e74c3c; }
+        .wh-card .zone-add { display:inline-flex; align-items:center; gap:4px; padding:3px 12px; border:1px dashed #4a90d9; border-radius:14px; font-size:12px; color:#4a90d9; cursor:pointer; background:#f0f4ff; }
+        .wh-card .zone-add:hover { background:#dce8fa; }
+        .wh-card .wh-meta { font-size:12px; color:#999; margin-top:8px; }
+        .wh-card .wh-actions { display:flex; gap:8px; align-items:center; }
+        .status-select { padding:6px 10px; border-radius:6px; border:1px solid #ddd; font-size:13px; background:#fff; }
+
+        .alert-card { border-radius:8px; padding:16px 20px; margin-bottom:14px; display:flex; gap:14px; align-items:flex-start; }
+        .alert-card.warn { background:#fef9e7; border:1px solid #f9e79f; }
+        .alert-card.danger { background:#fdedec; border:1px solid #f5b7b1; }
+        .alert-card.info { background:#f0f4ff; border:1px solid #c8d8f0; }
+        .alert-card .alert-icon { font-size:22px; flex-shrink:0; }
+        .alert-card .alert-body { flex:1; }
+        .alert-card .alert-title { font-weight:600; font-size:14px; margin-bottom:4px; }
+        .alert-card .alert-desc { font-size:13px; color:#555; }
+        .alert-card .alert-action { margin-top:10px; }
+        .stats-row { display:flex; gap:14px; margin-bottom:20px; }
+        .stat-card { flex:1; background:#f8f9fc; border-radius:8px; padding:16px; text-align:center; }
+        .stat-card .stat-num { font-size:28px; font-weight:700; color:#1a1a2e; }
+        .stat-card .stat-label { font-size:12px; color:#888; margin-top:4px; }
+        .scan-info { font-size:12px; color:#999; text-align:right; margin-bottom:14px; }
+
+        .footer-bar {
+            text-align:center; padding:12px; font-size:11px; color:#999;
+            background:#fafbfc; border-top:1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app">
+    <div class="topbar">
+        <div class="topbar-left">
+            <div class="logo-icon">✦</div>
+            <div>
+                <div class="brand">星途AI · 多仓路由</div>
+                <div class="brand-sub">Xingtu AI Multi-Warehouse Routing</div>
+            </div>
+        </div>
+        <div class="author">星途时动 · wzp</div>
+    </div>
+
+    <div class="page">
+        <div class="tabs">
+            <div class="tab active" data-tab="tab1">📋 路由推荐</div>
+            <div class="tab" data-tab="tab2">⚙️ 规则配置</div>
+            <div class="tab" data-tab="tab3">🩺 健康监控 <span class="badge">2</span></div>
+        </div>
+
+        <!-- Tab 1: 路由推荐 -->
+        <div class="tab-panel active" id="tab1">
+            <div class="content">
+                <div class="info-card">
+                    <div class="row"><span class="label">订单号</span><span class="value">ORD20260715001</span></div>
+                    <div class="row"><span class="label">下单时间</span><span class="value">2026-07-15 10:23:00</span></div>
+                    <div class="row"><span class="label">收件地址</span><span class="value">广东省广州市天河区体育西路 xx 号</span></div>
+                    <div class="row"><span class="label">下单仓</span><span class="value">北京仓（WH-BJ-002）<span class="tag tag-far" style="margin-left:6px;">下单仓</span></span></div>
+                    <div class="row"><span class="label">SKU 数 / 总件数</span><span class="value">3 个 SKU · 共 5 件</span></div>
+                    <div class="row"><span class="label">下单仓发货距离</span><span class="warn">⚠ 约 2100 km（跨区）</span></div>
+                </div>
+
+                <div class="route-result">
+                    <h4>✅ 星途AI 推荐：切换至广州仓</h4>
+                    <div class="detail">广州仓距离收件地址约 8 km，全量有货，预计履约时效 <strong>1 天</strong>（原北京仓需 3-4 天）</div>
+                    <div class="saved">↓ 节省约 2100 km · 约 2.5 天</div>
+                </div>
+
+                <div class="ai-reason">
+                    <div class="ai-tag">✦ 星途AI 推荐理由</div>
+                    <div class="reason-text">
+                        经 AI 地址解析（广州市天河区）→ 遍历 6 个候选仓 → 过滤缺货仓（长沙仓 SKU-002 缺货）→ 按距离排序：<br>
+                        ① 全量 SKU 有货 ✅ &nbsp; ② 距离最近 8 km ✅ &nbsp; ③ 仓内负载 45% 正常 ✅ &nbsp; ④ 路由状态「全量运行」✅
+                    </div>
+                </div>
+
+                <h4 class="section-title">候选仓库对比 <span class="sub">（按距离升序，已过滤缺货仓）</span></h4>
+                <table>
+                    <thead><tr><th>仓库</th><th>距离</th><th>全量库存</th><th>负载</th><th>路由状态</th><th>操作</th></tr></thead>
+                    <tbody>
+                        <tr class="highlight">
+                            <td>广州仓 WH-GZ-001 <span class="tag tag-best">推荐</span></td>
+                            <td>8 km</td><td>✅ 充足</td><td>45%</td><td><span class="tag tag-active">全量</span></td><td>—</td>
+                        </tr>
+                        <tr>
+                            <td>武汉仓 WH-WH-003</td>
+                            <td>850 km</td><td>✅ 充足</td><td>30%</td><td><span class="tag tag-trial">灰度</span></td><td>—</td>
+                        </tr>
+                        <tr>
+                            <td>成都仓 WH-CD-004</td>
+                            <td>1200 km</td><td>✅ 充足</td><td>55%</td><td><span class="tag tag-active">全量</span></td><td>—</td>
+                        </tr>
+                        <tr>
+                            <td>长沙仓 WH-CS-005</td>
+                            <td>1400 km</td><td>⚠ SKU-002 缺货</td><td>60%</td><td><span class="tag tag-active">全量</span></td><td>—</td>
+                        </tr>
+                        <tr>
+                            <td>北京仓 WH-BJ-002 <span class="tag tag-cur">下单仓</span></td>
+                            <td>2100 km</td><td>✅ 充足</td><td>40%</td><td><span class="tag tag-active">全量</span></td><td>—</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="actions">
+                    <button class="btn btn-ghost" onclick="openOverride()" style="flex:1; padding:12px 0;">手动指定仓库</button>
+                    <button class="btn btn-outline" onclick="keepOriginal()">保持北京仓</button>
+                    <button class="btn btn-primary" onclick="confirmRoute()">确认切换至广州仓</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: 规则配置 -->
+        <div class="tab-panel" id="tab2">
+            <div class="content">
+                <p style="font-size:13px; color:#888; margin-bottom:18px;">
+                    管理各仓库的覆盖区域和路由参与状态。仓库新增后，仓储规划部需在此配置覆盖区域并切换路由状态，否则星途AI 不会将订单路由至该仓。
+                </p>
+
+                <div class="wh-card active-wh">
+                    <div class="wh-header">
+                        <span><span class="wh-name">广州仓</span><span class="wh-id">WH-GZ-001</span></span>
+                        <span class="wh-actions">
+                            <span class="tag tag-active">全量运行</span>
+                            <select class="status-select" onchange="changeStatus('WH-GZ-001', this.value, '广州仓')">
+                                <option value="active" selected>全量运行</option>
+                                <option value="trial">灰度运行</option>
+                                <option value="disabled">未启用</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="wh-zones">
+                        <span class="zone-chip">广东 <span class="remove" onclick="removeZone('广州仓','广东')">×</span></span>
+                        <span class="zone-chip">广西 <span class="remove" onclick="removeZone('广州仓','广西')">×</span></span>
+                        <span class="zone-chip">海南 <span class="remove" onclick="removeZone('广州仓','海南')">×</span></span>
+                        <span class="zone-chip">福建 <span class="remove" onclick="removeZone('广州仓','福建')">×</span></span>
+                        <span class="zone-add" onclick="addZone('广州仓')">+ 添加省份</span>
+                    </div>
+                    <div class="wh-meta">最后修改：2026-07-10 14:22 by 张运营 · 覆盖 4 个省份</div>
+                </div>
+
+                <div class="wh-card trial-wh">
+                    <div class="wh-header">
+                        <span><span class="wh-name">武汉仓</span><span class="wh-id">WH-WH-003</span></span>
+                        <span class="wh-actions">
+                            <span class="tag tag-trial">灰度运行（10%流量）</span>
+                            <select class="status-select" onchange="changeStatus('WH-WH-003', this.value, '武汉仓')">
+                                <option value="active">全量运行</option>
+                                <option value="trial" selected>灰度运行</option>
+                                <option value="disabled">未启用</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="wh-zones">
+                        <span class="zone-chip">湖北 <span class="remove" onclick="removeZone('武汉仓','湖北')">×</span></span>
+                        <span class="zone-chip">河南 <span class="remove" onclick="removeZone('武汉仓','河南')">×</span></span>
+                        <span class="zone-chip">江西 <span class="remove" onclick="removeZone('武汉仓','江西')">×</span></span>
+                        <span class="zone-add" onclick="addZone('武汉仓')">+ 添加省份</span>
+                    </div>
+                    <div class="wh-meta">
+                        ⚠ 已保持"灰度运行"状态 <strong>42 天</strong> · 最后修改：2026-06-03 09:15 by 李仓储
+                        <span style="color:#e67e22; margin-left:8px;">← 健康巡检已标记</span>
+                    </div>
+                </div>
+
+                <div class="wh-card active-wh">
+                    <div class="wh-header">
+                        <span><span class="wh-name">成都仓</span><span class="wh-id">WH-CD-004</span></span>
+                        <span class="wh-actions">
+                            <span class="tag tag-active">全量运行</span>
+                            <select class="status-select" onchange="changeStatus('WH-CD-004', this.value, '成都仓')">
+                                <option value="active" selected>全量运行</option>
+                                <option value="trial">灰度运行</option>
+                                <option value="disabled">未启用</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="wh-zones">
+                        <span class="zone-chip">四川 <span class="remove" onclick="removeZone('成都仓','四川')">×</span></span>
+                        <span class="zone-chip">重庆 <span class="remove" onclick="removeZone('成都仓','重庆')">×</span></span>
+                        <span class="zone-chip">云南 <span class="remove" onclick="removeZone('成都仓','云南')">×</span></span>
+                        <span class="zone-add" onclick="addZone('成都仓')">+ 添加省份</span>
+                    </div>
+                    <div class="wh-meta">最后修改：2026-06-20 10:05 by 张运营 · 覆盖 3 个省份</div>
+                </div>
+
+                <div class="wh-card active-wh">
+                    <div class="wh-header">
+                        <span><span class="wh-name">长沙仓</span><span class="wh-id">WH-CS-005</span></span>
+                        <span class="wh-actions">
+                            <span class="tag tag-active">全量运行</span>
+                            <select class="status-select" onchange="changeStatus('WH-CS-005', this.value, '长沙仓')">
+                                <option value="active" selected>全量运行</option>
+                                <option value="trial">灰度运行</option>
+                                <option value="disabled">未启用</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="wh-zones">
+                        <span class="zone-chip">湖南 <span class="remove" onclick="removeZone('长沙仓','湖南')">×</span></span>
+                        <span class="zone-add" onclick="addZone('长沙仓')">+ 添加省份</span>
+                    </div>
+                    <div class="wh-meta">最后修改：2026-05-12 16:30 by 张运营 · 覆盖 1 个省份</div>
+                </div>
+
+                <div class="wh-card active-wh">
+                    <div class="wh-header">
+                        <span><span class="wh-name">北京仓</span><span class="wh-id">WH-BJ-002</span></span>
+                        <span class="wh-actions">
+                            <span class="tag tag-active">全量运行</span>
+                            <select class="status-select" onchange="changeStatus('WH-BJ-002', this.value, '北京仓')">
+                                <option value="active" selected>全量运行</option>
+                                <option value="trial">灰度运行</option>
+                                <option value="disabled">未启用</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="wh-zones">
+                        <span class="zone-chip">北京 <span class="remove" onclick="removeZone('北京仓','北京')">×</span></span>
+                        <span class="zone-chip">天津 <span class="remove" onclick="removeZone('北京仓','天津')">×</span></span>
+                        <span class="zone-chip">河北 <span class="remove" onclick="removeZone('北京仓','河北')">×</span></span>
+                        <span class="zone-chip">山东 <span class="remove" onclick="removeZone('北京仓','山东')">×</span></span>
+                        <span class="zone-chip">辽宁 <span class="remove" onclick="removeZone('北京仓','辽宁')">×</span></span>
+                        <span class="zone-add" onclick="addZone('北京仓')">+ 添加省份</span>
+                    </div>
+                    <div class="wh-meta">最后修改：2024-11-03 09:00 by 系统初始化 · 覆盖 5 个省份</div>
+                </div>
+
+                <div class="wh-card disabled-wh">
+                    <div class="wh-header">
+                        <span><span class="wh-name">上海仓</span><span class="wh-id">WH-SH-006</span></span>
+                        <span class="wh-actions">
+                            <span class="tag tag-disabled">未启用</span>
+                            <select class="status-select" onchange="changeStatus('WH-SH-006', this.value, '上海仓')">
+                                <option value="active">全量运行</option>
+                                <option value="trial">灰度运行</option>
+                                <option value="disabled" selected>未启用</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="wh-zones">
+                        <span style="color:#999; font-size:12px;">⚠ 尚未配置覆盖区域——此仓有库存但不会参与路由推荐</span>
+                        <span class="zone-add" onclick="addZone('上海仓')">+ 添加省份</span>
+                    </div>
+                    <div class="wh-meta">
+                        ⚠ 该仓库存充足但不在路由候选池
+                        <span style="color:#e74c3c; margin-left:8px;">← 健康巡检已标记</span>
+                    </div>
+                </div>
+
+                <div style="text-align:right; padding-top:8px;">
+                    <button class="btn btn-primary btn-sm" onclick="showToast('✅ 规则已保存', '6 个仓库的路由配置已更新，即时生效')">保存全部修改</button>
+                </div>
+
+                <div style="margin-top:20px; padding:14px 16px; background:#f0f4ff; border-radius:8px; font-size:13px; color:#333;">
+                    <strong>💡 说明：</strong>仓库路由状态变更记录写入操作日志，支持版本回滚。
+                    新仓上线默认"未启用"，需手动配置覆盖区域 → 切至"灰度运行"（10% 流量试跑） → 观察无异常后切至"全量运行"。
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: 健康监控 -->
+        <div class="tab-panel" id="tab3">
+            <div class="content">
+                <div class="scan-info">最近扫描：2026-07-15 08:00 · 下次扫描：2026-07-22 08:00 · 星途AI 巡检结果自动推送运营主管企业微信</div>
+
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-num">6</div>
+                        <div class="stat-label">已接入仓库</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num">1</div>
+                        <div class="stat-label" style="color:#f39c12;">灰度运行超期</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num">1</div>
+                        <div class="stat-label" style="color:#e74c3c;">未启用路由的仓库</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num">12%</div>
+                        <div class="stat-label">本周跨仓发货占比</div>
+                    </div>
+                </div>
+
+                <h4 class="section-title">🔔 星途AI 巡检 · 需要关注的事项</h4>
+
+                <div class="alert-card warn">
+                    <div class="alert-icon">⏰</div>
+                    <div class="alert-body">
+                        <div class="alert-title">武汉仓已灰度试跑 42 天，建议尽快转正</div>
+                        <div class="alert-desc">
+                            武汉仓在今年 6 月 3 日开始灰度试跑（目前承接 10% 华东订单），至今已一个半月未转正。
+                            试跑期间库存数据稳定、履约时效正常，继续观望已经没有额外收益——建议要么转为全量运行，要么直接关仓退出。
+                        </div>
+                        <div class="alert-action">
+                            <button class="btn btn-success btn-sm" onclick="showToast('✅ 武汉仓已转为全量运行', '即日起承接全部覆盖区域订单')">转为全量运行</button>
+                            <button class="btn btn-outline btn-sm" style="margin-left:8px;" onclick="showToast('已标记为已知', '将在下周巡检中再次提醒')">已知悉，下周再看</button>
+                            <button class="btn btn-danger btn-sm" style="margin-left:8px;" onclick="showToast('武汉仓已关闭路由', '该仓不再参与路由推荐')">关闭该仓路由</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert-card danger">
+                    <div class="alert-icon">🚫</div>
+                    <div class="alert-body">
+                        <div class="alert-title">上海仓库存充足，但没有开启路由——华东订单仍在跨区发货</div>
+                        <div class="alert-desc">
+                            上海仓当前库存能满足约 85% 的华东订单（上海、江苏、浙江、安徽），但路由状态为"未启用"，覆盖区域也还没配置。
+                            这意味着星途AI 永远不会把订单分给上海仓。目前华东买家的订单仍然从北京仓（2100 km）或长沙仓（1100 km）发出——既慢又贵。
+                        </div>
+                        <div class="alert-action">
+                            <button class="btn btn-primary btn-sm" onclick="goToConfig()">去配置上海仓</button>
+                            <button class="btn btn-outline btn-sm" style="margin-left:8px;" onclick="showToast('已标记为已知', '将在下次巡检中再次提醒')">已知悉，暂不处理</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert-card info">
+                    <div class="alert-icon">📈</div>
+                    <div class="alert-body">
+                        <div class="alert-title">本周跨仓发货占比升高了 5 个百分点</div>
+                        <div class="alert-desc">
+                            跨仓发货占比从上周的 10% 升到本周的 15%。主要是华北地区（北京、河北、天津）订单量涨了，北京仓忙不过来（负载到了 75%），
+                            星途AI 自动把一部分订单分流到了武汉仓——这个行为符合预期，但说明北京仓的容量接近上限了，需要关注是否要扩容或调整覆盖区域。
+                        </div>
+                        <div class="alert-action">
+                            <button class="btn btn-outline btn-sm" onclick="showToast('已查看趋势', '进入跨仓发货趋势详情页')">查看趋势详情</button>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 class="section-title" style="margin-top:20px;">📋 星途AI 自动巡检项</h4>
+                <table>
+                    <thead><tr><th>巡检项目</th><th>触发条件</th><th>通知对象</th><th>状态</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>灰度运行超期提醒</td>
+                            <td>仓库处于"灰度运行"状态超过 30 天</td>
+                            <td>运营主管（企业微信）</td>
+                            <td><span class="tag tag-active">运行中</span></td>
+                        </tr>
+                        <tr>
+                            <td>仓库未启用路由检测</td>
+                            <td>仓库有可用库存，但路由状态为"未启用"或覆盖区域为空</td>
+                            <td>运营主管 + 仓储规划（企业微信）</td>
+                            <td><span class="tag tag-active">运行中</span></td>
+                        </tr>
+                        <tr>
+                            <td>跨仓占比异常预警</td>
+                            <td>跨仓发货占比相比上周升高超过 5 个百分点</td>
+                            <td>运营主管（企业微信）</td>
+                            <td><span class="tag tag-active">运行中</span></td>
+                        </tr>
+                        <tr>
+                            <td>路由配置变更留痕</td>
+                            <td>每次修改仓库路由状态或覆盖区域</td>
+                            <td>记录操作日志，可随时回溯</td>
+                            <td><span class="tag tag-active">运行中</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="footer-bar">星途时动 · 星途AI-多仓路由 · 产品原型 V1.0 · 作者 wzp</div>
+    </div>
+</div>
+
+<div class="toast" id="toast">
+    <span id="toastMsg"></span>
+    <div class="toast-detail" id="toastDetail"></div>
+</div>
+
+<div class="overlay" id="overlay">
+    <div class="modal">
+        <h4>手动指定发货仓库</h4>
+        <p class="hint">以下为全量有货仓，选择后将覆盖星途AI 推荐结果。</p>
+        <select id="whSelect">
+            <option value="WH-GZ-001">广州仓 — 8 km · 全量有货 · 负载 45% · 全量运行</option>
+            <option value="WH-WH-003">武汉仓 — 850 km · 全量有货 · 负载 30% · 灰度运行</option>
+            <option value="WH-CD-004">成都仓 — 1200 km · 全量有货 · 负载 55% · 全量运行</option>
+            <option value="WH-BJ-002">北京仓 — 2100 km · 全量有货 · 负载 40% · 全量运行</option>
+        </select>
+        <div class="modal-actions">
+            <button class="btn btn-outline" onclick="closeOverride()" style="flex:1;">取消</button>
+            <button class="btn btn-primary" onclick="applyOverride()" style="flex:1;">确认指定</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.tab').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+            var targetId = this.getAttribute('data-tab');
+            document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+            this.classList.add('active');
+            document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+            document.getElementById(targetId).classList.add('active');
+        });
+    });
+
+    function showToast(msg, detail) {
+        var t = document.getElementById('toast');
+        document.getElementById('toastMsg').innerText = msg;
+        document.getElementById('toastDetail').innerText = detail || '';
+        t.classList.add('show');
+        setTimeout(function(){ t.classList.remove('show'); }, 3000);
+    }
+
+    function confirmRoute() {
+        showToast('✅ 路由已确认', '发货仓已切换至广州仓 WH-GZ-001 · 预计节约 2100 km / 2.5 天');
+    }
+    function keepOriginal() {
+        showToast('已保持原下单仓（北京仓）发货');
+    }
+    function openOverride() { document.getElementById('overlay').classList.add('show'); }
+    function closeOverride() { document.getElementById('overlay').classList.remove('show'); }
+    function applyOverride() {
+        var sel = document.getElementById('whSelect');
+        var whName = sel.options[sel.selectedIndex].text;
+        document.getElementById('overlay').classList.remove('show');
+        showToast('✅ 已手动指定发货仓', whName + ' · 操作已记录');
+    }
+
+    function goToConfig() {
+        document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+        document.querySelector('[data-tab=tab2]').classList.add('active');
+        document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+        document.getElementById('tab2').classList.add('active');
+        showToast('已跳转至规则配置页', '请为上海仓配置覆盖区域并开启路由');
+    }
+
+    var STATUS_LABEL = { 'active': '全量运行', 'trial': '灰度运行', 'disabled': '未启用' };
+    function changeStatus(whId, newStatus, whName) {
+        var label = STATUS_LABEL[newStatus] || newStatus;
+        if (newStatus === 'disabled') {
+            if (!confirm('确认将 ' + whName + ' 设为"未启用"？\n\n该仓将不再参与路由推荐，已有库存的订单不会被路由到此仓。')) {
+                return;
+            }
+        }
+        showToast('✅ ' + whName + ' 路由状态已变更', whId + ' → ' + label + ' · 即时生效 · 操作已记入日志');
+    }
+    function removeZone(whName, province) {
+        if (confirm('确认从 ' + whName + ' 的覆盖区域中移除"' + province + '"？')) {
+            showToast('已移除', whName + ' 不再覆盖 ' + province + ' · 即时生效');
+        }
+    }
+    function addZone(whName) {
+        var province = prompt('为' + whName + '添加覆盖省份（输入省份名称）：');
+        if (province && province.trim()) {
+            showToast('✅ 已添加', whName + ' 新增覆盖：' + province.trim() + ' · 即时生效');
+        }
+    }
+</script>
+
+</body>
+</html>
